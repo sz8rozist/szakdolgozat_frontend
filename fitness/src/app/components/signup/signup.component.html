@@ -1,1 +1,194 @@
-<p>signup works!</p>
+<main>
+  <div class="container">
+    <section
+      class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4"
+    >
+      <div class="container">
+        <div class="row justify-content-center">
+          <div
+            class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center"
+          >
+
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="pt-4 pb-2">
+                  <h5 class="card-title text-center pb-0 fs-4">
+                    Készíts egy fiókot
+                  </h5>
+                  <p class="text-center small">
+                    Add meg a személyes adataidat hogy elkészüljön a fiókod
+                  </p>
+                </div>
+                <form
+                  class="row g-3 needs-validation"
+                  [formGroup]="signupForm"
+                  (ngSubmit)="onSubmit()"
+                >
+                  <div class="col-6">
+                    <label for="yourName" class="form-label">Vezetéknév</label>
+                    <input
+                      type="text"
+                      name="name"
+                      formControlName="veznev"
+                      class="form-control"
+                      id="yourName"
+                      required
+                    />
+                    <div
+                      class="invalid-feedback"
+                      [ngClass]="{'active': this.signupForm.get('veznev')?.errors?.['required'] && (this.signupForm.get('veznev')?.dirty || this.signupForm.get('veznev')?.touched)}"
+                    >
+                      A vezetéknév megadása kötelező.
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label for="yourEmail" class="form-label">Keresztnév</label>
+                    <input
+                      type="email"
+                      name="email"
+                      formControlName="kernev"
+                      class="form-control"
+                      id="yourEmail"
+                      required
+                    />
+                    <div
+                      class="invalid-feedback"
+                      [ngClass]="{'active': this.signupForm.get('kernev')?.errors?.['required'] && (this.signupForm.get('kernev')?.dirty || this.signupForm.get('kernev')?.touched)}"
+                    >
+                      A keresztnév megadása kötelező.
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="yourUsername" class="form-label">Email</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend"
+                        ><i class="fa-solid fa-at"></i
+                      ></span>
+                      <input
+                        type="text"
+                        name="username"
+                        formControlName="email"
+                        class="form-control"
+                        id="yourUsername"
+                        required
+                      />
+                      <div
+                        class="invalid-feedback"
+                        [ngClass]="{'active': this.signupForm.get('email')?.errors?.['required'] && (this.signupForm.get('email')?.dirty || this.signupForm.get('email')?.touched)}"
+                      >
+                        Az email cím megadása kötelező.
+                      </div>
+                      <div
+                        class="invalid-feedback"
+                        [ngClass]="{'active': this.signupForm.get('email')?.errors?.['email']}"
+                      >
+                        Hibás email formátum.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="yourUsername" class="form-label"
+                      >Felhasználónév</label
+                    >
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend"
+                        ><i class="fa-solid fa-user"></i
+                      ></span>
+                      <input
+                        type="text"
+                        name="username"
+                        formControlName="username"
+                        class="form-control"
+                        id="yourUsername"
+                        required
+                      />
+                      <div
+                        class="invalid-feedback"
+                        [ngClass]="{'active': this.signupForm.get('username')?.errors?.['required'] && (this.signupForm.get('username')?.dirty || this.signupForm.get('username')?.touched)}"
+                      >
+                        A felhasználónév megadása kötelező.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="yourPassword" class="form-label">Jelszó</label>
+                    <div class="input-group">
+                      <span class="input-group-text" id="inputGroupPrepend"
+                        ><i class="fa-solid fa-key"></i
+                      ></span>
+                      <input
+                        type="password"
+                        name="password"
+                        formControlName="password"
+                        class="form-control"
+                        id="yourPassword"
+                        required
+                      />
+                    </div>
+                    <div
+                      class="invalid-feedback"
+                      [ngClass]="{'active': this.signupForm.get('password')?.errors?.['required'] && (this.signupForm.get('password')?.dirty || this.signupForm.get('password')?.touched)}"
+                    >
+                      A jelszó megadása kötelező.
+                    </div>
+                    <div
+                      class="invalid-feedback"
+                      [ngClass]="{'active': this.signupForm.get('password')?.errors?.['minlength']}"
+                    >
+                      A jelszónak minimum 8 karakter hosszúnak kell lennie.
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating mb-3">
+                      <select
+                        class="form-select"
+                        id="floatingSelect"
+                        aria-label="Floating label select example"
+                        formControlName="role"
+                      >
+                        <option value="GUEST">Vendég</option>
+                        <option value="TRAINER">Edző</option>
+                      </select>
+                      <label for="floatingSelect">Jogosultság</label>
+                      <div
+                      class="invalid-feedback"
+                      [ngClass]="{'active': this.signupForm.get('role')?.errors?.['required'] && (this.signupForm.get('role')?.dirty || this.signupForm.get('role')?.touched)}"
+                    >
+                      A jogosultság kiválasztása kötelező.
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button
+                      class="btn btn-primary w-100"
+                      type="submit"
+                      [disabled]="signupForm.invalid"
+                    >
+                      Regisztráció
+                    </button>
+                  </div>
+                  <div class="col-12">
+                    <p class="small mb-0">
+                      Van már fiókod?
+                      <a href="#" routerLink="/signin">Jelentkezz be</a>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="credits">
+              <!-- All the links in the footer should remain intact. -->
+              <!-- You can delete the links only if you purchased the pro version. -->
+              <!-- Licensing information: https://bootstrapmade.com/license/ -->
+              <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<!-- End #main -->

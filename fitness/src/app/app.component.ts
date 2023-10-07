@@ -8,7 +8,7 @@ import { AuthService } from './service/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'fitness';
+  title = 'My Fitness';
   isSpecialRoute: boolean = false;
   isAuthenticated: any;
 

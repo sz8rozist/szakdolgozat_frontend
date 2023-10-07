@@ -5,6 +5,7 @@ import { LoginUser } from '../model/LoginUser';
 import { LoginResponse } from '../model/LoginResponse';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { SignupUser } from '../model/SignupUser';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,10 @@ export class AuthService {
 
   login(loginUser: LoginUser) {
     return this.http.post<LoginResponse>(`${this.apiUrlService.getApiUrl()}/user/login`, loginUser);
+  }
+
+  signup(signupUser: SignupUser){
+    return this.http.post(`${this.apiUrlService.getApiUrl()}/user/register`, signupUser,{observe: 'response'});
   }
 
   isAuthenticated() {
@@ -29,6 +34,18 @@ export class AuthService {
     if(token){
       return this.jwtHelper.decodeToken(token as string);
     }
+  }
+
+  isTokenExpired(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return true; // Nincs token
+    }
+    const tokenData = JSON.parse(atob(token.split('.')[1]));
+    const expirationDate = new Date(tokenData.exp * 1000); // Konvertálás ms-re
+    console.log(expirationDate);
+    console.log(expirationDate.getMinutes(), new Date().getMinutes());
+    return expirationDate.getTime() <= new Date().getTime(); // Ellenőrzés, hogy a token lejárt-e
   }
 
   logout() {

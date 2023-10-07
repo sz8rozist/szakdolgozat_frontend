@@ -14,5 +14,6 @@ export class DashboardComponent {
   ngOnInit(){
     console.log(this.authService.isAuthenticated());
     console.log(this.authService.getDecodedToken());
+    console.log(this.authService.isTokenExpired());
   }
 }
