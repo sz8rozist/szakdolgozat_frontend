@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route, Router, NavigationEnd } from '@angular/router';
+import { AuthService } from './service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,9 @@ import { ActivatedRoute, Route, Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
   title = 'fitness';
   isSpecialRoute: boolean = false;
+  isAuthenticated: any;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
   ngOnInit(){
     this.router.events.subscribe(
       (event: any) => {
@@ -22,5 +24,6 @@ export class AppComponent {
         }
       }
     );
+    this.isAuthenticated = this.authService.isAuthenticated();
   }
 }
