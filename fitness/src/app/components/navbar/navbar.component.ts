@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,8 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class NavbarComponent {
   isSpecialRoute: boolean = false;
-  constructor(private router: Router){}
+  toggleNotification: boolean = false;
+  constructor(private router: Router, private renderer: Renderer2){}
 
   ngOnInit(){
     this.router.events.subscribe(
@@ -21,5 +22,19 @@ export class NavbarComponent {
         }
       }
     );
+  }
+  toggleSideBar(){
+    const body = document.querySelector('body');
+    if (body) {
+      if (body.classList.contains('toggle-sidebar')) {
+        body.classList.remove('toggle-sidebar');
+      } else {
+        body.classList.add('toggle-sidebar');
+      }
+    }
+  }
+
+  toggleNotificationFunc(){
+    this.toggleNotification = !this.toggleNotification;
   }
 }
