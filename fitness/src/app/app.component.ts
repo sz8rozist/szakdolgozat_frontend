@@ -15,7 +15,8 @@ export class AppComponent {
     this.router.events.subscribe(
       (event: any) => {
         if (event instanceof NavigationEnd) {
-          if(this.router.url === "/signin" || this.router.url === "/signup"){
+          console.log(this.router.url);
+          if(this.router.url === "/dashboard"){
             this.isSpecialRoute = true;
           }
         }
