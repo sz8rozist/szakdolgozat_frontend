@@ -100,14 +100,14 @@
   
         </li><!-- End Notification Nav -->
   
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" >
   
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <span class="nav-link nav-icon" style="cursor: pointer;" (click)="toggleMessageDropdownFunc()" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
             <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
+          </span><!-- End Messages Icon -->
   
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" [ngClass]="{'show': toggleMessageDropdown}" [ngStyle]="{'position': toggleMessageDropdown ? 'absolute' : '', 'inset': toggleMessageDropdown ? '0px 0px auto auto' : '', 'margin': toggleMessageDropdown? '0px' : '', 'transform': toggleMessageDropdown ? 'translate(-25px, 35px)' : ''}">
             <li class="dropdown-header">
               You have 3 new messages
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>

@@ -1,7 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, Renderer2, Output } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { map, tap } from 'rxjs';
-import { LoginResponse } from 'src/app/model/LoginResponse';
+import { Component, EventEmitter,  Output } from '@angular/core';
+import {  Router } from '@angular/router';
 import { User } from 'src/app/model/User';
 import { AuthService } from 'src/app/service/auth.service';
 
@@ -15,6 +13,7 @@ export class NavbarComponent {
   isSpecialRoute: boolean = false;
   toggleNotification: boolean = false;
   toggleProfileDropdown: boolean = false;
+  toggleMessageDropdown: boolean = false;
   auth?: User;
   constructor(private router: Router, public authService: AuthService){}
 
@@ -41,6 +40,10 @@ export class NavbarComponent {
   }
   toggleProfileDropdownFunc(){
     this.toggleProfileDropdown = !this.toggleProfileDropdown;
+  }
+
+  toggleMessageDropdownFunc(){
+    this.toggleMessageDropdown = !this.toggleMessageDropdown;
   }
 
   onLogout(){
