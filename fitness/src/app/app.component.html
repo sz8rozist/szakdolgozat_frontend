@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar (logoutEvent)="onLogout()" [auth]="auth"></app-navbar>
 <div class="container-fluid">
   <div class="row">
     <app-sidebar *ngIf="isSpecialRoute"></app-sidebar>

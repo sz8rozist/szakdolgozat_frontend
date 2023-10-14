@@ -12,12 +12,13 @@ export class AppComponent {
   isSpecialRoute: boolean = false;
   isAuthenticated: any;
 
+  auth: any;
+
   constructor(private router: Router, private authService: AuthService) {}
   ngOnInit(){
     this.router.events.subscribe(
       (event: any) => {
         if (event instanceof NavigationEnd) {
-          console.log(this.router.url);
           if(this.router.url === "/dashboard"){
             this.isSpecialRoute = true;
           }
@@ -25,5 +26,10 @@ export class AppComponent {
       }
     );
     this.isAuthenticated = this.authService.isAuthenticated();
+    this.auth = this.authService.getDecodedToken();
+  }
+
+  onLogout(){
+    this.authService.logout();
   }
 }

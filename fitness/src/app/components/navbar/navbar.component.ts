@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Renderer2, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -7,8 +7,11 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  @Input() auth: any;
+  @Output() logoutEvent = new EventEmitter<void>();
   isSpecialRoute: boolean = false;
   toggleNotification: boolean = false;
+  toggleProfileDropdown: boolean = false;
   constructor(private router: Router, private renderer: Renderer2){}
 
   ngOnInit(){
@@ -36,5 +39,12 @@ export class NavbarComponent {
 
   toggleNotificationFunc(){
     this.toggleNotification = !this.toggleNotification;
+  }
+  toggleProfileDropdownFunc(){
+    this.toggleProfileDropdown = !this.toggleProfileDropdown;
+  }
+
+  onLogout(){
+    this.logoutEvent.emit();
   }
 }
