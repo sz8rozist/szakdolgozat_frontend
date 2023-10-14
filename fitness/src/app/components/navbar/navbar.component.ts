@@ -1,5 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, Renderer2, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { map, tap } from 'rxjs';
+import { LoginResponse } from 'src/app/model/LoginResponse';
+import { User } from 'src/app/model/User';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,24 +11,19 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  @Input() auth: any;
   @Output() logoutEvent = new EventEmitter<void>();
   isSpecialRoute: boolean = false;
   toggleNotification: boolean = false;
   toggleProfileDropdown: boolean = false;
-  constructor(private router: Router, private renderer: Renderer2){}
+  auth?: User;
+  constructor(private router: Router, public authService: AuthService){}
 
   ngOnInit(){
-    this.router.events.subscribe(
-      (event: any) => {
-        if (event instanceof NavigationEnd) {
-          console.log(this.router.url);
-          if(this.router.url === "/dashboard"){
-            this.isSpecialRoute = true;
-          }
-        }
-      }
-    );
+    const token = this.authService.getDecodedToken();
+    console.log(token);
+    this.authService.getUserById(token.sub).subscribe((response: User) =>{
+      this.auth = response;
+    })
   }
   toggleSideBar(){
     const body = document.querySelector('body');

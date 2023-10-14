@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (request.url.endsWith('/user/login') || request.url.endsWith('/user/register')) {
+    /*if (request.url.endsWith('/user/login') || request.url.endsWith('/user/register')) {
       return next.handle(request);
     }
 
@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
       }
     });
 
-    return next.handle(modifiedRequest);
-    //return next.handle(request);
+    return next.handle(modifiedRequest);*/
+    return next.handle(request);
   }
 }

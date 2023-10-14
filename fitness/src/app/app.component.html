@@ -1,11 +1,11 @@
-<app-navbar (logoutEvent)="onLogout()" [auth]="auth"></app-navbar>
+<app-navbar (logoutEvent)="onLogout()" *ngIf="authService.isLoggedIn$ | async"></app-navbar>
 <div class="container-fluid">
   <div class="row">
-    <app-sidebar *ngIf="isSpecialRoute"></app-sidebar>
+    <app-sidebar *ngIf="authService.isLoggedIn$ | async"></app-sidebar>
     <div class="col-md-12">
       <router-outlet></router-outlet>
       <ng-toast [style]="{width:'300px'}"></ng-toast>
     </div>
   </div>
-  <app-footer [isSpecialRoute]="isSpecialRoute"></app-footer>
+  <app-footer *ngIf="authService.isLoggedIn$ | async"></app-footer>
 </div>

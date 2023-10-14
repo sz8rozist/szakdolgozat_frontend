@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { tap } from 'rxjs';
 import { LoginResponse } from 'src/app/model/LoginResponse';
 import { LoginUser } from 'src/app/model/LoginUser';
 import { AuthService } from 'src/app/service/auth.service';
@@ -28,27 +29,27 @@ export class SigninComponent {
       };
       this.authService.login(loginUser).subscribe(
         (response: LoginResponse) => {
-          localStorage.setItem("token", response.token);
-          this.toast.success({
-            detail: 'Sikeres',
-            summary: 'Sikeres bejelentkezés!',
-            duration: 2000,
-            type: 'success',
-          });
-          setTimeout(() => {
-            this.router.navigate(['/dashboard']);
-          }, 2000);
+          if(response){
+            this.toast.success({
+              detail: 'Sikeres',
+              summary: 'Sikeres bejelentkezés!',
+              duration: 2000,
+              type: 'success',
+            });
+              this.router.navigate(['/dashboard']);
+          }
         },
         (error) => {
           this.toast.error({
             detail: 'Hiba',
             summary: error.error.message,
-            duration: 2000,
+            duration: 3000,
             type: 'error',
           });
           console.log(error.error);
         }
       );
+
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, map, tap } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 
 
@@ -12,14 +12,16 @@ export class AuthGuard  {
     private authService: AuthService,
     private router: Router
   ){}
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if(!this.authService.isAuthenticated()){
-        this.router.navigate(["/signin"]);
-        return false;
-      }
-      return true;
+  canActivate(): Observable<boolean> {
+      return this.authService.isLoggedIn$.pipe(
+        tap((response) =>{
+          if(!response){
+            this.router.navigate(["/signin"]);
+            return false;
+          }
+          return true;
+        })
+      );
   }
   
 }
