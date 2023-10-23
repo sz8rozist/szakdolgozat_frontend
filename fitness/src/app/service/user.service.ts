@@ -17,4 +17,8 @@ export class UserService {
   getImage(imageName: string){
     return this.http.get(`${this.apiUrlService.getApiUrl()}/user/image/${imageName}`, {responseType: 'blob'});
   }
+
+  deleteImage(userId: number){
+    return this.http.delete(`${this.apiUrlService.getApiUrl()}/user/image/${userId}`);
+  }
 }

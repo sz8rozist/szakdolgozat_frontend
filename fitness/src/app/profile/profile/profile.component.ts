@@ -99,4 +99,11 @@ export class ProfileComponent {
         this.getAuthData();
       });
   }
+
+  deleteProfilePicture(){
+    this.userService.deleteImage(this.user?.id as number).subscribe(response =>{
+      console.log(response);
+      this.profileImageSrc = "";
+    });
+  }
 }
