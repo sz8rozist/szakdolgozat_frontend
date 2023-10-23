@@ -1,5 +1,5 @@
 <main id="main" class="main">
-
+  {{user | json}}
     <div class="pagetitle">
       <h1>Profile</h1>
       <nav>
@@ -18,8 +18,9 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
               <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2>Kevin Anderson</h2>
-              <h3>Web Designer</h3>
+              <h2>{{trainer?.first_name || guest?.first_name}} {{trainer?.last_name || guest?.last_name}}</h2>
+              <h3 *ngIf="trainer">Edző</h3>
+              <h3 *ngIf="guest">Vendég</h3>
               <div class="social-links mt-2">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -28,11 +29,8 @@
               </div>
             </div>
           </div>
-
         </div>
-
         <div class="col-xl-8">
-
           <div class="card">
             <div class="card-body pt-3">
               <!-- Bordered Tabs -->
@@ -53,48 +51,42 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" [class.active]="activeTab === 'overview'" [class.show]="activeTab === 'overview'" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
-
-                  <h5 class="card-title">Profile Details</h5>
-
+                  <!--<h5 class="card-title">About</h5>
+                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>-->
+                  <h5 class="card-title">Profil Adatok</h5>
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                    <div class="col-lg-3 col-md-4 label ">Vezetéknév</div>
+                    <div class="col-lg-9 col-md-8">{{trainer?.first_name || guest?.first_name}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Keresztnév</div>
+                    <div class="col-lg-9 col-md-8">{{trainer?.last_name || guest?.last_name}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Email cím</div>
+                    <div class="col-lg-9 col-md-8">{{trainer?.email || guest?.email}}</div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                  <div class="row" *ngIf="trainer?.type">
+                    <div class="col-lg-3 col-md-4 label">Típus</div>
+                    <div class="col-lg-9 col-md-8">{{trainer?.type}}</div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                  <div class="row" *ngIf="guest?.age">
+                    <div class="col-lg-3 col-md-4 label">Életkor</div>
+                    <div class="col-lg-9 col-md-8">{{guest?.age}}</div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
+                  <div class="row" *ngIf="guest?.age">
+                    <div class="col-lg-3 col-md-4 label">Magasság</div>
+                    <div class="col-lg-9 col-md-8">{{guest?.height}} cm</div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                  <div class="row" *ngIf="guest?.weight">
+                    <div class="col-lg-3 col-md-4 label">Testsúly</div>
+                    <div class="col-lg-9 col-md-8">{{guest?.weight}} kg</div>
                   </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
-                  </div>
-
                 </div>
-
                 <div class="tab-pane fade profile-edit pt-3" [class.active]="activeTab === 'edit'" [class.show]="activeTab === 'edit'" id="profile-edit">
 
                   <!-- Profile Edit Form -->

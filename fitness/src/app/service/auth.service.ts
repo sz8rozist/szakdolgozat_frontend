@@ -6,7 +6,7 @@ import { LoginResponse } from '../model/LoginResponse';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { SignupUser } from '../model/SignupUser';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../model/User';
 
 @Injectable({
@@ -59,5 +59,10 @@ export class AuthService {
 
   getUserById(userId: number){
     return this.http.get<User>(`${this.apiUrlService.getApiUrl()}/user/${userId}`);
+  }
+
+  getAuthData(): Observable<User>{
+    const token = this.getDecodedToken();
+    return this.getUserById(token.sub);
   }
 }

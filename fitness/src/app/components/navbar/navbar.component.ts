@@ -18,11 +18,9 @@ export class NavbarComponent {
   constructor(private router: Router, public authService: AuthService){}
 
   ngOnInit(){
-    const token = this.authService.getDecodedToken();
-    console.log(token);
-    this.authService.getUserById(token.sub).subscribe((response: User) =>{
+    this.authService.getAuthData().subscribe((response: User) =>{
       this.auth = response;
-    })
+    });
   }
   toggleSideBar(){
     const body = document.querySelector('body');
