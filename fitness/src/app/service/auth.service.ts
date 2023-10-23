@@ -55,6 +55,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/signin']);
+    this._isLoggedIn$.next(false);
   }
 
   getUserById(userId: number){

@@ -19,6 +19,11 @@ export class SigninComponent {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
+    this.authService.isLoggedIn$.subscribe(resp =>{
+      if(resp){
+        this.router.navigate(["/dashboard"]);
+      }
+    })
   }
 
   onSubmit() {
