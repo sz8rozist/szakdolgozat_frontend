@@ -5,7 +5,8 @@ import { Trainer } from "./Trainer"
 export interface User{
     id?: number
     username: string
-    password: string
+    password: string,
+    profilePictureName: string,
     roles: Role[]
     guest: Guest
     trainer: Trainer

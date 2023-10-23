@@ -5,7 +5,7 @@
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-        <li class="breadcrumb-item active">Profile</li>
+        <li class="breadcrumb-item active">Profil</li>
       </ol>
     </nav>
   </div>
@@ -19,7 +19,7 @@
             class="card-body profile-card pt-4 d-flex flex-column align-items-center"
           >
             <img
-              src="assets/img/profile-img.jpg"
+              [src]="profileImageSrc"
               alt="Profile"
               class="rounded-circle"
             />
@@ -144,15 +144,15 @@
                       >Profilkép</label
                     >
                     <div class="col-md-8 col-lg-9">
-                      <img src="assets/img/profile-img.jpg" alt="Profile" />
+                      <img [src]="profileImageSrc" alt="Profile" />
+                      <a
+                      href="#"
+                      class="btn btn-danger btn-sm ms-3"
+                      title="Remove my profile image"
+                      ><i class="bi bi-trash"></i
+                    ></a>
                       <div class="pt-2">
-                        <input class="form-control" type="file" id="formFile" />
-                        <a
-                          href="#"
-                          class="btn btn-danger btn-sm"
-                          title="Remove my profile image"
-                          ><i class="bi bi-trash"></i
-                        ></a>
+                        <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)" />
                       </div>
                     </div>
                   </div>
@@ -327,7 +327,7 @@
                     <button type="submit" class="btn btn-primary">
                       Módosítások mentése
                     </button>
-                    <button type="submit" class="btn btn-primary ms-2">
+                    <button type="submit" class="btn btn-primary ms-2" (click)="uploadProfilePicture()">
                       Profilkép feltöltése
                     </button>
                   </div>

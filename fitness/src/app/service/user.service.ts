@@ -10,7 +10,11 @@ export class UserService {
   constructor(private apiUrlService: ApiUrlService,
     private http: HttpClient) { }
 
-  uploadFile(formData: FormData){
-    return this.http.post<string>(`${this.apiUrlService.getApiUrl()}/user/image`, formData);
+  uploadFile(formData: FormData, userId: number){
+    return this.http.post(`${this.apiUrlService.getApiUrl()}/user/image/${userId}`, formData,{responseType: 'text'});
+  }
+
+  getImage(imageName: string){
+    return this.http.get(`${this.apiUrlService.getApiUrl()}/user/image/${imageName}`, {responseType: 'blob'});
   }
 }
