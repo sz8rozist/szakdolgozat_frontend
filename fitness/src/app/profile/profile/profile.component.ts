@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Guest } from 'src/app/model/Guest';
 import { Trainer } from 'src/app/model/Trainer';
 import { User } from 'src/app/model/User';
@@ -15,9 +16,21 @@ export class ProfileComponent {
   trainer?: Trainer;
   guest?: Guest
 
+  profileForm: FormGroup;
+
   constructor(
     private authService: AuthService,
-  ){}
+  ){
+    this.profileForm = new FormGroup({
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      age: new FormControl('',[Validators.pattern('^[0-9]*$')]),
+      height: new FormControl('', [Validators.pattern('^[0-9]*$')]),
+      weight: new FormControl('', [Validators.pattern('^[0-9]*$')]),
+      type: new FormControl('')
+    });
+  }
 
   ngOnInit(){
     this.authService.getAuthData().subscribe((response: User) =>{
@@ -28,7 +41,20 @@ export class ProfileComponent {
         }else{
           this.guest = this.user.guest;
         }
+        this.patchFormData();
       }
+    });
+  }
+
+  patchFormData(){
+    this.profileForm.patchValue({
+      firstName : this.trainer?.first_name || this.guest?.first_name,
+      lastName: this.trainer?.last_name || this.guest?.last_name,
+      email: this.trainer?.email || this.guest?.email,
+      age: this.guest?.age,
+      height: this.guest?.height,
+      weight: this.guest?.weight,
+      type: this.trainer?.type
     });
   }
 
