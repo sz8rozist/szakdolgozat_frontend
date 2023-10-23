@@ -16,12 +16,16 @@ export class NavbarComponent {
   toggleProfileDropdown: boolean = false;
   toggleMessageDropdown: boolean = false;
   auth?: User;
-  profileImageSrc?: string;
+  profileImageSrc: string | null = null;
 
   constructor(private router: Router, public authService: AuthService, private userService: UserService){}
 
   ngOnInit(){
    this.getAuthData();
+   this.userService.profilePicture$.subscribe(newProfilePictureUrl => {
+    console.log(newProfilePictureUrl);
+      this.getProfilePicture(newProfilePictureUrl);
+  });
   }
   toggleSideBar(){
     const body = document.querySelector('body');
@@ -49,7 +53,7 @@ export class NavbarComponent {
     this.logoutEvent.emit();
   }
 
-  getProfilePicture(imageName: string) {
+  getProfilePicture(imageName: string | null) {
     if(imageName != null){
       this.userService.getImage(imageName).subscribe((response) => {
         const reader = new FileReader();
@@ -58,6 +62,8 @@ export class NavbarComponent {
         };
         reader.readAsDataURL(response);
       });
+    }else{
+      this.profileImageSrc = imageName;
     }
   }
 
