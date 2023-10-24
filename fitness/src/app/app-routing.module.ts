@@ -18,6 +18,11 @@ const routes: Routes = [
     loadChildren: () =>
     import('./profile/profile.module').then((m) => m.ProfileModule),
   },
+  {
+    path: 'chat',
+    loadChildren: () =>
+    import('./chat/chat.module').then((m) => m.ChatModule),
+  },
   { path: '', redirectTo: '/signin', pathMatch: 'full' },
   { path: '**', redirectTo: '/not-found', pathMatch: 'full' },
 ];
