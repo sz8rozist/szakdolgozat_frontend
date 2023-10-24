@@ -9,7 +9,7 @@ export interface Guest{
     age: number
     weight: number
     notification: []
-    trainer:Trainer
+    trainer: Trainer
     diets: []
     workouts: []
 }
