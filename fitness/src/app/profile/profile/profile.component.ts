@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { ChangePassword } from 'src/app/model/ChangePassword';
 import { Guest } from 'src/app/model/Guest';
 import { Trainer } from 'src/app/model/Trainer';
 import { UpdateProfile } from 'src/app/model/UpdateProfile';
@@ -152,6 +153,22 @@ export class ProfileComponent {
         type: 'success',
       });
       this.getAuthData();
+    });
+  }
+
+  changePassword(){
+    const data: ChangePassword = {
+      password: this.newPasswordForm.get("newPassword")?.value
+    };
+    this.userService.changePassword(data, this.user?.id as number).subscribe(response =>{
+      console.log(response);
+      this.toast.success({
+        detail: 'Sikeres',
+        summary: 'Sikeres jelszó módosítás!',
+        duration: 2000,
+        type: 'success',
+      });
+      this.newPasswordForm.reset();
     });
   }
 }

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UpdateProfile } from '../model/UpdateProfile';
 import { User } from '../model/User';
+import { ChangePassword } from '../model/ChangePassword';
 
 @Injectable({
   providedIn: 'root',
@@ -46,5 +47,9 @@ export class UserService {
 
   updateProfileData(data: UpdateProfile){
     return this.http.put<User>(`${this.apiUrlService.getApiUrl()}/user/${data.id}`, data);
+  }
+
+  changePassword(password: ChangePassword, userId: number){
+    return this.http.put(`${this.apiUrlService.getApiUrl()}/user/password/${userId}`, password);
   }
 }

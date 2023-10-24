@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { SignupUser } from '../model/SignupUser';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../model/User';
+import { ChangePassword } from '../model/ChangePassword';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +68,7 @@ export class AuthService {
     return this.getUserById(token.sub);
   }
 
-  checkPassword(userId: number, password: string){
-   return this.http.post<boolean>(`${this.apiUrlService.getApiUrl()}/password/${userId}`, password, {observe: 'response'}); 
+  checkPassword(userId: number, password: ChangePassword){
+   return this.http.post<boolean>(`${this.apiUrlService.getApiUrl()}/user/password/${userId}`, password, {observe: 'response'}); 
   }
 }

@@ -413,7 +413,7 @@
                 id="profile-change-password"
               >
                 <!-- Change Password Form -->
-                <form>
+                <form [formGroup]="newPasswordForm">
                   <div class="row mb-3">
                     <label
                       for="currentPassword"
@@ -426,7 +426,10 @@
                         type="password"
                         class="form-control"
                         id="currentPassword"
+                        formControlName="password"
                       />
+                      <span *ngIf="this.newPasswordForm.get('password')?.errors?.['required'] &&  this.newPasswordForm.get('password')?.touched" class="text-danger"> Kötelező kitölteni. </span>
+                      <span *ngIf="this.newPasswordForm.get('password')?.errors?.['goodPass']" class="text-danger"> Hibás régi jelszó. </span>
                     </div>
                   </div>
 
@@ -442,7 +445,9 @@
                         type="password"
                         class="form-control"
                         id="newPassword"
+                        formControlName="newPassword"
                       />
+                      <span *ngIf="this.newPasswordForm.get('newPassword')?.errors?.['required'] &&  this.newPasswordForm.get('newPassword')?.touched" class="text-danger"> Kötelező kitölteni. </span>
                     </div>
                   </div>
 
@@ -458,12 +463,15 @@
                         type="password"
                         class="form-control"
                         id="renewPassword"
+                        formControlName="confirmNewPassword"
                       />
+                      <span *ngIf="this.newPasswordForm.get('confirmNewPassword')?.errors?.['required'] &&  this.newPasswordForm.get('confirmNewPassword')?.touched" class="text-danger"> Kötelező kitölteni. </span>
+                      <span *ngIf="this.newPasswordForm.hasError('passwordMismatch')" class="text-danger"> A két új jelszó nem egyezik. </span>
                     </div>
                   </div>
 
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" (click)="changePassword()" [disabled]="this.newPasswordForm.invalid">
                       Jelszó változtatás
                     </button>
                   </div>
