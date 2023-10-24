@@ -7,6 +7,8 @@ import { UpdateProfile } from 'src/app/model/UpdateProfile';
 import { User } from 'src/app/model/User';
 import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/service/user.service';
+import { passwordMatchValidator } from 'src/app/validators/confirm-password-validator';
+import { PasswordValidator } from 'src/app/validators/password-validator';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +23,7 @@ export class ProfileComponent {
   selectedFile?: File;
   profileImageSrc?: string;
   profileForm: FormGroup;
-
+  newPasswordForm: FormGroup;
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -36,6 +38,11 @@ export class ProfileComponent {
       weight: new FormControl('', [Validators.pattern('^[0-9]*$')]),
       type: new FormControl(''),
     });
+    this.newPasswordForm = new FormGroup({
+      password: new FormControl('',{validators: [Validators.required], asyncValidators: [PasswordValidator.goodPasswordValidator(this.authService)], updateOn: 'blur'}),
+      newPassword: new FormControl('', [Validators.required]),
+      confirmNewPassword: new FormControl('',[Validators.required])
+    }, {validators: passwordMatchValidator});
   }
 
   ngOnInit() {

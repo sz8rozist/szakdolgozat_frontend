@@ -66,4 +66,8 @@ export class AuthService {
     const token = this.getDecodedToken();
     return this.getUserById(token.sub);
   }
+
+  checkPassword(userId: number, password: string){
+   return this.http.post<boolean>(`${this.apiUrlService.getApiUrl()}/password/${userId}`, password, {observe: 'response'}); 
+  }
 }
