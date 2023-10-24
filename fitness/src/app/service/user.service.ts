@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ApiUrlService } from './api-url.service';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UpdateProfile } from '../model/UpdateProfile';
+import { User } from '../model/User';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +42,9 @@ export class UserService {
     return this.http.delete(
       `${this.apiUrlService.getApiUrl()}/user/image/${userId}`
     );
+  }
+
+  updateProfileData(data: UpdateProfile){
+    return this.http.put<User>(`${this.apiUrlService.getApiUrl()}/user/${data.id}`, data);
   }
 }

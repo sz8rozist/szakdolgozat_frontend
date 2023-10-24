@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgToastService } from 'ng-angular-popup';
 import { Guest } from 'src/app/model/Guest';
 import { Trainer } from 'src/app/model/Trainer';
+import { UpdateProfile } from 'src/app/model/UpdateProfile';
 import { User } from 'src/app/model/User';
 import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/service/user.service';
@@ -22,7 +24,8 @@ export class ProfileComponent {
 
   constructor(
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private toast: NgToastService
   ) {
     this.profileForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -36,10 +39,10 @@ export class ProfileComponent {
   }
 
   ngOnInit() {
-   this.getAuthData();
+    this.getAuthData();
   }
 
-  getAuthData(){
+  getAuthData() {
     this.authService.getAuthData().subscribe((response: User) => {
       if (response) {
         this.user = response;
@@ -55,7 +58,7 @@ export class ProfileComponent {
   }
 
   getProfilePicture(imageName: string) {
-    if(imageName != null){
+    if (imageName != null) {
       this.userService.getImage(imageName).subscribe((response) => {
         const reader = new FileReader();
         reader.onload = (e: any) => {
@@ -98,14 +101,50 @@ export class ProfileComponent {
         console.log(response);
         this.getAuthData();
         this.userService.updateProfilePicture(response);
+        this.toast.success({
+          detail: 'Sikeres',
+          summary: 'Sikeres képfeltöltés!',
+          duration: 2000,
+          type: 'success',
+        });
       });
   }
 
-  deleteProfilePicture(){
-    this.userService.deleteImage(this.user?.id as number).subscribe(response =>{
-      console.log(response);
-      this.profileImageSrc = "";
-      this.userService.deleteProfilePicture();
+  deleteProfilePicture() {
+    this.userService
+      .deleteImage(this.user?.id as number)
+      .subscribe((response) => {
+        console.log(response);
+        this.profileImageSrc = '';
+        this.userService.deleteProfilePicture();
+        this.toast.success({
+          detail: 'Sikeres',
+          summary: 'Sikeres profilkép törlés!',
+          duration: 2000,
+          type: 'success',
+        });
+      });
+  }
+
+  updateProfile() {
+    const data: UpdateProfile = {
+      id: this.user?.id,
+      firstName: this.profileForm.get('firstName')?.value,
+      lastName: this.profileForm.get('lastName')?.value,
+      email: this.profileForm.get('email')?.value,
+      age: this.profileForm.get('age')?.value,
+      height: this.profileForm.get('height')?.value,
+      weight: this.profileForm.get('weight')?.value,
+      type: this.profileForm.get('type')?.value,
+    };
+    this.userService.updateProfileData(data).subscribe((response: User) => {
+      this.toast.success({
+        detail: 'Sikeres',
+        summary: 'Sikeres frissítés!',
+        duration: 2000,
+        type: 'success',
+      });
+      this.getAuthData();
     });
   }
 }
