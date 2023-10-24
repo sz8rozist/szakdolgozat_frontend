@@ -15,6 +15,12 @@
           <span>Chat</span>
         </a>
       </li>
+      <li *ngIf="auth?.guest != null" class="nav-item">
+        <a class="nav-link " routerLink="trainer">
+          <i class="bi bi-choose"></i>
+          <span>Edző kiválasztása</span>
+        </a>
+      </li>
     </ul>
   
   </aside><!-- End Sidebar-->
