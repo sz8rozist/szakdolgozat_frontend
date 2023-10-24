@@ -24,6 +24,11 @@ const routes: Routes = [
     import('./trainer/trainer.module').then((m) => m.TrainerModule)
   },
   {
+    path: 'diet',
+    loadChildren: () =>
+    import('./diet/diet.module').then((m) => m.DietModule)
+  },
+  {
     path: 'chat',
     loadChildren: () =>
     import('./chat/chat.module').then((m) => m.ChatModule),

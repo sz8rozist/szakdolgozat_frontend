@@ -11,7 +11,7 @@ import { TrainerRoutingModule } from './trainer-routing';
   ],
   imports: [
     CommonModule,
-    TrainerRoutingModule
+    TrainerRoutingModule,
   ]
 })
 export class TrainerModule { }

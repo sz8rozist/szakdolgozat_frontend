@@ -9,17 +9,25 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class SidebarComponent {
   auth?: User;
-
+  isEtrendVisible = false;
+  isEdzesVisible = false;
   constructor(private authService: AuthService){}
 
   getAuthData(){
     this.authService.getAuthData().subscribe((response: User) =>{
-      console.log(response);
       this.auth = response;
     });
   }
 
   ngOnInit(){
     this.getAuthData();
+  }
+
+  toggleULVisibility() {
+    this.isEtrendVisible = !this.isEtrendVisible;
+  }
+
+  toggleEdzesMenuVisible(){
+    this.isEdzesVisible = !this.isEdzesVisible;
   }
 }
