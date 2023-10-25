@@ -17,4 +17,8 @@ export class DietService {
   getAllFood(offset: number, pageSize: number){
     return this.http.get<Food[]>(`${this.apiUrlService.getApiUrl()}/food/${offset}/${pageSize}`);
   }
+
+  getAllFoodWithoutPagination(){
+    return this.http.get<Food[]>(`${this.apiUrlService.getApiUrl()}/food`);
+  }
 }

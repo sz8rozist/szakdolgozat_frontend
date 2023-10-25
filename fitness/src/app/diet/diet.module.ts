@@ -6,6 +6,8 @@ import { FoodFormComponent } from './food-form/food-form.component';
 import { FoodListComponent } from './food-list/food-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IncrementPipe } from '../pipe/increment.pipe';
+import { DietFormComponent } from './diet-form/diet-form.component';
+import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
 
 
 
@@ -14,12 +16,17 @@ import { IncrementPipe } from '../pipe/increment.pipe';
     DietDiaryComponent,
     FoodFormComponent,
     FoodListComponent,
-    IncrementPipe
+    IncrementPipe,
+    DietFormComponent
   ],
   imports: [
     CommonModule,
     DietRoutingModule,
-    ReactiveFormsModule
+    NgChartsModule,
+    ReactiveFormsModule,
+  ],
+  providers: [
+    { provide: NgChartsConfiguration, useValue: { generateColors: false }}
   ]
 })
 export class DietModule { }

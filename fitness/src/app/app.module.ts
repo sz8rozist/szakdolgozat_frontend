@@ -42,7 +42,7 @@ import { JwtModule } from '@auth0/angular-jwt';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })
