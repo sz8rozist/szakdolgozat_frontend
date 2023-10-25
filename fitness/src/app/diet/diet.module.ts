@@ -5,6 +5,7 @@ import { DietRoutingModule } from './diet-routing-module';
 import { FoodFormComponent } from './food-form/food-form.component';
 import { FoodListComponent } from './food-list/food-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IncrementPipe } from '../pipe/increment.pipe';
 
 
 
@@ -12,7 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     DietDiaryComponent,
     FoodFormComponent,
-    FoodListComponent
+    FoodListComponent,
+    IncrementPipe
   ],
   imports: [
     CommonModule,

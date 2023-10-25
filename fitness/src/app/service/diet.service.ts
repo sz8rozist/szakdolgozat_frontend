@@ -14,7 +14,7 @@ export class DietService {
     return this.http.post<Food>(`${this.apiUrlService.getApiUrl()}/food`, food);
   }
 
-  getAllFood(){
-    return this.http.get<Food[]>(`${this.apiUrlService.getApiUrl()}/food`);
+  getAllFood(offset: number, pageSize: number){
+    return this.http.get<Food[]>(`${this.apiUrlService.getApiUrl()}/food/${offset}/${pageSize}`);
   }
 }
