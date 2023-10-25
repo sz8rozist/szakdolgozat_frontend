@@ -1,0 +1,177 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Új étel</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
+        <li class="breadcrumb-item">Étrend</li>
+        <li class="breadcrumb-item">Ételek</li>
+        <li class="breadcrumb-item active">Új étel</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Étel hozzáadása</h5>
+
+            <!-- Horizontal Form -->
+            <form [formGroup]="foodForm" (ngSubmit)="onSubmit()">
+              <div class="row mb-3">
+                <label for="inputEmail3" class="col-sm-2 col-form-label"
+                  >Név</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    formControlName="name"
+                    class="form-control"
+                    id="inputText"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('name')?.errors?.['required'] && this.foodForm.get('name')?.touched"
+                  >
+                    A név kitöltése kötelező!
+                  </span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputEmail3" class="col-sm-2 col-form-label"
+                  >Kalória (100g)</label
+                >
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input
+                      type="email"
+                      formControlName="calorie"
+                      class="form-control"
+                      id="inputEmail"
+                    />
+                    <span class="input-group-text" id="basic-addon2"
+                      >gramm</span
+                    >
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('calorie')?.errors?.['pattern'] && this.foodForm.get('calorie')?.touched"
+                  >
+                    A kalória csak szám lehet!
+                  </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('calorie')?.errors?.['required'] && this.foodForm.get('calorie')?.touched"
+                  >
+                    A kalória kitöltése kötelező!
+                  </span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-2 col-form-label"
+                  >Szénhidrát (100g)</label
+                >
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input
+                      formControlName="carbonhydrate"
+                      type="text"
+                      class="form-control"
+                      id="inputPassword"
+                    />
+                    <span class="input-group-text" id="basic-addon2"
+                      >gramm</span
+                    >
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['pattern'] && this.foodForm.get('carbonhydrate')?.touched"
+                  >
+                    A szénhidrát csak szám lehet!
+                  </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['required'] && this.foodForm.get('carbonhydrate')?.touched"
+                  >
+                    A szénhidrát kitöltése kötelező!
+                  </span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-2 col-form-label"
+                  >Fehérje (100g)</label
+                >
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input
+                      formControlName="protein"
+                      type="text"
+                      class="form-control"
+                      id="inputPassword"
+                    />
+                    <span class="input-group-text" id="basic-addon2"
+                      >gramm</span
+                    >
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('protein')?.errors?.['pattern'] && this.foodForm.get('protein')?.touched"
+                  >
+                    A fehérje csak szám lehet!
+                  </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('protein')?.errors?.['required'] && this.foodForm.get('protein')?.touched"
+                  >
+                    A fehérje kitöltése kötelező!
+                  </span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-2 col-form-label"
+                  >Zsír (100g)</label
+                >
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input
+                      formControlName="fat"
+                      type="text"
+                      class="form-control"
+                      id="inputPassword"
+                    />
+                    <span class="input-group-text" id="basic-addon2"
+                      >gramm</span
+                    >
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('fat')?.errors?.['pattern'] && this.foodForm.get('fat')?.touched"
+                  >
+                    A zsír csak szám lehet!
+                  </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="this.foodForm.get('fat')?.errors?.['required'] && this.foodForm.get('fat')?.touched"
+                  >
+                    A zsír kitöltése kötelező!
+                  </span>
+                </div>
+              </div>
+              <div class="text-center">
+                <button
+                  [disabled]="foodForm.invalid"
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Mentés
+                </button>
+              </div>
+            </form>
+            <!-- End Horizontal Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

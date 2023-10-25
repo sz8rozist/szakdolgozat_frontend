@@ -8,14 +8,7 @@ import huLocale from '@fullcalendar/core/locales/hu';
   styleUrls: ['./diet-diary.component.css']
 })
 export class DietDiaryComponent {
-  calendarOptions: CalendarOptions = {
-    plugins: [dayGridPlugin],
-    initialView: 'dayGridMonth',
-    locale: huLocale,
-    events: [
-      { title: 'Meeting', start: new Date() }
-    ]
-  };
+
 
   constructor(){}
 }

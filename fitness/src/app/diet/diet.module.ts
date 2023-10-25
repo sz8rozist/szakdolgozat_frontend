@@ -2,18 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DietDiaryComponent } from './diet-diary/diet-diary.component';
 import { DietRoutingModule } from './diet-routing-module';
-import { FullCalendarModule } from '@fullcalendar/angular';
+import { FoodFormComponent } from './food-form/food-form.component';
+import { FoodListComponent } from './food-list/food-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    DietDiaryComponent
+    DietDiaryComponent,
+    FoodFormComponent,
+    FoodListComponent
   ],
   imports: [
     CommonModule,
     DietRoutingModule,
-    FullCalendarModule
+    ReactiveFormsModule
   ]
 })
 export class DietModule { }
