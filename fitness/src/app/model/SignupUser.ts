@@ -1,8 +1,8 @@
 import { Role } from "./Role"
 
 export interface SignupUser{
-    veznev: string
-    kernev: string
+    firstName: string
+    lastName: string
     username: string
     password: string
     email: string

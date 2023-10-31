@@ -6,11 +6,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { NgToastModule, NgToastService } from 'ng-angular-popup';
 import { BaseChartDirective } from 'ng2-charts';
-import { DietFood } from 'src/app/model/DietFood';
-import { Food } from 'src/app/model/Food';
-import { DietService } from 'src/app/service/diet.service';
-
+import { Diet } from '../../model/Diet';
+import { DietFood } from '../../model/DietFood';
+import { Food } from '../../model/Food';
+import { DietService } from '../../service/diet.service';
+import { AuthService } from '../../service/auth.service';
 @Component({
   selector: 'app-diet-form',
   templateUrl: './diet-form.component.html',
@@ -20,6 +22,7 @@ export class DietFormComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   foods?: Food[];
   dietFoods: DietFood[] = [];
+  arr:Diet[] = [];
   sum: {
     calorie: number;
     carbonhydrate: number;
@@ -33,7 +36,9 @@ export class DietFormComponent {
   };
   etelForm: FormGroup;
   dietForm: FormGroup;
-  constructor(private dietService: DietService) {
+  constructor(private dietService: DietService,
+    private toast: NgToastService,
+    private authService: AuthService) {
     this.loadFoods();
     this.etelForm = new FormGroup({
       etel: new FormControl('', [Validators.required]),
@@ -44,7 +49,7 @@ export class DietFormComponent {
       ]),
     });
     this.dietForm = new FormGroup({
-      date: new FormControl('', [Validators.required])
+      date: new FormControl('', [Validators.required]),
     });
   }
 
@@ -152,9 +157,32 @@ export class DietFormComponent {
     this.chart?.update();
   }
 
-  saveEtrend(){
-    if(this.dietForm.valid && this.dietFoods.length > 0){
-      console.log(this.dietForm.getRawValue());
+  saveEtrend() {
+    if (this.dietForm.valid && this.dietFoods.length > 0) {
+      const token = this.authService.getDecodedToken();
+      this.dietFoods.forEach((elem) => {
+        const data: Diet = {
+          foodId: elem.id as number,
+          quantity: elem.quantity,
+          type: elem.type,
+          date: this.dietForm.get('date')?.value,
+          userId: token.sub,
+          trainerId: null,
+        };
+        this.arr.push(data);
+      });
+      console.log(this.arr);
+      this.dietService.saveDiet(this.arr).subscribe(() => {
+        this.toast.success({
+          detail: 'Sikeres',
+          summary: 'Sikeres étrend mentés!',
+          duration: 2000,
+          type: 'success',
+        });
+        this.dietForm.reset();
+        this.etelForm.reset();
+        this.dietFoods = [];
+      });
     }
   }
 }

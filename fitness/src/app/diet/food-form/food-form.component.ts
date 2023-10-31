@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { Food } from 'src/app/model/Food';
-import { DietService } from 'src/app/service/diet.service';
+import { Food } from '../../model/Food';
+import { DietService } from '../../service/diet.service';
 
 @Component({
   selector: 'app-food-form',

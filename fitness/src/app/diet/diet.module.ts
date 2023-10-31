@@ -8,13 +8,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IncrementPipe } from '../pipe/increment.pipe';
 import { DietFormComponent } from './diet-form/diet-form.component';
 import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
-
-
-
+import { NgToastModule } from 'ng-angular-popup';
 @NgModule({
   declarations: [
     DietDiaryComponent,
-    FoodFormComponent,
+   FoodFormComponent,
     FoodListComponent,
     IncrementPipe,
     DietFormComponent
@@ -24,6 +22,7 @@ import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
     DietRoutingModule,
     NgChartsModule,
     ReactiveFormsModule,
+    NgToastModule
   ],
   providers: [
     { provide: NgChartsConfiguration, useValue: { generateColors: false }}

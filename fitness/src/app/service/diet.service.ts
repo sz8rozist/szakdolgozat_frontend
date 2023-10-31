@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiUrlService } from './api-url.service';
 import { Food } from '../model/Food';
-
+import { Diet } from '../model/Diet';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,5 +20,9 @@ export class DietService {
 
   getAllFoodWithoutPagination(){
     return this.http.get<Food[]>(`${this.apiUrlService.getApiUrl()}/food`);
+  }
+
+  saveDiet(diet: Diet[]){
+    return this.http.post(`${this.apiUrlService.getApiUrl()}/diet`, diet);
   }
 }

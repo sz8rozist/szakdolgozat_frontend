@@ -30,14 +30,14 @@
                     <input
                       type="text"
                       name="name"
-                      formControlName="veznev"
+                      formControlName="firstName"
                       class="form-control"
                       id="yourName"
                       required
                     />
                     <div
                       class="invalid-feedback"
-                      [ngClass]="{'active': this.signupForm.get('veznev')?.errors?.['required'] && (this.signupForm.get('veznev')?.dirty || this.signupForm.get('veznev')?.touched)}"
+                      [ngClass]="{'display-block': this.signupForm.get('firstName')?.errors?.['required'] && (this.signupForm.get('firstName')?.dirty || this.signupForm.get('firstName')?.touched)}"
                     >
                       A vezetéknév megadása kötelező.
                     </div>
@@ -47,14 +47,14 @@
                     <input
                       type="email"
                       name="email"
-                      formControlName="kernev"
+                      formControlName="lastName"
                       class="form-control"
                       id="yourEmail"
                       required
                     />
                     <div
                       class="invalid-feedback"
-                      [ngClass]="{'active': this.signupForm.get('kernev')?.errors?.['required'] && (this.signupForm.get('kernev')?.dirty || this.signupForm.get('kernev')?.touched)}"
+                      [ngClass]="{'display-block': this.signupForm.get('lastName')?.errors?.['required'] && (this.signupForm.get('lastName')?.dirty || this.signupForm.get('lastName')?.touched)}"
                     >
                       A keresztnév megadása kötelező.
                     </div>
@@ -75,13 +75,13 @@
                       />
                       <div
                         class="invalid-feedback"
-                        [ngClass]="{'active': this.signupForm.get('email')?.errors?.['required'] && (this.signupForm.get('email')?.dirty || this.signupForm.get('email')?.touched)}"
+                        [ngClass]="{'display-block': this.signupForm.get('email')?.errors?.['required'] && (this.signupForm.get('email')?.dirty || this.signupForm.get('email')?.touched)}"
                       >
                         Az email cím megadása kötelező.
                       </div>
                       <div
                         class="invalid-feedback"
-                        [ngClass]="{'active': this.signupForm.get('email')?.errors?.['email']}"
+                        [ngClass]="{'display-block': this.signupForm.get('email')?.errors?.['email']}"
                       >
                         Hibás email formátum.
                       </div>
@@ -105,7 +105,7 @@
                       />
                       <div
                         class="invalid-feedback"
-                        [ngClass]="{'active': this.signupForm.get('username')?.errors?.['required'] && (this.signupForm.get('username')?.dirty || this.signupForm.get('username')?.touched)}"
+                        [ngClass]="{'display-block': this.signupForm.get('username')?.errors?.['required'] && (this.signupForm.get('username')?.dirty || this.signupForm.get('username')?.touched)}"
                       >
                         A felhasználónév megadása kötelező.
                       </div>
@@ -128,13 +128,13 @@
                     </div>
                     <div
                       class="invalid-feedback"
-                      [ngClass]="{'active': this.signupForm.get('password')?.errors?.['required'] && (this.signupForm.get('password')?.dirty || this.signupForm.get('password')?.touched)}"
+                      [ngClass]="{'display-block': this.signupForm.get('password')?.errors?.['required'] && (this.signupForm.get('password')?.dirty || this.signupForm.get('password')?.touched)}"
                     >
                       A jelszó megadása kötelező.
                     </div>
                     <div
                       class="invalid-feedback"
-                      [ngClass]="{'active': this.signupForm.get('password')?.errors?.['minlength']}"
+                      [ngClass]="{'display-block': this.signupForm.get('password')?.errors?.['minlength']}"
                     >
                       A jelszónak minimum 8 karakter hosszúnak kell lennie.
                     </div>
@@ -153,7 +153,7 @@
                       <label for="floatingSelect">Jogosultság</label>
                       <div
                       class="invalid-feedback"
-                      [ngClass]="{'active': this.signupForm.get('role')?.errors?.['required'] && (this.signupForm.get('role')?.dirty || this.signupForm.get('role')?.touched)}"
+                      [ngClass]="{'display-block': this.signupForm.get('role')?.errors?.['required'] && (this.signupForm.get('role')?.dirty || this.signupForm.get('role')?.touched)}"
                     >
                       A jogosultság kiválasztása kötelező.
                     </div>
