@@ -25,4 +25,9 @@ export class DietService {
   saveDiet(diet: Diet[]){
     return this.http.post(`${this.apiUrlService.getApiUrl()}/diet`, diet);
   }
+
+  getDates(userId: number){
+    return this.http.get<string[]>(`${this.apiUrlService.getApiUrl()}/diet/dates/${userId}`);
+
+  }
 }
