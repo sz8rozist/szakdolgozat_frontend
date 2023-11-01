@@ -47,9 +47,9 @@ export class DietService {
   }
 
     
-  deleteFood(foodId: number, guestId: number) {
+  deleteFood(dietId: number, guestId: number) {
     return this.http.delete(
-      `${this.apiUrlService.getApiUrl()}/diet/food/${foodId}/${guestId}`
+      `${this.apiUrlService.getApiUrl()}/diet/food/${dietId}/${guestId}`
     );
   }
 }

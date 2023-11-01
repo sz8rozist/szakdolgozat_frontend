@@ -138,11 +138,11 @@ export class DietDiaryComponent {
     });
   }
 
-  removeFood(foodId: any) {
+  removeFood(dietId: any) {
     this.authService.getAuthData().subscribe((response: UserResponse) => {
       if (response.guest != null) {
         this.dietService
-          .deleteFood(foodId, response.guest.id as number)
+          .deleteFood(dietId, response.guest.id as number)
           .subscribe(() => {
             this.loadDiet(this.date);
             this.pieChartData.datasets[0].data = [];
