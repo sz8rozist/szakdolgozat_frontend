@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
-import { ChangePassword } from 'src/app/model/ChangePassword';
-import { Guest } from 'src/app/model/Guest';
-import { Trainer } from 'src/app/model/Trainer';
-import { UpdateProfile } from 'src/app/model/UpdateProfile';
-import { User } from 'src/app/model/User';
-import { AuthService } from 'src/app/service/auth.service';
-import { UserService } from 'src/app/service/user.service';
-import { passwordMatchValidator } from 'src/app/validators/confirm-password-validator';
-import { PasswordValidator } from 'src/app/validators/password-validator';
+import { ChangePassword } from '../../model/ChangePassword';
+import { Guest } from '../../model/Guest';
+import { Trainer } from '../../model/Trainer';
+import { UpdateProfile } from '../../model/UpdateProfile';
+import { User } from '../../model/User';
+import { AuthService } from '../../service/auth.service';
+import { UserService } from '../../service/user.service';
+import { passwordMatchValidator } from '../../validators/confirm-password-validator';
+import { PasswordValidator } from '../../validators/password-validator';
+import { UserResponse } from '../../model/UserResponse';
 
 @Component({
   selector: 'app-profile',
@@ -51,16 +52,16 @@ export class ProfileComponent {
   }
 
   getAuthData() {
-    this.authService.getAuthData().subscribe((response: User) => {
+    this.authService.getAuthData().subscribe((response: UserResponse) => {
       if (response) {
-        this.user = response;
-        if (this.user.trainer != null) {
-          this.trainer = this.user.trainer;
+        this.user = response.user;
+        if (response.trainer != null) {
+          this.trainer = response.trainer;
         } else {
-          this.guest = this.user.guest;
+          this.guest = response.guest;
         }
         this.patchFormData();
-        this.getProfilePicture(response.profilePictureName);
+        this.getProfilePicture(response.user.profilePictureName);
       }
     });
   }

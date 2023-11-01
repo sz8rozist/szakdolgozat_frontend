@@ -8,6 +8,4 @@ export interface User{
     password: string,
     profilePictureName: string,
     roles: Role[]
-    guest: Guest
-    trainer: Trainer
 }

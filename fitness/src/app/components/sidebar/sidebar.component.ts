@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/model/User';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from '../../service/auth.service';
+import { UserResponse } from '../../model/UserResponse';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,13 +8,13 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  auth?: User;
+  auth?: UserResponse;
   isEtrendVisible = false;
   isEdzesVisible = false;
   constructor(private authService: AuthService){}
 
   getAuthData(){
-    this.authService.getAuthData().subscribe((response: User) =>{
+    this.authService.getAuthData().subscribe((response: UserResponse) =>{
       this.auth = response;
     });
   }

@@ -9,6 +9,7 @@ import { SignupUser } from '../model/SignupUser';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../model/User';
 import { ChangePassword } from '../model/ChangePassword';
+import { UserResponse } from '../model/UserResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -60,10 +61,10 @@ export class AuthService {
   }
 
   getUserById(userId: number){
-    return this.http.get<User>(`${this.apiUrlService.getApiUrl()}/user/${userId}`);
+    return this.http.get<UserResponse>(`${this.apiUrlService.getApiUrl()}/user/${userId}`);
   }
 
-  getAuthData(): Observable<User>{
+  getAuthData(): Observable<UserResponse>{
     const token = this.getDecodedToken();
     return this.getUserById(token.sub);
   }

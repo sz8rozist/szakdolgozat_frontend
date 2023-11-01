@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
-import { ChooseTrainerRequest } from 'src/app/model/ChooseTrainerRequest';
-import { Trainer } from 'src/app/model/Trainer';
-import { TrainerResponse } from 'src/app/model/TrainerResponse';
-import { User } from 'src/app/model/User';
-import { AuthService } from 'src/app/service/auth.service';
-import { TrainerService } from 'src/app/service/trainer.service';
-import { UserService } from 'src/app/service/user.service';
+import { ChooseTrainerRequest } from '../../model/ChooseTrainerRequest';
+import { Trainer } from '../../model/Trainer';
+import { TrainerResponse } from '../../model/TrainerResponse';
+import { AuthService } from '../../service/auth.service';
+import { TrainerService } from '../../service/trainer.service';
+import { UserService } from '../../service/user.service';
+import { UserResponse } from '../../model/UserResponse';
 @Component({
   selector: 'app-trainer',
   templateUrl: './trainer.component.html',
@@ -15,7 +15,7 @@ import { UserService } from 'src/app/service/user.service';
 export class TrainerComponent {
 
   trainers?: TrainerResponse[];
-  user?: User;
+  user?: UserResponse;
 
   
 
@@ -55,7 +55,7 @@ export class TrainerComponent {
   }
 
   getAuthData() {
-    this.authService.getAuthData().subscribe((response: User) => {
+    this.authService.getAuthData().subscribe((response: UserResponse) => {
       if (response) {
         this.user = response;
       }

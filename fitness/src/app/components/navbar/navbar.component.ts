@@ -1,8 +1,9 @@
 import { Component, EventEmitter,  Output } from '@angular/core';
 import {  Router } from '@angular/router';
-import { User } from 'src/app/model/User';
-import { AuthService } from 'src/app/service/auth.service';
-import { UserService } from 'src/app/service/user.service';
+import { User } from '../../model/User';
+import { AuthService } from '../../service/auth.service';
+import { UserService } from '../../service/user.service';
+import { UserResponse } from '../../model/UserResponse';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,7 @@ export class NavbarComponent {
   toggleNotification: boolean = false;
   toggleProfileDropdown: boolean = false;
   toggleMessageDropdown: boolean = false;
-  auth?: User;
+  auth?: UserResponse;
   profileImageSrc: string | null = null;
 
   constructor(private router: Router, public authService: AuthService, private userService: UserService){}
@@ -68,9 +69,9 @@ export class NavbarComponent {
   }
 
   getAuthData(){
-    this.authService.getAuthData().subscribe((response: User) =>{
+    this.authService.getAuthData().subscribe((response: UserResponse) =>{
       this.auth = response;
-      this.getProfilePicture(response.profilePictureName);
+      this.getProfilePicture(response.user.profilePictureName);
     });
   }
 }
