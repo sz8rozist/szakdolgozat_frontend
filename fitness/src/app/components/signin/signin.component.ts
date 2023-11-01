@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { tap } from 'rxjs';
 import { LoginResponse } from 'src/app/model/LoginResponse';
 import { LoginUser } from 'src/app/model/LoginUser';
 import { AuthService } from 'src/app/service/auth.service';

@@ -3,31 +3,53 @@ import { Injectable } from '@angular/core';
 import { ApiUrlService } from './api-url.service';
 import { Food } from '../model/Food';
 import { Diet } from '../model/Diet';
+import { DietResponse } from '../model/DietResponse';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DietService {
+  constructor(private http: HttpClient, private apiUrlService: ApiUrlService) {}
 
-  constructor(private http: HttpClient, private apiUrlService: ApiUrlService) { }
-
-  createFood(food: Food){
+  createFood(food: Food) {
     return this.http.post<Food>(`${this.apiUrlService.getApiUrl()}/food`, food);
   }
 
-  getAllFood(offset: number, pageSize: number){
-    return this.http.get<Food[]>(`${this.apiUrlService.getApiUrl()}/food/${offset}/${pageSize}`);
+  getAllFood(offset: number, pageSize: number) {
+    return this.http.get<Food[]>(
+      `${this.apiUrlService.getApiUrl()}/food/${offset}/${pageSize}`
+    );
   }
 
-  getAllFoodWithoutPagination(){
+  getAllFoodWithoutPagination() {
     return this.http.get<Food[]>(`${this.apiUrlService.getApiUrl()}/food`);
   }
 
-  saveDiet(diet: Diet[]){
+  saveDiet(diet: Diet[]) {
     return this.http.post(`${this.apiUrlService.getApiUrl()}/diet`, diet);
   }
 
-  getDates(userId: number){
-    return this.http.get<string[]>(`${this.apiUrlService.getApiUrl()}/diet/dates/${userId}`);
+  getDates(userId: number) {
+    return this.http.get<string[]>(
+      `${this.apiUrlService.getApiUrl()}/diet/dates/${userId}`
+    );
+  }
 
+  getDietByDateAndGuestId(guestId: number, date: string) {
+    return this.http.get<DietResponse>(
+      `${this.apiUrlService.getApiUrl()}/diet/${guestId}/${date}`
+    );
+  }
+
+  deleteDiet(guestId: number, date: string) {
+    return this.http.delete(
+      `${this.apiUrlService.getApiUrl()}/diet/${guestId}/${date}`
+    );
+  }
+
+    
+  deleteFood(foodId: number, guestId: number) {
+    return this.http.delete(
+      `${this.apiUrlService.getApiUrl()}/diet/food/${foodId}/${guestId}`
+    );
   }
 }

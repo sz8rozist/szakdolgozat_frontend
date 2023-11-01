@@ -1,3 +1,4 @@
+import { InputMaskModule } from '@ectuser/input-mask-test';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -23,7 +24,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     SidebarComponent,
     NavbarComponent,
     NotFoundComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
