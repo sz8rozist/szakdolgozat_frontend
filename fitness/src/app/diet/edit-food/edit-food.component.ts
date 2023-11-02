@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { Diet } from 'src/app/model/Diet';
+import { DietUpdateRequest } from 'src/app/model/DietUpdateRequest';
 import { Food } from 'src/app/model/Food';
 import { DietService } from 'src/app/service/diet.service';
 
@@ -16,7 +18,7 @@ export class EditFoodComponent {
   diet?: Diet;
   foods?: Food[];
 
-  constructor(private dietService: DietService, private route: ActivatedRoute) {
+  constructor(private dietService: DietService, private route: ActivatedRoute, private router: Router, private toast: NgToastService) {
     this.foodForm = new FormGroup({
       foodId: new FormControl('', [Validators.required]),
       calorie: new FormControl('', [Validators.required,Validators.pattern('^[0-9]*$')]),
@@ -86,6 +88,21 @@ export class EditFoodComponent {
     if(this.dietForm.valid && this.foodForm.valid){
       console.log(this.dietForm.getRawValue());
       console.log(this.foodForm.getRawValue());
+      const diet: DietUpdateRequest = {
+        foodId: this.foodForm.get('foodId')?.value,
+        quantity: this.dietForm.get('quantity')?.value,
+        date: this.dietForm.get('date')?.value,
+        type: this.dietForm.get('type')?.value
+      }
+      this.dietService.updateDiet(diet, this.diet?.id as number).subscribe(() =>{
+        this.toast.success({
+          detail: 'Sikeres',
+          summary: 'Sikeres frissítés',
+          duration: 2000,
+          type: 'success',
+        });
+        this.router.navigate(["diet/diary"]);
+      });
     }
   }
 }

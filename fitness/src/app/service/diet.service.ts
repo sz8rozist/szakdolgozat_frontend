@@ -4,6 +4,7 @@ import { ApiUrlService } from './api-url.service';
 import { Food } from '../model/Food';
 import { Diet } from '../model/Diet';
 import { DietResponse } from '../model/DietResponse';
+import { DietUpdateRequest } from '../model/DietUpdateRequest';
 @Injectable({
   providedIn: 'root',
 })
@@ -59,5 +60,9 @@ export class DietService {
 
   getFoodById(foodId: number){
     return this.http.get<Food>(`${this.apiUrlService.getApiUrl()}/food/${foodId}`);
+  }
+
+  updateDiet(data: DietUpdateRequest, dietId: number){
+    return this.http.put(`${this.apiUrlService.getApiUrl()}/diet/${dietId}`, data);
   }
 }
