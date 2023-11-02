@@ -52,4 +52,12 @@ export class DietService {
       `${this.apiUrlService.getApiUrl()}/diet/food/${dietId}/${guestId}`
     );
   }
+
+  getDietById(dietId: number){
+    return this.http.get<Diet>(`${this.apiUrlService.getApiUrl()}/diet/${dietId}`);
+  }
+
+  getFoodById(foodId: number){
+    return this.http.get<Food>(`${this.apiUrlService.getApiUrl()}/food/${foodId}`);
+  }
 }

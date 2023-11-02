@@ -9,13 +9,15 @@ import { IncrementPipe } from '../pipe/increment.pipe';
 import { DietFormComponent } from './diet-form/diet-form.component';
 import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
 import { NgToastModule } from 'ng-angular-popup';
+import { EditFoodComponent } from './edit-food/edit-food.component';
 @NgModule({
   declarations: [
     DietDiaryComponent,
    FoodFormComponent,
     FoodListComponent,
     IncrementPipe,
-    DietFormComponent
+    DietFormComponent,
+    EditFoodComponent
   ],
   imports: [
     CommonModule,

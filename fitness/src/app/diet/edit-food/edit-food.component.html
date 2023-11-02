@@ -1,0 +1,221 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Étkezés szerkesztése</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
+        <li class="breadcrumb-item">Étrend</li>
+        <li class="breadcrumb-item">Étkezési napló</li>
+        <li class="breadcrumb-item active">Étkezés szerkesztése</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header mb-3">
+            <div class="row">
+                <div class="col-lg-6">Étkezés</div>
+                <div class="col-lg-6 text-end">
+                    <button (click)="saveEtkezes()" [disabled]="foodForm.invalid || dietForm.invalid" class="btn btn-success">Étkezés mentése</button>
+                </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <form class="row g-3" [formGroup]="foodForm">
+                  <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                      <select
+                        class="form-select"
+                        id="floatingSelect"
+                        aria-label="Floating label select example"
+                        formControlName="foodId"
+                        (change)="onSelectChange($event)"
+                      >
+                        <option *ngFor="let food of foods" [value]="food.id">
+                          {{ food.name }}
+                        </option>
+                      </select>
+                      <label for="floatingSelect">Étel</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6" style="margin-top: 0;">
+                    <div class="form-floating">
+                      <input
+                        type="email"
+                        class="form-control"
+                        formControlName="calorie"
+                        id="floatingEmail"
+                        placeholder="Your Email"
+                        readonly
+                      />
+                      <label for="floatingEmail">Kalória (100g)</label>
+                    </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.foodForm.get('calorie')?.errors?.['pattern'] && this.foodForm.get('calorie')?.touched"
+                    >
+                      A kalória csak szám lehet!
+                    </span>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.foodForm.get('calorie')?.errors?.['required'] && this.foodForm.get('calorie')?.touched"
+                    >
+                      A kalória kitöltése kötelező!
+                    </span>
+                  </div>
+                  <div class="col-md-6" style="margin-top: 0;">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="carbonhydrate"
+                        id="floatingPassword"
+                        placeholder="Password"
+                        readonly
+                      />
+                      <label for="floatingPassword">Szénhidrát (100g)</label>
+                    </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['pattern'] && this.foodForm.get('carbonhydrate')?.touched"
+                    >
+                      A szénhidrát csak szám lehet!
+                    </span>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['required'] && this.foodForm.get('carbonhydrate')?.touched"
+                    >
+                      A szénhidrát kitöltése kötelező!
+                    </span>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="protein"
+                        id="floatingPassword"
+                        placeholder="Password"
+                        readonly
+                      />
+                      <label for="floatingPassword">Fehérje (100g)</label>
+                    </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.foodForm.get('protein')?.errors?.['pattern'] && this.foodForm.get('protein')?.touched"
+                    >
+                      A fehérje csak szám lehet!
+                    </span>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.foodForm.get('protein')?.errors?.['required'] && this.foodForm.get('protein')?.touched"
+                    >
+                      A fehérje kitöltése kötelező!
+                    </span>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="fat"
+                        id="floatingPassword"
+                        placeholder="Password"
+                        readonly
+                      />
+                      <label for="floatingPassword">Zsír (100g)</label>
+                    </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.foodForm.get('fat')?.errors?.['pattern'] && this.foodForm.get('fat')?.touched"
+                    >
+                      A zsír csak szám lehet!
+                    </span>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.foodForm.get('fat')?.errors?.['required'] && this.foodForm.get('fat')?.touched"
+                    >
+                      A zsír kitöltése kötelező!
+                    </span>
+                  </div>
+                </form>
+              </div>
+              <div class="col-lg-6">
+                <form class="row g-3" [formGroup]="dietForm">
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="quantity"
+                        id="floatingPassword"
+                        placeholder="Password"
+                      />
+                      <label for="floatingPassword">Mennyiség</label>
+                    </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.dietForm.get('quantity')?.errors?.['pattern'] && this.dietForm.get('quantity')?.touched"
+                    >
+                      A mennyiség csak szám lehet!
+                    </span>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.dietForm.get('quantity')?.errors?.['required'] && this.dietForm.get('quantity')?.touched"
+                    >
+                      A mennyiség kitöltése kötelező!
+                    </span>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="date"
+                        id="floatingPassword"
+                        placeholder="Password"
+                      />
+                      <label for="floatingPassword">Dátum</label>
+                    </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.dietForm.get('date')?.errors?.['required'] && this.dietForm.get('date')?.touched"
+                    >
+                      A dátum kitöltése kötelező!
+                    </span>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <select
+                        class="form-select"
+                        id="floatingSelect"
+                        formControlName="type"
+                        aria-label="Floating label select example"
+                      >
+                        <option value="BREAKFAST">Reggeli</option>
+                        <option value="LUNCH">Ebéd</option>
+                        <option value="DINNER">Vacsora</option>
+                        <option value="SNACK">Snack</option>
+                      </select>
+                      <label for="floatingPassword">Típus</label>
+                    </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.dietForm.get('type')?.errors?.['required'] && this.dietForm.get('type')?.touched"
+                    >
+                      A típus kitöltése kötelező!
+                    </span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
