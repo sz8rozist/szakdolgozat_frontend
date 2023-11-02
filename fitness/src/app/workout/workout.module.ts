@@ -4,6 +4,9 @@ import { WorkoutRoutingModule } from './workout-routing-module';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { TrainingLogComponent } from './training-log/training-log.component';
 import { CreateTrainingComponent } from './create-training/create-training.component';
+import { IncrementPipe } from '../pipe/increment.pipe';
+import { AddExerciseComponent } from './add-exercise/add-exercise.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -11,11 +14,14 @@ import { CreateTrainingComponent } from './create-training/create-training.compo
   declarations: [
     ExerciseComponent,
     TrainingLogComponent,
-    CreateTrainingComponent
+    CreateTrainingComponent,
+    IncrementPipe,
+    AddExerciseComponent
   ],
   imports: [
     CommonModule,
-    WorkoutRoutingModule
+    WorkoutRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class WorkoutModule { }

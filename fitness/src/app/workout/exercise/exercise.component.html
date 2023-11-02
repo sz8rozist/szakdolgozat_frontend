@@ -1,1 +1,91 @@
-<p>exercise works!</p>
+<main class="main" id="main">
+  <div class="pagetitle">
+    <h1>Gyakorlatok</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
+        <li class="breadcrumb-item">Edzés</li>
+        <li class="breadcrumb-item active">Gyakorlatok</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <button routerLink="/workout/addExercise" class="btn btn-primary">
+                Új gyakorlat
+              </button>
+            </div>
+            <!-- Table with stripped rows -->
+            <div *ngIf="exercises.length == 0">
+              <div
+                class="alert alert-warning alert-dismissible fade show"
+                role="alert"
+              >
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                Nincs rögzítve gyakorlat.
+              </div>
+            </div>
+            <table *ngIf="exercises.length > 0" class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Név</th>
+                  <th scope="col">Leírás</th>
+                  <th scope="col">Testrész</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let e of exercises">
+                  <th scope="row">{{ e.id }}</th>
+                  <td>{{ e.name }}</td>
+                  <td>{{ e.description }}</td>
+                  <td>{{ e.targetedBodyPart }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+            <nav *ngIf="pages.length > 1" aria-label="Page navigation example">
+              <ul *ngIf="exercises.length > 0" class="pagination">
+                <li class="page-item">
+                  <span
+                    style="cursor: pointer"
+                    (click)="previousPage()"
+                    class="page-link"
+                    href="#"
+                    aria-label="Previous"
+                  >
+                    <span aria-hidden="true">&laquo;</span>
+                  </span>
+                </li>
+                <li *ngFor="let page of pages; index as i" class="page-item">
+                  <span
+                    style="cursor: pointer"
+                    (click)="changePage(i)"
+                    class="page-link"
+                    href="#"
+                    >{{ page | increment }}</span
+                  >
+                </li>
+                <li class="page-item">
+                  <span
+                    style="cursor: pointer"
+                    (click)="nextPage()"
+                    class="page-link"
+                    href="#"
+                    aria-label="Next"
+                  >
+                    <span aria-hidden="true">&raquo;</span>
+                  </span>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
