@@ -33,6 +33,11 @@ const routes: Routes = [
     loadChildren: () =>
     import('./chat/chat.module').then((m) => m.ChatModule),
   },
+  {
+    path: 'workout',
+    loadChildren: () =>
+    import('./workout/workout.module').then((m) => m.WorkoutModule)
+  },
   { path: '', redirectTo: '/signin', pathMatch: 'full' },
   { path: '**', redirectTo: '/not-found', pathMatch: 'full' },
 ];

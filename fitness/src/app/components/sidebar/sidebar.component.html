@@ -50,13 +50,18 @@
         </span>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav" [ngClass]="{'show': isEdzesVisible}">
           <li>
-            <a href="forms-elements.html">
+            <a routerLink="workout/exercises">
+              <i class="bi bi-circle"></i><span>Gyakorlatok</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="workout/create">
               <i class="bi bi-circle"></i><span>Edzés tervezés</span>
             </a>
           </li>
           <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Edzéseim</span>
+            <a routerLink="workout/training-log">
+              <i class="bi bi-circle"></i><span>Edzés napló</span>
             </a>
           </li>
         </ul>
