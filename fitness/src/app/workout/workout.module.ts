@@ -7,6 +7,7 @@ import { CreateTrainingComponent } from './create-training/create-training.compo
 import { IncrementPipe } from '../pipe/increment.pipe';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditWorkoutComponent } from './edit-workout/edit-workout.component';
 
 
 
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TrainingLogComponent,
     CreateTrainingComponent,
     IncrementPipe,
-    AddExerciseComponent
+    AddExerciseComponent,
+    EditWorkoutComponent
   ],
   imports: [
     CommonModule,
