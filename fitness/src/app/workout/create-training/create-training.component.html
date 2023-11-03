@@ -1,1 +1,85 @@
-<p>create-training works!</p>
+<main class="main" id="main">
+  <div class="pagetitle">
+    <h1>Edzés tervezés</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
+        <li class="breadcrumb-item">Edzés</li>
+        <li class="breadcrumb-item active">Edzés tervezés</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">Dátum</div>
+          <div class="card-body">
+            <div class="form-floating mb-3 mt-3">
+              <input
+                type="date"
+                class="form-control"
+                id="floatingInput"
+                [(ngModel)]="date"
+              />
+              <label for="floatingInput">Dátum</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">Edzés tervezés</div>
+          <div class="card-body">
+            <button (click)="addWorkout()" class="btn btn-primary mt-3">
+              Új gyakorlat
+            </button>
+            <table class="table table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th>Gyakorlat</th>
+                  <th>Sorozatszám</th>
+                  <th>Ismétlésszám</th>
+                  <th>Művelet</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let workout of workouts; let i = index">
+                  <td>
+                    <select class="form-select" name="exerciseId{{i}}" [(ngModel)]="workout.exerciseId" id="">
+                        <option *ngFor="let exercise of exercises" [value]="exercise.id">{{exercise.name}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="workout.sets"
+                      name="sets{{ i }}"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="workout.repetitions"
+                      name="reps{{ i }}"
+                    />
+                  </td>
+                  <td>
+                    <button class="btn btn-danger" (click)="removeWorkout(i)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button (click)="saveWorkout()" class="btn btn-success mt-3">
+                Mentés
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

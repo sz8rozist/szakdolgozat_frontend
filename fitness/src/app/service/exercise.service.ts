@@ -19,4 +19,8 @@ export class ExerciseService {
   saveExercise(exercise: Exercise) {
     return this.http.post<Exercise>(`${this.apiUrlService.getApiUrl()}/exercise`, exercise);
   }
+
+  getAllExerciseWithoutPagination(){
+    return this.http.get<Exercise[]>(`${this.apiUrlService.getApiUrl()}/exercise`);
+  }
 }
