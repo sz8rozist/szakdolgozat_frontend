@@ -26,4 +26,10 @@ export class WorkoutService {
   saveExerciseInWorkout(updateData: WorkoutUpdateRequest, workoutId: number){
     return this.http.put(`${this.apiUrlService.getApiUrl()}/workout/${workoutId}`, updateData);
   }
+
+  deleteWorkout(guestId: number, date: string) {
+    return this.http.delete(
+      `${this.apiUrlService.getApiUrl()}/workout/${guestId}/${date}`
+    );
+  }
 }

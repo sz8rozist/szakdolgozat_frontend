@@ -23,4 +23,9 @@ export class ExerciseService {
   getAllExerciseWithoutPagination(){
     return this.http.get<Exercise[]>(`${this.apiUrlService.getApiUrl()}/exercise`);
   }
+  deleteExercise(workoutId: number, guestId: number) {
+    return this.http.delete(
+      `${this.apiUrlService.getApiUrl()}/exercise/${workoutId}/${guestId}`
+    );
+  }
 }
