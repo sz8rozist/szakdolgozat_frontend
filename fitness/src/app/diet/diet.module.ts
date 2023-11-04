@@ -5,17 +5,16 @@ import { DietRoutingModule } from './diet-routing-module';
 import { FoodFormComponent } from './food-form/food-form.component';
 import { FoodListComponent } from './food-list/food-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IncrementPipe } from '../pipe/increment.pipe';
 import { DietFormComponent } from './diet-form/diet-form.component';
 import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
 import { NgToastModule } from 'ng-angular-popup';
 import { EditFoodComponent } from './edit-food/edit-food.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     DietDiaryComponent,
    FoodFormComponent,
     FoodListComponent,
-    IncrementPipe,
     DietFormComponent,
     EditFoodComponent
   ],
@@ -26,6 +25,7 @@ import { EditFoodComponent } from './edit-food/edit-food.component';
     ReactiveFormsModule,
     NgToastModule,
     FormsModule,
+    SharedModule
   ],
   providers: [
     { provide: NgChartsConfiguration, useValue: { generateColors: false }}

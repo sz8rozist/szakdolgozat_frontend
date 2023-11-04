@@ -15,6 +15,8 @@ import { AuthInterceptor } from './auth.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
 import { JwtModule } from '@auth0/angular-jwt';
+import { IncrementPipe } from './pipe/increment.pipe';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     SidebarComponent,
     NavbarComponent,
     NotFoundComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +34,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     HttpClientModule,
     ReactiveFormsModule,
     NgToastModule,
+    SharedModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter

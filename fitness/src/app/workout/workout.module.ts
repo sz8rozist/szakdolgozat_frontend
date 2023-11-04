@@ -4,10 +4,10 @@ import { WorkoutRoutingModule } from './workout-routing-module';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { TrainingLogComponent } from './training-log/training-log.component';
 import { CreateTrainingComponent } from './create-training/create-training.component';
-import { IncrementPipe } from '../pipe/increment.pipe';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditWorkoutComponent } from './edit-workout/edit-workout.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -16,7 +16,6 @@ import { EditWorkoutComponent } from './edit-workout/edit-workout.component';
     ExerciseComponent,
     TrainingLogComponent,
     CreateTrainingComponent,
-    IncrementPipe,
     AddExerciseComponent,
     EditWorkoutComponent
   ],
@@ -24,7 +23,8 @@ import { EditWorkoutComponent } from './edit-workout/edit-workout.component';
     CommonModule,
     WorkoutRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class WorkoutModule { }
