@@ -1,5 +1,19 @@
 <main id="main" class="main chat-main">
     <div class="row">
+      <div>
+        <h2>Private Chat</h2>
+        <div *ngFor="let message of messages">
+          <p>
+            {{ message.senderUserId }} to {{ message.receiverUserId }}: {{ message.message }}
+          </p>
+        </div>
+        <div>
+          <input [(ngModel)]="privateChatMessage.message" placeholder="Type your message" />
+          <button (click)="sendMessage()">Send</button>
+        </div>
+      </div>
+      {{messages | json}}
+      
       <div class="col-md-12">
         <div class="card" id="chat3" style="border-radius: 15px">
           <div class="card-body p-0 pb-3">
