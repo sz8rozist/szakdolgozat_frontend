@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { UpdateProfile } from '../model/UpdateProfile';
 import { User } from '../model/User';
 import { ChangePassword } from '../model/ChangePassword';
+import { UserResponse } from '../model/UserResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +52,9 @@ export class UserService {
 
   changePassword(password: ChangePassword, userId: number){
     return this.http.put(`${this.apiUrlService.getApiUrl()}/user/password/${userId}`, password);
+  }
+
+  getAllUser(){
+    return this.http.get<UserResponse[]>(`${this.apiUrlService.getApiUrl()}/user`);
   }
 }

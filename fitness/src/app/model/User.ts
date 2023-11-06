@@ -1,6 +1,4 @@
-import { Guest } from "./Guest"
 import { Role } from "./Role"
-import { Trainer } from "./Trainer"
 
 export interface User{
     id?: number
