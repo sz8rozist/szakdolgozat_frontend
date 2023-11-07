@@ -1,8 +1,8 @@
 import { User } from "./User";
 
 export interface Message{
-    senderUser: User | undefined
-    receiverUser: User | undefined
+    senderUser: User | null
+    receiverUser: User | null
     message: string
     dateTime: string
 }

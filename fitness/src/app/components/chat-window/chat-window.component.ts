@@ -5,6 +5,7 @@ import { User } from 'src/app/model/User';
 import { UserResponse } from 'src/app/model/UserResponse';
 import { AuthService } from 'src/app/service/auth.service';
 import { ChatService } from 'src/app/service/chat.service';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -19,13 +20,18 @@ export class ChatWindowComponent {
   senderUser?: UserResponse;
   constructor(
     private authService: AuthService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private messageService: MessageService
   ) {}
 
   ngOnChanges() {
     console.log(this.user);
     if (this.user) {
       this.showWindow = true;
+      const token = this.authService.getDecodedToken();
+      this.messageService.getAll(token.sub as number, this.user.user.id).subscribe((messages: Message[]) =>{
+        this.messages = [...messages];
+      })
     } else {
       this.showWindow = false;
     }
@@ -66,8 +72,8 @@ export class ChatWindowComponent {
     const d: Message = {
       message: this.message,
       dateTime: formattedDate,
-      senderUser: undefined,
-      receiverUser: undefined,
+      senderUser: null,
+      receiverUser: null,
     };
     this.authService
       .getUserById(data.senderUserId)
