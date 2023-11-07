@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Message } from 'src/app/model/Message';
 import { PrivateChatMessage } from 'src/app/model/PrivateChatMessage';
 import { User } from 'src/app/model/User';
 import { UserResponse } from 'src/app/model/UserResponse';
@@ -8,46 +9,43 @@ import { ChatService } from 'src/app/service/chat.service';
 @Component({
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
-  styleUrls: ['./chat-window.component.css']
+  styleUrls: ['./chat-window.component.css'],
 })
 export class ChatWindowComponent {
   showWindow: boolean = false;
   @Input() user: any;
-  message: string = "";
+  message: string = '';
   messages: any[] = [];
   senderUser?: UserResponse;
   constructor(
     private authService: AuthService,
     private chatService: ChatService
-  ){
-  }
+  ) {}
 
-  ngOnChanges(){
+  ngOnChanges() {
     console.log(this.user);
-    if(this.user){
+    if (this.user) {
       this.showWindow = true;
-    }else{
+    } else {
       this.showWindow = false;
     }
-   
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.chatService.getMessages().subscribe((message: any) => {
       this.messages.push(message);
     });
     this.fetchSenderUser();
   }
 
-  fetchSenderUser(){
-    this.authService.getAuthData().subscribe((response: UserResponse) =>{
+  fetchSenderUser() {
+    this.authService.getAuthData().subscribe((response: UserResponse) => {
       this.senderUser = response;
     });
   }
 
-  closeWindow(){
+  closeWindow() {
     this.showWindow = false;
-    this.user = undefined;
   }
 
   sendMessage() {
@@ -63,9 +61,32 @@ export class ChatWindowComponent {
       senderUserId: token.sub as number,
       receiverUserId: this.user.user.id,
       message: this.message,
-      dateTime: formattedDate
-    }
+      dateTime: formattedDate,
+    };
+    const d: Message = {
+      message: this.message,
+      dateTime: formattedDate,
+      senderUser: undefined,
+      receiverUser: undefined,
+    };
+    this.authService
+      .getUserById(data.senderUserId)
+      .subscribe((sender: UserResponse) => {
+        d.senderUser = sender.user;
+        this.authService
+          .getUserById(data.receiverUserId)
+          .subscribe((receiver: UserResponse) => {
+            d.receiverUser = receiver.user;
+            const messageToSend: Message = {
+              message: d.message,
+              dateTime: d.dateTime,
+              senderUser: d.senderUser,
+              receiverUser: d.receiverUser,
+            };
+            this.messages.push(messageToSend);
+          });
+      });
     this.chatService.sendPrivateMessage(data);
-    this.message = "";
+    this.message = '';
   }
 }
