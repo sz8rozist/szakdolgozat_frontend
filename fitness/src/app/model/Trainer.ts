@@ -1,3 +1,4 @@
+import { Guest } from "./Guest"
 import { User } from "./User"
 
 export interface Trainer{
@@ -7,7 +8,7 @@ export interface Trainer{
     last_name:string
     type: string
     notifications: []
-    guests: []
+    guests: Guest[]
     diets: []
     workouts: []
     user?: User

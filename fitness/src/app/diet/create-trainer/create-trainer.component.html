@@ -1,0 +1,203 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Étrend tervezés</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
+        <li class="breadcrumb-item">Étrend</li>
+        <li class="breadcrumb-item active">Étrend tervezés</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-header">Vendég kiválasztása</div>
+          <div class="card-body mt-3">
+            <div class="form-floating mb-3">
+              <select [(ngModel)]="selectedGuest" class="form-select">
+                <option *ngFor="let guest of trainer?.guests" [value]="guest.id">
+                  {{ guest.first_name + " " + guest.last_name }}
+                </option>
+              </select>
+              <label for="floatingSelect">Vendég</label>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Étel kiválasztása</div>
+          <div class="card-body mt-3">
+            <div class="row">
+              <div class="col-lg-6">
+                <form [formGroup]="etelForm">
+                  <div class="form-floating mb-3">
+                    <select
+                      class="form-select"
+                      id="floatingSelect"
+                      formControlName="etel"
+                      aria-label="Floating label select example"
+                    >
+                      <option *ngFor="let food of foods" [value]="food.id">
+                        {{ food.name }}
+                      </option>
+                    </select>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.etelForm.get('etel')?.errors?.['required'] && this.etelForm.get('etel')?.touched"
+                    >
+                      Az étel kiválasztása kötelező!
+                    </span>
+                    <label for="floatingSelect">Étel</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <select
+                      class="form-select"
+                      id="floatingSelect"
+                      formControlName="type"
+                      aria-label="Floating label select example"
+                    >
+                      <option value="BREAKFAST">Reggeli</option>
+                      <option value="LUNCH">Ebéd</option>
+                      <option value="DINNER">Vacsora</option>
+                      <option value="SNACK">Snack</option>
+                    </select>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.etelForm.get('type')?.errors?.['required'] && this.etelForm.get('type')?.touched"
+                    >
+                      Az étel típusának kiválasztása kötelező!
+                    </span>
+                    <label for="floatingSelect">Étel típusa</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input
+                      formControlName="quantity"
+                      type="text"
+                      class="form-control"
+                      id="floatingInput"
+                      placeholder="name@example.com"
+                    />
+                    <span
+                      class="text-danger"
+                      *ngIf="this.etelForm.get('quantity')?.errors?.['pattern'] && this.etelForm.get('quantity')?.touched"
+                    >
+                      A mennyiség csak szám lehet!
+                    </span>
+                    <span
+                      class="text-danger"
+                      *ngIf="this.etelForm.get('quantity')?.errors?.['required'] && this.etelForm.get('quantity')?.touched"
+                    >
+                      A mennyiség kitöltése kötelező!
+                    </span>
+                    <label for="floatingInput">Mennyiség</label>
+                  </div>
+                  <div class="card-footer">
+                    <button
+                      [disabled]="etelForm.invalid"
+                      class="btn btn-primary"
+                      (click)="addFoodToDiet()"
+                    >
+                      Hozzáad
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <form [formGroup]="dietForm">
+            <div class="card-header">
+              <div class="form-floating mb-3">
+                <input
+                  formControlName="date"
+                  type="date"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="this.dietForm.get('date')?.errors?.['required'] && this.dietForm.get('date')?.touched"
+                >
+                  A dátum kitöltése kötelező!
+                </span>
+                <label for="floatingInput">Dátum</label>
+              </div>
+            </div>
+            <div class="card-body">
+              <table class="table table-bordered mt-3">
+                <thead>
+                  <tr>
+                    <th>Étel neve</th>
+                    <th>Mennyiség</th>
+                    <th>Típus</th>
+                    <th>Szénhidrát (g)</th>
+                    <th>Fehérje (g)</th>
+                    <th>Zsír (g)</th>
+                    <th>Kalória (kCal)</th>
+                    <th>Művelet</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="dietFoods.length > 0">
+                    <tr *ngFor="let food of dietFoods">
+                      <td>{{ food.name }}</td>
+                      <td>{{ food.quantity }}</td>
+                      <td>{{ translateType(food.type) }}</td>
+                      <td class="text-end">{{ food.carbonhydrate }}</td>
+                      <td class="text-end">{{ food.protein }}</td>
+                      <td class="text-end">{{ food.fat }}</td>
+                      <td class="text-end">{{ food.calorie }}</td>
+                      <td>
+                        <button
+                          (click)="removeEtelFromDiet(food)"
+                          class="btn btn-danger"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr>
+                    <th colspan="3">Összesen:</th>
+                    <td class="text-end">{{ sum.carbonhydrate }}</td>
+                    <td class="text-end">{{ sum.protein }}</td>
+                    <td class="text-end">{{ sum.fat }}</td>
+                    <td class="text-end">{{ sum.calorie }}</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer">
+              <button
+                (click)="saveEtrend()"
+                [disabled]="dietForm.invalid || dietFoods.length == 0"
+                class="btn btn-primary"
+              >
+                Étrend mentése
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-header mb-3">Makrotápanyagok</div>
+          <div class="card-body">
+            <canvas
+              baseChart
+              class="chart"
+              [data]="pieChartData"
+              [type]="pieChartType"
+              [options]="pieChartOptions"
+            >
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

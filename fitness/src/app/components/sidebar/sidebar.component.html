@@ -45,11 +45,19 @@
             <i class="bi bi-circle"></i><span>Ételek</span>
           </a>
         </li>
-        <li>
+        <li *ngIf="auth?.guest; else trainerLink">
           <a routerLink="diet/create">
             <i class="bi bi-circle"></i><span>Étrend tervezés</span>
           </a>
         </li>
+        <ng-template #trainerLink>
+          <li>
+            <a routerLink="diet/create-trainer">
+              <i class="bi bi-circle"></i><span>Étrend tervezés</span>
+            </a>
+          </li>
+        </ng-template>
+        
         <li *ngIf="auth?.guest != null">
           <a routerLink="diet/diary">
             <i class="bi bi-circle"></i><span>Étkezési napló</span>

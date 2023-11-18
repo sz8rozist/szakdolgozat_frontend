@@ -6,7 +6,7 @@ export interface Diet{
     type: string;
     date: Date;
     foodId?: number;
-    userId?: number;
+    guestId?: number;
     trainerId?: number | null;
     food?: Food
 }

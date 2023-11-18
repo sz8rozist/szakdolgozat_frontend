@@ -1,30 +1,30 @@
 import { Component, ViewChild } from '@angular/core';
-import {
-  FormControl,
-  FormControlName,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { NgToastModule, NgToastService } from 'ng-angular-popup';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { NgToastService } from 'ng-angular-popup';
 import { BaseChartDirective } from 'ng2-charts';
-import { Diet } from '../../model/Diet';
-import { DietFood } from '../../model/DietFood';
-import { Food } from '../../model/Food';
-import { DietService } from '../../service/diet.service';
-import { AuthService } from '../../service/auth.service';
+import { Diet } from 'src/app/model/Diet';
+import { DietFood } from 'src/app/model/DietFood';
+import { Food } from 'src/app/model/Food';
+import { AuthService } from 'src/app/service/auth.service';
+import { DietService } from 'src/app/service/diet.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
-import { UserDto } from 'src/app/model/dto/UserDto';
+import { User } from 'src/app/model/User';
+import { Trainer } from 'src/app/model/Trainer';
+import { Guest } from 'src/app/model/Guest';
+
 @Component({
-  selector: 'app-diet-form',
-  templateUrl: './diet-form.component.html',
-  styleUrls: ['./diet-form.component.css'],
+  selector: 'app-create-trainer',
+  templateUrl: './create-trainer.component.html',
+  styleUrls: ['./create-trainer.component.css']
 })
-export class DietFormComponent {
+export class CreateTrainerComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   foods?: Food[];
   dietFoods: DietFood[] = [];
   arr: Diet[] = [];
+  selectedGuest?: number;
+  trainer?:Trainer;
   sum: {
     calorie: number;
     carbonhydrate: number;
@@ -54,6 +54,9 @@ export class DietFormComponent {
     });
     this.dietForm = new FormGroup({
       date: new FormControl('', [Validators.required]),
+    });
+    this.authService.getAuthData().subscribe((response: User) => {
+      this.trainer = response.trainer;
     });
   }
 
@@ -152,35 +155,39 @@ export class DietFormComponent {
 
   saveEtrend() {
     if (this.dietForm.valid && this.dietFoods.length > 0) {
-      const token = this.authService.getDecodedToken();
-      const authData = this.authService.getUserById(token.sub).toPromise();
-      authData.then((authData) => {
-        this.dietFoods.forEach((elem) => {
-          const data: Diet = {
-            foodId: elem.id as number,
-            quantity: elem.quantity,
-            type: elem.type,
-            date: this.dietForm.get('date')?.value,
-            guestId: authData?.guest.id,
-            trainerId: null,
-          };
-          this.arr.push(data);
+      if(!this.selectedGuest){
+        this.toast.error({
+          detail: 'Hiba',
+          summary: 'Vendég kiválasztása kötelező!',
+          duration: 2000,
+          type: 'error',
         });
-        console.log(this.arr);
-        this.dietService.saveDiet(this.arr).subscribe(() => {
-          this.toast.success({
-            detail: 'Sikeres',
-            summary: 'Sikeres étrend mentés!',
-            duration: 2000,
-            type: 'success',
-          });
-          this.dietForm.reset();
-          this.etelForm.reset();
-          this.dietFoods = [];
+        return;
+      }
+      this.dietFoods.forEach((elem) => {
+        console.log(this.selectedGuest);
+        const data: Diet = {
+          foodId: elem.id as number,
+          quantity: elem.quantity,
+          type: elem.type,
+          date: this.dietForm.get('date')?.value,
+          guestId: this.selectedGuest,
+          trainerId: this.trainer?.id,
+        };
+        this.arr.push(data);
+      });
+      console.log(this.arr);
+      this.dietService.saveDiet(this.arr).subscribe(() => {
+        this.toast.success({
+          detail: 'Sikeres',
+          summary: 'Sikeres étrend mentés!',
+          duration: 2000,
+          type: 'success',
         });
-      }).catch((error) => {
-        // Hibakezelés
-        console.error(error);
+        this.dietForm.reset();
+        this.etelForm.reset();
+        this.selectedGuest = undefined;
+        this.dietFoods = [];
       });
     }
   }

@@ -6,6 +6,7 @@ import { FoodListComponent } from './food-list/food-list.component';
 import { FoodFormComponent } from './food-form/food-form.component';
 import { DietFormComponent } from './diet-form/diet-form.component';
 import { EditFoodComponent } from './edit-food/edit-food.component';
+import { CreateTrainerComponent } from './create-trainer/create-trainer.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'food', component: FoodListComponent, canActivate: [AuthGuard]},
   {path: 'addFood', component: FoodFormComponent, canActivate: [AuthGuard]},
   {path: 'create', component: DietFormComponent, canActivate: [AuthGuard]},
-  {path: 'edit-food/:id', component: EditFoodComponent, canActivate: [AuthGuard]}
+  {path: 'edit-food/:id', component: EditFoodComponent, canActivate: [AuthGuard]},
+  {path: 'create-trainer', component: CreateTrainerComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
