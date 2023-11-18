@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { DietService } from '../../service/diet.service';
 import { AuthService } from '../../service/auth.service';
-import { UserResponse } from '../../model/UserResponse';
 import { DietResponse } from '../../model/DietResponse';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { NgToastService } from 'ng-angular-popup';
+import { User } from 'src/app/model/User';
 @Component({
   selector: 'app-diet-diary',
   templateUrl: './diet-diary.component.html',
@@ -58,7 +58,7 @@ export class DietDiaryComponent {
   }
 
   loadDiet(date: string) {
-    this.authService.getAuthData().subscribe((response: UserResponse) => {
+    this.authService.getAuthData().subscribe((response: User) => {
       if (response.guest != null) {
         this.dietService
           .getDietByDateAndGuestId(response.guest.id as number, date)
@@ -111,7 +111,7 @@ export class DietDiaryComponent {
   }
 
   deleteDiet() {
-    this.authService.getAuthData().subscribe((response: UserResponse) => {
+    this.authService.getAuthData().subscribe((response: User) => {
       if (response.guest != null) {
         this.dietService
           .deleteDiet(response.guest.id as number, this.date)
@@ -139,7 +139,7 @@ export class DietDiaryComponent {
   }
 
   removeFood(dietId: any) {
-    this.authService.getAuthData().subscribe((response: UserResponse) => {
+    this.authService.getAuthData().subscribe((response: User) => {
       if (response.guest != null) {
         this.dietService
           .deleteFood(dietId, response.guest.id as number)

@@ -15,6 +15,13 @@
       </a>
     </li>
 
+    <li class="nav-item" *ngIf="auth?.trainer != null">
+      <a routerLink="trainer/trainer-guests" class="nav-link">
+        <i class="bi bi-people"></i>
+        <span>Vendégeim</span>
+      </a>
+    </li>
+
     <li class="nav-item">
       <span
         class="nav-link collapsed"
@@ -43,7 +50,7 @@
             <i class="bi bi-circle"></i><span>Étrend tervezés</span>
           </a>
         </li>
-        <li>
+        <li *ngIf="auth?.guest != null">
           <a routerLink="diet/diary">
             <i class="bi bi-circle"></i><span>Étkezési napló</span>
           </a>
@@ -80,7 +87,7 @@
             <i class="bi bi-circle"></i><span>Edzés tervezés</span>
           </a>
         </li>
-        <li>
+        <li *ngIf="auth?.guest != null">
           <a routerLink="workout/training-log">
             <i class="bi bi-circle"></i><span>Edzés napló</span>
           </a>
@@ -99,7 +106,7 @@
           <div class="d-flex flex-row">
             <div>
               <img
-                [src]="user.user.profilePictureName"
+                [src]="user.profilePictureName"
                 alt="Profil kép"
                 class="d-flex align-self-center me-3"
                 width="60"
@@ -109,9 +116,9 @@
             <div class="pt-1">
               <p class="fw-bold mb-0">
                 {{
-                  (user?.trainer?.first_name || user?.guest?.first_name) +
+                  (user.firstName) +
                     " " +
-                    (user?.guest?.last_name || user?.trainer?.last_name)
+                    (user.lastName)
                 }}
               </p>
               <p class="small text-muted">Hello, Are you there?</p>

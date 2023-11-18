@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Route, Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './service/auth.service';
 import { User } from './model/User';
-import { UserResponse } from './model/UserResponse';
+import { UserDto } from './model/dto/UserDto';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent {
   title = 'My Fitness';
 
   auth: any;
-  user?: UserResponse;
+  user?: UserDto;
 
   constructor(private router: Router, public authService: AuthService) {}
   ngOnInit(){
@@ -24,7 +24,7 @@ export class AppComponent {
     this.authService.logout();
   }
 
-  getUserToChatWindow(value: UserResponse){
+  getUserToChatWindow(value: UserDto){
     this.user = value;
   }
 }

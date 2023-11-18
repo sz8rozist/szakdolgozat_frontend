@@ -5,7 +5,6 @@ import { Trainer } from '../../model/Trainer';
 import { AuthService } from '../../service/auth.service';
 import { TrainerService } from '../../service/trainer.service';
 import { UserService } from '../../service/user.service';
-import { UserResponse } from '../../model/UserResponse';
 import { User } from 'src/app/model/User';
 @Component({
   selector: 'app-trainer',
@@ -15,7 +14,7 @@ import { User } from 'src/app/model/User';
 export class TrainerComponent {
 
   trainers?: Trainer[];
-  user?: UserResponse;
+  user?: User;
 
   
 
@@ -55,7 +54,7 @@ export class TrainerComponent {
   }
 
   getAuthData() {
-    this.authService.getAuthData().subscribe((response: UserResponse) => {
+    this.authService.getAuthData().subscribe((response: User) => {
       if (response) {
         this.user = response;
       }

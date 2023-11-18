@@ -3,7 +3,6 @@ import {  Router } from '@angular/router';
 import { User } from '../../model/User';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
-import { UserResponse } from '../../model/UserResponse';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +15,7 @@ export class NavbarComponent {
   toggleNotification: boolean = false;
   toggleProfileDropdown: boolean = false;
   toggleMessageDropdown: boolean = false;
-  auth?: UserResponse;
+  auth?: User;
   profileImageSrc: string | null = null;
 
   constructor(private router: Router, public authService: AuthService, private userService: UserService){}
@@ -69,9 +68,9 @@ export class NavbarComponent {
   }
 
   getAuthData(){
-    this.authService.getAuthData().subscribe((response: UserResponse) =>{
+    this.authService.getAuthData().subscribe((response: User) =>{
       this.auth = response;
-      this.getProfilePicture(response.user.profilePictureName);
+      this.getProfilePicture(response.profilePictureName);
     });
   }
 }

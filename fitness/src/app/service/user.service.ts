@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { UpdateProfile } from '../model/UpdateProfile';
 import { User } from '../model/User';
 import { ChangePassword } from '../model/ChangePassword';
-import { UserResponse } from '../model/UserResponse';
+import { UserDto } from '../model/dto/UserDto';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +55,6 @@ export class UserService {
   }
 
   getAllUser(){
-    return this.http.get<UserResponse[]>(`${this.apiUrlService.getApiUrl()}/user`);
+    return this.http.get<UserDto[]>(`${this.apiUrlService.getApiUrl()}/user`);
   }
 }

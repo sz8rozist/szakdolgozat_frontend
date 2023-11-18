@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
-import { UserResponse } from '../../model/UserResponse';
 import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/model/User';
+import { UserDto } from 'src/app/model/dto/UserDto';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,16 +10,16 @@ import { User } from 'src/app/model/User';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  auth?: UserResponse;
+  auth?: User;
   isEtrendVisible = false;
   isEdzesVisible = false;
-  users: UserResponse[] = [];
-  @Output() chatWindow = new EventEmitter<UserResponse>();
+  users: UserDto[] = [];
+  @Output() chatWindow = new EventEmitter<UserDto>();
   constructor(private authService: AuthService,
     private userService: UserService){}
 
   getAuthData(){
-    this.authService.getAuthData().subscribe((response: UserResponse) =>{
+    this.authService.getAuthData().subscribe((response: User) =>{
       this.auth = response;
     });
   }
@@ -37,28 +37,28 @@ export class SidebarComponent {
     this.isEdzesVisible = !this.isEdzesVisible;
   }
 
-  chooseUser(user: UserResponse){
+  chooseUser(user: UserDto){
     this.chatWindow.emit(user);
   }
 
   fetchAllUser(){
-    this.userService.getAllUser().subscribe((response: UserResponse[]) =>{
+    this.userService.getAllUser().subscribe((response: UserDto[]) =>{
       console.log(response);
       this.users = [...response];
       this.users.forEach(user => {
-        if (user.user.profilePictureName) {
-          this.getProfilePicture(user.user.profilePictureName, user);
+        if (user.profilePictureName) {
+          this.getProfilePicture(user.profilePictureName, user);
         }
       });
     });
   }
 
-  getProfilePicture(imageName: string, user: UserResponse) {
+  getProfilePicture(imageName: string, user: UserDto) {
     if (imageName != null) {
       this.userService.getImage(imageName).subscribe((response) => {
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          user.user.profilePictureName = e.target.result;
+          user.profilePictureName = e.target.result;
         };
         reader.readAsDataURL(response);
       });

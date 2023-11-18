@@ -10,7 +10,6 @@ import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 import { passwordMatchValidator } from '../../validators/confirm-password-validator';
 import { PasswordValidator } from '../../validators/password-validator';
-import { UserResponse } from '../../model/UserResponse';
 
 @Component({
   selector: 'app-profile',
@@ -52,16 +51,16 @@ export class ProfileComponent {
   }
 
   getAuthData() {
-    this.authService.getAuthData().subscribe((response: UserResponse) => {
+    this.authService.getAuthData().subscribe((response: User) => {
       if (response) {
-        this.user = response.user;
+        this.user = response;
         if (response.trainer != null) {
           this.trainer = response.trainer;
         } else {
           this.guest = response.guest;
         }
         this.patchFormData();
-        this.getProfilePicture(response.user.profilePictureName);
+        this.getProfilePicture(response.profilePictureName);
       }
     });
   }

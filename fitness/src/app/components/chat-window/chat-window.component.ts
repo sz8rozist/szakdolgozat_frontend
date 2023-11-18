@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { Message } from 'src/app/model/Message';
-import { PrivateChatMessage } from 'src/app/model/PrivateChatMessage';
 import { User } from 'src/app/model/User';
-import { UserResponse } from 'src/app/model/UserResponse';
+import { MessageDto } from 'src/app/model/dto/MessageDto';
 import { AuthService } from 'src/app/service/auth.service';
 import { ChatService } from 'src/app/service/chat.service';
 import { MessageService } from 'src/app/service/message.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -17,19 +16,19 @@ export class ChatWindowComponent {
   @Input() user: any;
   message: string = '';
   messages: any[] = [];
-  senderUser?: UserResponse;
+  senderUser?: User;
   constructor(
     private authService: AuthService,
     private chatService: ChatService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private userService: UserService
   ) {}
 
   ngOnChanges() {
-    console.log(this.user);
     if (this.user) {
       this.showWindow = true;
       const token = this.authService.getDecodedToken();
-      this.messageService.getAll(token.sub as number, this.user.user.id).subscribe((messages: Message[]) =>{
+      this.messageService.getAll(token.sub as number, this.user.id).subscribe((messages: MessageDto[]) =>{
         this.messages = [...messages];
       })
     } else {
@@ -45,9 +44,24 @@ export class ChatWindowComponent {
   }
 
   fetchSenderUser() {
-    this.authService.getAuthData().subscribe((response: UserResponse) => {
+    this.authService.getAuthData().subscribe((response: User) => {
       this.senderUser = response;
+      if (this.senderUser.profilePictureName) {
+        this.getProfilePicture(this.senderUser.profilePictureName, this.senderUser);
+      }
     });
+  }
+
+  getProfilePicture(imageName: string, user: User) {
+    if (imageName != null) {
+      this.userService.getImage(imageName).subscribe((response) => {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          user.profilePictureName = e.target.result;
+        };
+        reader.readAsDataURL(response);
+      });
+    }
   }
 
   closeWindow() {
@@ -62,37 +76,37 @@ export class ChatWindowComponent {
     const day = currentDateTime.getDate().toString().padStart(2, '0');
 
     const formattedDate = `${year}-${month}-${day}`;
-    const token = this.authService.getDecodedToken();
-    const data: PrivateChatMessage = {
-      senderUserId: token.sub as number,
-      receiverUserId: this.user.user.id,
+   
+    const messageToSend: MessageDto = {
       message: this.message,
       dateTime: formattedDate,
+      senderUserFirstName: "",
+      senderUserLastName: "",
+      receiverUserFirstName: "",
+      receiverUserLastName: "",
+      readed: false,
+      senderUserId: this.senderUser?.id as number,
+      receiverUserId: this.user.id as number,
     };
-    const d: Message = {
-      message: this.message,
-      dateTime: formattedDate,
-      senderUser: null,
-      receiverUser: null,
-    };
-    this.authService
-      .getUserById(data.senderUserId)
-      .subscribe((sender: UserResponse) => {
-        d.senderUser = sender.user;
-        this.authService
-          .getUserById(data.receiverUserId)
-          .subscribe((receiver: UserResponse) => {
-            d.receiverUser = receiver.user;
-            const messageToSend: Message = {
-              message: d.message,
-              dateTime: d.dateTime,
-              senderUser: d.senderUser,
-              receiverUser: d.receiverUser,
-            };
-            this.messages.push(messageToSend);
-          });
-      });
-    this.chatService.sendPrivateMessage(data);
+    if(this.senderUser?.guest){
+      messageToSend.senderUserFirstName = this.senderUser.guest.first_name;
+      messageToSend.senderUserLastName = this.senderUser.guest.last_name;
+    }
+    if(this.senderUser?.trainer){
+      messageToSend.senderUserFirstName = this.senderUser.trainer.first_name;
+      messageToSend.senderUserLastName = this.senderUser.trainer.last_name;
+    }
+    if(this.user.guest){
+      messageToSend.senderUserFirstName = this.user.guest.first_name;
+      messageToSend.senderUserLastName = this.user.guest.last_name;
+    }
+    if(this.user.trainer){
+      messageToSend.senderUserFirstName = this.user.trainer.first_name;
+      messageToSend.senderUserLastName = this.user.trainer.last_name;
+    }
+    console.log(messageToSend);
+    this.messages.push(messageToSend);
     this.message = '';
+    this.chatService.sendPrivateMessage(messageToSend);
   }
 }

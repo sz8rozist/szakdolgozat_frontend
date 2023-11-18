@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { PrivateChatMessage } from '../model/PrivateChatMessage';
 import { StompConfig, Client } from '@stomp/stompjs';
 import { Observable, Subject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { MessageDto } from '../model/dto/MessageDto';
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
   private stompClient: Client = new Client();
-  private messageSubject: Subject<PrivateChatMessage> =
-    new Subject<PrivateChatMessage>();
+  private messageSubject: Subject<MessageDto> =
+    new Subject<MessageDto>();
   constructor(
     private authService: AuthService
   ) {
@@ -24,25 +24,27 @@ export class ChatService {
         console.log('WebSocket connected');
         // Itt tudsz üzeneteket küldeni a szerver felé
         const token = this.authService.getDecodedToken();
-        setTimeout(() => {
-          this.stompClient.subscribe(`/queue/private/${token.sub}`, (message) => {
-            this.messageSubject.next(JSON.parse(message.body));
-          });
-        }, 1000);
+        if(token){
+          setTimeout(() => {
+            this.stompClient.subscribe(`/queue/private/${token.sub}`, (message) => {
+              this.messageSubject.next(JSON.parse(message.body));
+            });
+          }, 1000);
+        }
       },
     };
     this.stompClient = new Client(stompConfig);
     this.stompClient.activate();
   }
   // Üzenet küldése a szerver felé
-  sendPrivateMessage(message: PrivateChatMessage) {
+  sendPrivateMessage(message: MessageDto) {
     this.stompClient.publish({
       destination: `/app/chat.sendPrivateMessage/${message.receiverUserId}`,
       body: JSON.stringify(message),
     });
   }
 
-  getMessages(): Observable<PrivateChatMessage> {
+  getMessages(): Observable<MessageDto> {
     return this.messageSubject.asObservable();
   }
 }

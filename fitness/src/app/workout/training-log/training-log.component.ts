@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { Exercise } from 'src/app/model/Exercise';
 import { User } from 'src/app/model/User';
-import { UserResponse } from 'src/app/model/UserResponse';
 import { Workout } from 'src/app/model/Workout';
 import { AuthService } from 'src/app/service/auth.service';
 import { ExerciseService } from 'src/app/service/exercise.service';
@@ -57,7 +56,7 @@ export class TrainingLogComponent {
   }
 
   deleteExercise(workoutId: any){
-    this.authService.getAuthData().subscribe((resp: UserResponse) =>{
+    this.authService.getAuthData().subscribe((resp: User) =>{
       if(resp && resp.guest != null){
         this.exerciseService.deleteExercise(workoutId, resp.guest.id as number).subscribe(() =>{
           this.loadWorkout(this.date);
@@ -73,7 +72,7 @@ export class TrainingLogComponent {
   }
 
   deleteWorkout(){
-    this.authService.getAuthData().subscribe((resp: UserResponse) =>{
+    this.authService.getAuthData().subscribe((resp: User) =>{
       if(resp && resp.guest != null){
         this.workoutService.deleteWorkout(resp.guest.id as number, this.date).subscribe(() =>{
           this.workouts = [];
