@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { ChooseTrainerRequest } from '../../model/ChooseTrainerRequest';
 import { Trainer } from '../../model/Trainer';
-import { TrainerResponse } from '../../model/TrainerResponse';
 import { AuthService } from '../../service/auth.service';
 import { TrainerService } from '../../service/trainer.service';
 import { UserService } from '../../service/user.service';
 import { UserResponse } from '../../model/UserResponse';
+import { User } from 'src/app/model/User';
 @Component({
   selector: 'app-trainer',
   templateUrl: './trainer.component.html',
@@ -14,7 +14,7 @@ import { UserResponse } from '../../model/UserResponse';
 })
 export class TrainerComponent {
 
-  trainers?: TrainerResponse[];
+  trainers?: Trainer[];
   user?: UserResponse;
 
   
@@ -30,24 +30,24 @@ export class TrainerComponent {
   }
 
   getAllTrainer(){
-    this.trainerService.getAllTrainer().subscribe((response: TrainerResponse[]) =>{
+    this.trainerService.getAllTrainer().subscribe((response: Trainer[]) =>{
       console.log(response);
       this.trainers = [...response];
 
       this.trainers.forEach(trainer => {
-        if (trainer.userProfileImage) {
-          this.getProfilePicture(trainer.userProfileImage, trainer);
+        if (trainer?.user?.profilePictureName) {
+          this.getProfilePicture(trainer?.user?.profilePictureName, trainer.user);
         }
       });
     });
   }
 
-  getProfilePicture(imageName: string, trainer: TrainerResponse) {
+  getProfilePicture(imageName: string, trainer: User) {
     if (imageName != null) {
       this.userService.getImage(imageName).subscribe((response) => {
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          trainer.userProfileImage = e.target.result;
+          trainer.profilePictureName = e.target.result;
         };
         reader.readAsDataURL(response);
       });

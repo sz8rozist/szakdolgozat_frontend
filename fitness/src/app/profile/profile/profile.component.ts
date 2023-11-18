@@ -107,7 +107,6 @@ export class ProfileComponent {
     this.userService
       .uploadFile(formData, this.user?.id as number)
       .subscribe((response: string) => {
-        console.log(response);
         this.getAuthData();
         this.userService.updateProfilePicture(response);
         this.toast.success({

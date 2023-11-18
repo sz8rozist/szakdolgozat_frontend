@@ -1,3 +1,5 @@
+import { User } from "./User"
+
 export interface Trainer{
     id?: number
     email: string
@@ -8,4 +10,5 @@ export interface Trainer{
     guests: []
     diets: []
     workouts: []
+    user?: User
 }

@@ -13,6 +13,7 @@ import { DietFood } from '../../model/DietFood';
 import { Food } from '../../model/Food';
 import { DietService } from '../../service/diet.service';
 import { AuthService } from '../../service/auth.service';
+import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-diet-form',
   templateUrl: './diet-form.component.html',
@@ -22,7 +23,7 @@ export class DietFormComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   foods?: Food[];
   dietFoods: DietFood[] = [];
-  arr:Diet[] = [];
+  arr: Diet[] = [];
   sum: {
     calorie: number;
     carbonhydrate: number;
@@ -36,9 +37,11 @@ export class DietFormComponent {
   };
   etelForm: FormGroup;
   dietForm: FormGroup;
-  constructor(private dietService: DietService,
+  constructor(
+    private dietService: DietService,
     private toast: NgToastService,
-    private authService: AuthService) {
+    private authService: AuthService
+  ) {
     this.loadFoods();
     this.etelForm = new FormGroup({
       etel: new FormControl('', [Validators.required]),
@@ -64,7 +67,7 @@ export class DietFormComponent {
     },
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Szénhidrát', 'Fehérje', 'Zsír'],
+    labels: [],
     datasets: [
       {
         data: [1],
@@ -72,6 +75,7 @@ export class DietFormComponent {
       },
     ],
   };
+  public pieChartPlugins = [DatalabelsPlugin];
   public pieChartType: ChartType = 'pie';
 
   loadFoods() {
@@ -111,12 +115,7 @@ export class DietFormComponent {
         'lightgreen',
         'lightblue',
       ];
-      this.pieChartData.datasets[0].data.push(
-        this.sum.carbonhydrate,
-        this.sum.protein,
-        this.sum.fat
-      );
-      this.chart?.update();
+      this.uploadChartData();
       this.etelForm.reset();
     }
   }
@@ -147,14 +146,7 @@ export class DietFormComponent {
     this.sum.carbonhydrate -= food.carbonhydrate;
     this.sum.protein -= food.protein;
     this.sum.fat -= food.fat;
-
-    // Frissítsd a pieChartData-t a sum alapján
-    this.pieChartData.datasets[0].data = [
-      this.sum.carbonhydrate,
-      this.sum.protein,
-      this.sum.fat,
-    ];
-    this.chart?.update();
+    this.uploadChartData();
   }
 
   saveEtrend() {
@@ -184,5 +176,27 @@ export class DietFormComponent {
         this.dietFoods = [];
       });
     }
+  }
+
+  uploadChartData() {
+    const totalCalories =
+      this.sum.carbonhydrate + this.sum.protein + this.sum.fat;
+    const carbPercentage = (this.sum.carbonhydrate / totalCalories) * 100;
+    const proteinPercentage = (this.sum.protein / totalCalories) * 100;
+    const fatPercentage = (this.sum.fat / totalCalories) * 100;
+
+    // Frissítsd a pieChartData-t a százalékos értékek alapján
+    this.pieChartData.labels = [
+      `Szénhidrát: ${carbPercentage.toFixed(0)}%`,
+      `Fehérje: ${proteinPercentage.toFixed(0)}%`,
+      `Zsír: ${fatPercentage.toFixed(0)}%`,
+    ];
+    // Frissítsd a pieChartData-t a sum alapján
+    this.pieChartData.datasets[0].data = [
+      this.sum.carbonhydrate,
+      this.sum.protein,
+      this.sum.fat,
+    ];
+    this.chart?.update();
   }
 }

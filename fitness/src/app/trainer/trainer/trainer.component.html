@@ -11,15 +11,15 @@
   <div class="row align-items-top">
     <div class="col-lg-2" *ngFor="let t of trainers">
       <div class="card">
-        <img [src]="t.userProfileImage" class="card-img-top" alt="Edző profilképe" />
+        <img [src]="t.user?.profilePictureName" class="card-img-top" alt="Edző profilképe" />
         <div class="card-body">
-          <h5 class="card-title">{{t.trainer.first_name + " " + t.trainer.last_name}}</h5>
+          <h5 class="card-title">{{t.first_name + " " + t.last_name}}</h5>
           <p class="card-text">
-            {{t.trainer.type}}
+            {{t.type}}
           </p>
         </div>
         <div class="card-footer">
-            <button class="btn btn-success" [disabled]="user?.guest != null && user?.guest?.trainer != null" (click)="chooseTrainer(t.trainer)">Kiválaszt</button>
+            <button class="btn btn-success" [disabled]="user?.guest != null && user?.guest?.trainer != null" (click)="chooseTrainer(t)">Kiválaszt</button>
           </div>
       </div>
     </div>
