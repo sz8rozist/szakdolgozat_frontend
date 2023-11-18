@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TrainerComponent } from './trainer/trainer.component';
 import { TrainerRoutingModule } from './trainer-routing';
 import { TrainerGuestsComponent } from './trainer-guests/trainer-guests.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -14,6 +15,8 @@ import { TrainerGuestsComponent } from './trainer-guests/trainer-guests.componen
   imports: [
     CommonModule,
     TrainerRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class TrainerModule { }
