@@ -74,14 +74,19 @@
                   <td class="text-end">{{ food.food?.calorie }}</td>
                   <td>
                     <button
-                      class="btn btn-primary me-2"
+                      class="btn btn-primary btn-sm me-2"
                       routerLink="/diet/edit-food/{{food.id}}"
                     >
                       Szerkesztés
                     </button>
                     <button
+                    class="btn btn-success btn-sm me-2"
+                  >
+                    <i class="bi bi-check"></i>
+                  </button>
+                    <button
                       (click)="removeFood(food.id)"
-                      class="btn btn-danger"
+                      class="btn btn-danger btn-sm"
                     >
                       <i class="bi bi-trash"></i>
                     </button>

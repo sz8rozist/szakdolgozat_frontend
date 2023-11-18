@@ -76,6 +76,17 @@ export class DietDiaryComponent {
               resp.proteinSum,
               resp.fatSum
             );
+            const totalCalories =
+              resp.carbonhydrateSum + resp.proteinSum + resp.fatSum;
+            const carbPercentage =
+              (resp.carbonhydrateSum / totalCalories) * 100;
+            const proteinPercentage = (resp.proteinSum / totalCalories) * 100;
+            const fatPercentage = (resp.fatSum / totalCalories) * 100;
+            this.pieChartData.labels = [
+              `Szénhidrát: ${carbPercentage.toFixed(0)}%`,
+              `Fehérje: ${proteinPercentage.toFixed(0)}%`,
+              `Zsír: ${fatPercentage.toFixed(0)}%`,
+            ];
             this.chart?.update();
           });
       }
