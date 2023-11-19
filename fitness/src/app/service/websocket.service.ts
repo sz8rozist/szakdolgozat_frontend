@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebsocketService {
   private stompClient: Client = new Client();
@@ -33,15 +33,13 @@ export class WebsocketService {
                 this.messageSubject.next(JSON.parse(message.body));
               }
             );
-            let trainer = token.role.find((item: any) => item.role === "TRAINER");
-            if(trainer){
-              this.stompClient.subscribe(
-                `/queue/trainerNotification/${token.sub}`,
-                (message) => {
-                  this.dietSubject.next(JSON.parse(message.body));
-                }
-              )
-            }
+
+            this.stompClient.subscribe(
+              `/queue/trainerNotification/${token.sub}`,
+              (message) => {
+                this.dietSubject.next(JSON.parse(message.body));
+              }
+            );
           }, 1000);
         }
       },
@@ -61,10 +59,14 @@ export class WebsocketService {
     return this.messageSubject.asObservable();
   }
 
-  sendDietNotification(message: SocketDietDto){
+  sendDietNotification(message: SocketDietDto) {
     this.stompClient.publish({
       destination: `/app/trainer.diet/${message.trainerId}`,
-      body: JSON.stringify(message)
+      body: JSON.stringify(message),
     });
+  }
+
+  getDietNotificationToTrainer() {
+    return this.dietSubject.asObservable();
   }
 }

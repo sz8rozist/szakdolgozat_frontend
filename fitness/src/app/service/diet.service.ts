@@ -71,4 +71,8 @@ export class DietService {
   sendNotificationToTrainer(message: SocketDietDto) {
     this.webSocketService.sendDietNotification(message);
   }
+
+  getTrainerNotification() {
+    return this.webSocketService.getDietNotificationToTrainer();
+  }
 }

@@ -38,7 +38,6 @@ export class ChatWindowComponent {
 
   ngOnInit() {
     this.chatService.getMessages().subscribe((message: MessageDto) => {
-      console.log(message);
       this.messages.push(message);
     });
     this.fetchSenderUser();
