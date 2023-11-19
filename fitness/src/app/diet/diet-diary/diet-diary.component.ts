@@ -6,6 +6,10 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { NgToastService } from 'ng-angular-popup';
 import { User } from 'src/app/model/User';
+import { SocketDietDto } from 'src/app/model/dto/SocketDietDto';
+import { DietDto } from 'src/app/model/dto/DietDto';
+import { GuestService } from 'src/app/service/guest.service';
+import { Trainer } from 'src/app/model/Trainer';
 @Component({
   selector: 'app-diet-diary',
   templateUrl: './diet-diary.component.html',
@@ -48,7 +52,8 @@ export class DietDiaryComponent {
   constructor(
     private dietService: DietService,
     private authService: AuthService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private guestService: GuestService
   ) {}
 
   ngOnInit() {}
@@ -63,6 +68,7 @@ export class DietDiaryComponent {
         this.dietService
           .getDietByDateAndGuestId(response.guest.id as number, date)
           .subscribe((resp: DietResponse) => {
+            console.log(resp);
             this.diet = resp;
             this.pieChartData.datasets[0].data = [];
             this.pieChartData.datasets[0].backgroundColor = [];
@@ -173,6 +179,22 @@ export class DietDiaryComponent {
             });
           });
       }
+    });
+  }
+
+  sendNotificationToTrainer(food: DietDto){
+    const token = this.authService.getDecodedToken();
+    const trainer = this.guestService.findTrainer(token.sub).toPromise();
+    trainer.then((response: Trainer | any) =>{
+      //console.log(response);
+      const data: SocketDietDto = {
+        guestId: token.sub as number,
+        trainerId: response.id,
+        message: "A " + food.name + " étel elfogyasztásra került."
+      }
+      this.dietService.sendNotificationToTrainer(data);
+    }, error =>{
+      console.log(error.mesage);
     });
   }
 }

@@ -15,7 +15,7 @@ export class ChatWindowComponent {
   showWindow: boolean = false;
   @Input() user: any;
   message: string = '';
-  messages: any[] = [];
+  messages: MessageDto[] = [];
   senderUser?: User;
   constructor(
     private authService: AuthService,
@@ -37,7 +37,8 @@ export class ChatWindowComponent {
   }
 
   ngOnInit() {
-    this.chatService.getMessages().subscribe((message: any) => {
+    this.chatService.getMessages().subscribe((message: MessageDto) => {
+      console.log(message);
       this.messages.push(message);
     });
     this.fetchSenderUser();

@@ -341,33 +341,33 @@
                 id="profile-settings"
               >
                 <!-- Settings Form -->
-                <ng-container *ngIf="guest?.trainer != null">
+                <ng-container *ngIf="guestTrainer != null">
                   <h5 class="card-title">Edző Adatok</h5>
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Vezetéknév</div>
                     <div class="col-lg-9 col-md-8">
-                      {{ guest?.trainer?.first_name }}
+                      {{ guestTrainer.first_name }}
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Keresztnév</div>
                     <div class="col-lg-9 col-md-8">
-                      {{  guest?.trainer?.last_name }}
+                      {{  guestTrainer.last_name }}
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email cím</div>
                     <div class="col-lg-9 col-md-8">
-                      {{  guest?.trainer?.email }}
+                      {{  guestTrainer.email }}
                     </div>
                   </div>
   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Típus</div>
-                    <div class="col-lg-9 col-md-8">{{ guest?.trainer?.type }}</div>
+                    <div class="col-lg-9 col-md-8">{{ guestTrainer.type }}</div>
                   </div>
                 </ng-container>                
-                <ng-container *ngIf="guest?.trainer == null">
+                <ng-container *ngIf="guestTrainer == null">
                   <p>Nincs rögzítve edző.</p>
                 </ng-container>
                 <!-- End settings Form -->

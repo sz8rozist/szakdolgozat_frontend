@@ -5,11 +5,13 @@ import { Food } from '../model/Food';
 import { Diet } from '../model/Diet';
 import { DietResponse } from '../model/DietResponse';
 import { DietUpdateRequest } from '../model/DietUpdateRequest';
+import { WebsocketService } from './websocket.service';
+import { SocketDietDto } from '../model/dto/SocketDietDto';
 @Injectable({
   providedIn: 'root',
 })
 export class DietService {
-  constructor(private http: HttpClient, private apiUrlService: ApiUrlService) {}
+  constructor(private http: HttpClient, private apiUrlService: ApiUrlService, private webSocketService: WebsocketService) {}
 
   createFood(food: Food) {
     return this.http.post<Food>(`${this.apiUrlService.getApiUrl()}/food`, food);
@@ -64,5 +66,9 @@ export class DietService {
 
   updateDiet(data: DietUpdateRequest, dietId: number){
     return this.http.put(`${this.apiUrlService.getApiUrl()}/diet/${dietId}`, data);
+  }
+
+  sendNotificationToTrainer(message: SocketDietDto) {
+    this.webSocketService.sendDietNotification(message);
   }
 }

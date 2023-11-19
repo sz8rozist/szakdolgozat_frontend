@@ -11,7 +11,6 @@ import { DietService } from 'src/app/service/diet.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { User } from 'src/app/model/User';
 import { Trainer } from 'src/app/model/Trainer';
-import { Guest } from 'src/app/model/Guest';
 
 @Component({
   selector: 'app-create-trainer',
@@ -165,7 +164,6 @@ export class CreateTrainerComponent {
         return;
       }
       this.dietFoods.forEach((elem) => {
-        console.log(this.selectedGuest);
         const data: Diet = {
           foodId: elem.id as number,
           quantity: elem.quantity,
@@ -176,7 +174,6 @@ export class CreateTrainerComponent {
         };
         this.arr.push(data);
       });
-      console.log(this.arr);
       this.dietService.saveDiet(this.arr).subscribe(() => {
         this.toast.success({
           detail: 'Sikeres',

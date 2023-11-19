@@ -9,7 +9,5 @@ export interface Trainer{
     type: string
     notifications: []
     guests: Guest[]
-    diets: []
-    workouts: []
     user?: User
 }

@@ -65,27 +65,28 @@
               </thead>
               <tbody>
                 <tr *ngFor="let food of diet.diet">
-                  <td>{{ food.food?.name }}</td>
+                  <td>{{ food.name }}</td>
                   <td>{{ food.quantity }}</td>
-                  <td>{{ translateType(food.type) }}</td>
-                  <td class="text-end">{{ food.food?.carbonhydrate }}</td>
-                  <td class="text-end">{{ food.food?.protein }}</td>
-                  <td class="text-end">{{ food.food?.fat }}</td>
-                  <td class="text-end">{{ food.food?.calorie }}</td>
+                  <td>{{ translateType(food.foodType) }}</td>
+                  <td class="text-end">{{ food.carbonhydrate }}</td>
+                  <td class="text-end">{{ food.protein }}</td>
+                  <td class="text-end">{{ food.fat }}</td>
+                  <td class="text-end">{{ food.calorie }}</td>
                   <td>
                     <button
                       class="btn btn-primary btn-sm me-2"
-                      routerLink="/diet/edit-food/{{food.id}}"
+                      routerLink="/diet/edit-food/{{food.dietId}}"
                     >
                       Szerkesztés
                     </button>
                     <button
                     class="btn btn-success btn-sm me-2"
+                    (click)="sendNotificationToTrainer(food)"
                   >
                     <i class="bi bi-check"></i>
                   </button>
                     <button
-                      (click)="removeFood(food.id)"
+                      (click)="removeFood(food.dietId)"
                       class="btn btn-danger btn-sm"
                     >
                       <i class="bi bi-trash"></i>

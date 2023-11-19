@@ -10,6 +10,7 @@ import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 import { passwordMatchValidator } from '../../validators/confirm-password-validator';
 import { PasswordValidator } from '../../validators/password-validator';
+import { GuestService } from 'src/app/service/guest.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ export class ProfileComponent {
   user?: User;
   trainer?: Trainer;
   guest?: Guest;
+  guestTrainer?: Trainer;
   selectedFile?: File;
   profileImageSrc?: string;
   profileForm: FormGroup;
@@ -28,7 +30,8 @@ export class ProfileComponent {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private guestService: GuestService
   ) {
     this.profileForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -50,14 +53,25 @@ export class ProfileComponent {
     this.getAuthData();
   }
 
+  getGuestTrainer(){
+    const trainer = this.guestService.findTrainer(this.guest?.id as number).toPromise();
+    trainer.then((response: Trainer | any) =>{
+      this.guestTrainer = response;
+    }, error =>{
+      console.log(error.mesage);
+    });
+  }
+
   getAuthData() {
     this.authService.getAuthData().subscribe((response: User) => {
       if (response) {
+        console.log(response);
         this.user = response;
         if (response.trainer != null) {
           this.trainer = response.trainer;
         } else {
           this.guest = response.guest;
+          this.getGuestTrainer();
         }
         this.patchFormData();
         this.getProfilePicture(response.profilePictureName);
