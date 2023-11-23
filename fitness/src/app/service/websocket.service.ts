@@ -4,6 +4,7 @@ import { Subject, Observable } from 'rxjs';
 import { MessageDto } from '../model/dto/MessageDto';
 import { AuthService } from './auth.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
+import { NotificationModel } from '../model/NotificationModel';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { SocketDietDto } from '../model/dto/SocketDietDto';
 export class WebsocketService {
   private stompClient: Client = new Client();
   private messageSubject: Subject<MessageDto> = new Subject<MessageDto>();
-  private dietSubject: Subject<SocketDietDto> = new Subject<SocketDietDto>();
+  private dietSubject: Subject<NotificationModel> = new Subject<NotificationModel>();
 
   constructor(private authService: AuthService) {
     this.initializeWebSocketConnection();
@@ -33,7 +34,6 @@ export class WebsocketService {
                 this.messageSubject.next(JSON.parse(message.body));
               }
             );
-
             this.stompClient.subscribe(
               `/queue/trainerNotification/${token.sub}`,
               (message) => {

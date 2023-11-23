@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Route, Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from './service/auth.service';
-import { User } from './model/User';
 import { UserDto } from './model/dto/UserDto';
 import { DietService } from './service/diet.service';
-import { SocketDietDto } from './model/dto/SocketDietDto';
-import { NgToastModule, NgToastService } from 'ng-angular-popup';
+import { NgToastService } from 'ng-angular-popup';
+import { NotificationModel } from './model/NotificationModel';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +31,7 @@ export class AppComponent {
   }
 
   getTrainerNotification(){
-    this.dietService.getTrainerNotification().subscribe((response: SocketDietDto) =>{
+    this.dietService.getTrainerNotification().subscribe((response: NotificationModel) =>{
       console.log(response);
       setTimeout(() => {
         this.toast.info({

@@ -183,6 +183,7 @@ export class DietDiaryComponent {
   }
 
   sendNotificationToTrainer(food: DietDto){
+    console.log(food.foodId);
     const token = this.authService.getDecodedToken();
     const trainer = this.guestService.findTrainer(token.sub).toPromise();
     trainer.then((response: Trainer | any) =>{
@@ -190,9 +191,11 @@ export class DietDiaryComponent {
       const data: SocketDietDto = {
         guestId: token.sub as number,
         trainerId: response.id,
-        message: "A " + food.name + " étel elfogyasztásra került."
+        foodId: food.foodId,
+        dietId: food.dietId
       }
       this.dietService.sendNotificationToTrainer(data);
+      this.loadDiet(this.date);
     }, error =>{
       console.log(error.mesage);
     });

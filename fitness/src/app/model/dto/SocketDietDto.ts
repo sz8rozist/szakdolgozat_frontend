@@ -1,5 +1,6 @@
 export interface SocketDietDto{
     trainerId: number,
-    message: string
+    foodId: number
     guestId: number
+    dietId: number
 }

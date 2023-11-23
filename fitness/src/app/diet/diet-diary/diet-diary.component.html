@@ -75,15 +75,23 @@
                   <td>
                     <button
                       class="btn btn-primary btn-sm me-2"
-                      routerLink="/diet/edit-food/{{food.dietId}}"
+                      routerLink="/diet/edit-food/{{ food.dietId }}"
                     >
                       Szerkesztés
                     </button>
                     <button
-                    class="btn btn-success btn-sm me-2"
+                    class="btn btn-success btn-sm  me-2"
                     (click)="sendNotificationToTrainer(food)"
+                    *ngIf="!food.eated"
                   >
-                    <i class="bi bi-check"></i>
+                    Elfogyasztás
+                  </button>
+                  <button
+                    class="btn btn-success btn-sm  me-2"
+                    *ngIf="food.eated"
+                    disabled
+                  >
+                  <i class="bi bi-check" *ngIf="food.eated"></i> Elfogyasztva
                   </button>
                     <button
                       (click)="removeFood(food.dietId)"
