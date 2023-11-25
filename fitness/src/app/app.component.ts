@@ -52,18 +52,15 @@ export class AppComponent {
   }
 
   getLastDietNotificationForTrainer(){
-    const token = this.authService.getDecodedToken();
-    const trainer = token.role.find((item: any) => item.role == "TRAINER");
-    if(trainer){
       const authData = this.authService.getAuthData().toPromise();
       authData.then((response: any) =>{
-        if(response){
+        if(response.trainer != null){
           this.notificationService.getLastFiveDietNotificationForTrainer(response.trainer.id as number).subscribe((resp: NotificationDto[]) => {
             this.notification = resp.filter(obj => !obj.viewed);
           });
         }
       }, error => {console.log(error)});
-    }
+    
     
   }
 }
