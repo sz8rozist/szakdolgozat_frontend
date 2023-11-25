@@ -5,6 +5,9 @@ import { UserDto } from './model/dto/UserDto';
 import { DietService } from './service/diet.service';
 import { NgToastService } from 'ng-angular-popup';
 import { NotificationModel } from './model/NotificationModel';
+import { NotificationService } from './service/notification.service';
+import { NotificationDto } from './model/dto/NotificationDto';
+import { User } from './model/User';
 
 @Component({
   selector: 'app-root',
@@ -16,10 +19,15 @@ export class AppComponent {
 
   auth: any;
   user?: UserDto;
+  notification?: NotificationDto[];
 
-  constructor(private router: Router, public authService: AuthService, private dietService: DietService, private toast: NgToastService) {}
+  constructor(private router: Router,
+     public authService: AuthService,
+      private notificationService: NotificationService,
+       private toast: NgToastService) {}
   ngOnInit(){
    this.getTrainerNotification();
+   this.getLastDietNotificationForTrainer();
   }
 
   onLogout(){
@@ -31,8 +39,7 @@ export class AppComponent {
   }
 
   getTrainerNotification(){
-    this.dietService.getTrainerNotification().subscribe((response: NotificationModel) =>{
-      console.log(response);
+    this.notificationService.getTrainerNotification().subscribe((response: NotificationModel) =>{
       setTimeout(() => {
         this.toast.info({
           detail: 'Értesítés',
@@ -42,5 +49,21 @@ export class AppComponent {
         });
       }, 2500);
     });
+  }
+
+  getLastDietNotificationForTrainer(){
+    const token = this.authService.getDecodedToken();
+    const trainer = token.role.find((item: any) => item.role == "TRAINER");
+    if(trainer){
+      const authData = this.authService.getAuthData().toPromise();
+      authData.then((response: any) =>{
+        if(response){
+          this.notificationService.getLastFiveDietNotificationForTrainer(response.trainer.id as number).subscribe((resp: NotificationDto[]) => {
+            this.notification = resp.filter(obj => !obj.viewed);
+          });
+        }
+      }, error => {console.log(error)});
+    }
+    
   }
 }

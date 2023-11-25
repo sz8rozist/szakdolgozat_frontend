@@ -1,6 +1,5 @@
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
-
     <div class="d-flex align-items-center justify-content-between">
       <div  class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
@@ -29,19 +28,19 @@
   
           <span class="nav-link nav-icon" style="cursor: pointer;" (click)="toggleNotificationFunc()" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number">{{notification?.length}}</span>
           </span><!-- End Notification Icon -->
   
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" [ngClass]="{'show': toggleNotification}" [ngStyle]="{'position': toggleNotification ? 'absolute' : '', 'inset': toggleNotification ? '0px 0px auto auto' : '', 'margin': toggleNotification? '0px' : '', 'transform': toggleNotification ? 'translate(-25px, 35px)' : ''}">
             <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              {{notification?.length}} új értesítésed van
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Mutasd mindet</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
   
-            <li class="notification-item">
+            <!--<li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
               <div>
                 <h4>Lorem Ipsum</h4>
@@ -78,14 +77,14 @@
   
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li>-->
   
-            <li class="notification-item">
+            <li class="notification-item" *ngFor="let n of notification">
               <i class="bi bi-info-circle text-primary"></i>
               <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
+                <h4>{{n.guestFirstName + ' ' + n.guestLastName}}</h4>
+                <p>{{n.message}}</p>
+                <p>{{n.date}}</p>
               </div>
             </li>
   
@@ -93,7 +92,7 @@
               <hr class="dropdown-divider">
             </li>
             <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
+              <a href="#">Mutasd az összes új értesítést</a>
             </li>
   
           </ul><!-- End Notification Dropdown Items -->

@@ -10,6 +10,7 @@ import { SocketDietDto } from 'src/app/model/dto/SocketDietDto';
 import { DietDto } from 'src/app/model/dto/DietDto';
 import { GuestService } from 'src/app/service/guest.service';
 import { Trainer } from 'src/app/model/Trainer';
+import { NotificationService } from 'src/app/service/notification.service';
 @Component({
   selector: 'app-diet-diary',
   templateUrl: './diet-diary.component.html',
@@ -53,7 +54,8 @@ export class DietDiaryComponent {
     private dietService: DietService,
     private authService: AuthService,
     private toast: NgToastService,
-    private guestService: GuestService
+    private guestService: GuestService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {}
@@ -194,7 +196,7 @@ export class DietDiaryComponent {
         foodId: food.foodId,
         dietId: food.dietId
       }
-      this.dietService.sendNotificationToTrainer(data);
+      this.notificationService.sendNotificationToTrainer(data);
       this.loadDiet(this.date);
     }, error =>{
       console.log(error.mesage);

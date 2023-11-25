@@ -1,4 +1,4 @@
-<app-navbar (logoutEvent)="onLogout()" *ngIf="authService.isLoggedIn$ | async"></app-navbar>
+<app-navbar (logoutEvent)="onLogout()" *ngIf="authService.isLoggedIn$ | async" [notification]="notification"></app-navbar>
 <div class="container-fluid">
   <div class="row">
     <app-sidebar (chatWindow)="getUserToChatWindow($event)" *ngIf="authService.isLoggedIn$ | async"></app-sidebar>

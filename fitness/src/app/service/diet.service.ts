@@ -67,12 +67,4 @@ export class DietService {
   updateDiet(data: DietUpdateRequest, dietId: number){
     return this.http.put(`${this.apiUrlService.getApiUrl()}/diet/${dietId}`, data);
   }
-
-  sendNotificationToTrainer(message: SocketDietDto) {
-    this.webSocketService.sendDietNotification(message);
-  }
-
-  getTrainerNotification() {
-    return this.webSocketService.getDietNotificationToTrainer();
-  }
 }
