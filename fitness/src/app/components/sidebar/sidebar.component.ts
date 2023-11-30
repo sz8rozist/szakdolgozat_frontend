@@ -3,6 +3,7 @@ import { AuthService } from '../../service/auth.service';
 import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/model/User';
 import { UserDto } from 'src/app/model/dto/UserDto';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,7 +17,8 @@ export class SidebarComponent {
   users: UserDto[] = [];
   @Output() chatWindow = new EventEmitter<UserDto>();
   constructor(private authService: AuthService,
-    private userService: UserService){}
+    private userService: UserService,
+    private translateService: TranslateService){}
 
   getAuthData(){
     this.authService.getAuthData().subscribe((response: User) =>{
@@ -63,6 +65,12 @@ export class SidebarComponent {
         reader.readAsDataURL(response);
       });
     }
+  }
+
+  changeLang(lang: string){
+    const selectedLanguage = lang;
+    localStorage.setItem('lang', selectedLanguage);
+    this.translateService.use(selectedLanguage);
   }
 
 }

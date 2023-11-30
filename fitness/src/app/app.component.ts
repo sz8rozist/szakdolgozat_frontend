@@ -8,11 +8,12 @@ import { NotificationModel } from './model/NotificationModel';
 import { NotificationService } from './service/notification.service';
 import { NotificationDto } from './model/dto/NotificationDto';
 import { User } from './model/User';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'My Fitness';
@@ -21,46 +22,59 @@ export class AppComponent {
   user?: UserDto;
   notification?: NotificationDto[];
 
-  constructor(private router: Router,
-     public authService: AuthService,
-      private notificationService: NotificationService,
-       private toast: NgToastService) {}
-  ngOnInit(){
-   this.getTrainerNotification();
-   this.getLastDietNotificationForTrainer();
+  constructor(
+    public authService: AuthService,
+    private notificationService: NotificationService,
+    private toast: NgToastService,
+    private translateService: TranslateService
+  ) {}
+  ngOnInit() {
+    this.getTrainerNotification();
+    this.getLastDietNotificationForTrainer();
+    this.translateService.setDefaultLang('hu');
+    this.translateService.use(localStorage.getItem('lang') || 'hu');
   }
 
-  onLogout(){
+  onLogout() {
     this.authService.logout();
   }
 
-  getUserToChatWindow(value: UserDto){
+  getUserToChatWindow(value: UserDto) {
     this.user = value;
   }
 
-  getTrainerNotification(){
-    this.notificationService.getTrainerNotification().subscribe((response: NotificationModel) =>{
-      setTimeout(() => {
-        this.toast.info({
-          detail: 'Értesítés',
-          summary: response.message,
-          duration: 2000,
-          type: 'info',
-        });
-      }, 2500);
-    });
+  getTrainerNotification() {
+    this.notificationService
+      .getTrainerNotification()
+      .subscribe((response: NotificationModel) => {
+        setTimeout(() => {
+          this.toast.info({
+            detail: 'Értesítés',
+            summary: response.message,
+            duration: 2000,
+            type: 'info',
+          });
+        }, 2500);
+      });
   }
 
-  getLastDietNotificationForTrainer(){
-      const authData = this.authService.getAuthData().toPromise();
-      authData.then((response: any) =>{
-        if(response.trainer != null){
-          this.notificationService.getLastFiveDietNotificationForTrainer(response.trainer.id as number).subscribe((resp: NotificationDto[]) => {
-            this.notification = resp.filter(obj => !obj.viewed);
-          });
+  getLastDietNotificationForTrainer() {
+    const authData = this.authService.getAuthData().toPromise();
+    authData.then(
+      (response: any) => {
+        if (response.trainer != null) {
+          this.notificationService
+            .getLastFiveDietNotificationForTrainer(
+              response.trainer.id as number
+            )
+            .subscribe((resp: NotificationDto[]) => {
+              this.notification = resp.filter((obj) => !obj.viewed);
+            });
         }
-      }, error => {console.log(error)});
-    
-    
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

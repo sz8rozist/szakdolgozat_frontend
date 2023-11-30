@@ -1,0 +1,15 @@
+{
+    "felhasznalonev": "Felhasználónév",
+    "jelszo": "Jelszó",
+    "bejelentkezes": "Bejelentkezés",
+    "nyelv": "Nyelv",
+    "kezdolap": "Kezdőlap",
+    "jelentkezz_be": "Jelentkezz be a fiókodba",
+    "felhasznalonev_es_jelszo": "Add meg a felhasználóneved és a jelszavad",
+    "magyar": "Magyar",
+    "angol": "Angol",
+    "emlekezz_ram": "Emlékezz rám",
+    "nincs_meg_fiokod":" Nincs még fiókod?",
+    "keszits_egyet": "Készíts egyet",
+    "keszitette": "Készítette"
+}
