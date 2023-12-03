@@ -1,12 +1,12 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Étkezés szerkesztése</h1>
+    <h1>{{"etkezes_szerkesztes"|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-        <li class="breadcrumb-item">Étrend</li>
-        <li class="breadcrumb-item">Étkezési napló</li>
-        <li class="breadcrumb-item active">Étkezés szerkesztése</li>
+        <li class="breadcrumb-item"><a href="index.html">{{"kezdolap"|translate}}</a></li>
+        <li class="breadcrumb-item">{{"etrend"|translate}}</li>
+        <li class="breadcrumb-item">{{"etkezesi_naplo"|translate}}</li>
+        <li class="breadcrumb-item active">{{"etkezes_szerkesztes"|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -16,7 +16,7 @@
         <div class="card">
           <div class="card-header mb-3">
             <div class="row">
-                <div class="col-lg-6">Étkezés</div>
+                <div class="col-lg-6">{{"etkezes"|translate}}</div>
                 <div class="col-lg-6 text-end">
                     <button (click)="saveEtkezes()" [disabled]="foodForm.invalid || dietForm.invalid" class="btn btn-success">Étkezés mentése</button>
                 </div>
@@ -39,7 +39,7 @@
                           {{ food.name }}
                         </option>
                       </select>
-                      <label for="floatingSelect">Étel</label>
+                      <label for="floatingSelect">{{"etel"|translate}}</label>
                     </div>
                   </div>
                   <div class="col-md-6" style="margin-top: 0;">
@@ -52,7 +52,7 @@
                         placeholder="Your Email"
                         readonly
                       />
-                      <label for="floatingEmail">Kalória (100g)</label>
+                      <label for="floatingEmail">{{"kaloria"|translate}} (100g)</label>
                     </div>
                     <span
                       class="text-danger"
@@ -77,7 +77,7 @@
                         placeholder="Password"
                         readonly
                       />
-                      <label for="floatingPassword">Szénhidrát (100g)</label>
+                      <label for="floatingPassword">{{"szenhidrat"|translate}} (100g)</label>
                     </div>
                     <span
                       class="text-danger"
@@ -102,7 +102,7 @@
                         placeholder="Password"
                         readonly
                       />
-                      <label for="floatingPassword">Fehérje (100g)</label>
+                      <label for="floatingPassword">{{"feherje"|translate}} (100g)</label>
                     </div>
                     <span
                       class="text-danger"
@@ -127,7 +127,7 @@
                         placeholder="Password"
                         readonly
                       />
-                      <label for="floatingPassword">Zsír (100g)</label>
+                      <label for="floatingPassword">{{"zsir"|translate}} (100g)</label>
                     </div>
                     <span
                       class="text-danger"
@@ -155,7 +155,7 @@
                         id="floatingPassword"
                         placeholder="Password"
                       />
-                      <label for="floatingPassword">Mennyiség</label>
+                      <label for="floatingPassword">{{"mennyiseg"|translate}}</label>
                     </div>
                     <span
                       class="text-danger"
@@ -179,7 +179,7 @@
                         id="floatingPassword"
                         placeholder="Password"
                       />
-                      <label for="floatingPassword">Dátum</label>
+                      <label for="floatingPassword">{{"datum"|translate}}</label>
                     </div>
                     <span
                       class="text-danger"
@@ -196,12 +196,12 @@
                         formControlName="type"
                         aria-label="Floating label select example"
                       >
-                        <option value="BREAKFAST">Reggeli</option>
-                        <option value="LUNCH">Ebéd</option>
-                        <option value="DINNER">Vacsora</option>
-                        <option value="SNACK">Snack</option>
+                        <option value="BREAKFAST">{{"reggeli"|translate}}</option>
+                        <option value="LUNCH">{{"ebed"|translate}}</option>
+                        <option value="DINNER">{{"vacsora"|translate}}</option>
+                        <option value="SNACK">{{"snack"|translate}}</option>
                       </select>
-                      <label for="floatingPassword">Típus</label>
+                      <label for="floatingPassword">{{"tipus"|translate}}</label>
                     </div>
                     <span
                       class="text-danger"

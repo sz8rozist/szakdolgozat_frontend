@@ -1,12 +1,12 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Új étel</h1>
+    <h1>{{"uj_etel"|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-        <li class="breadcrumb-item">Étrend</li>
-        <li class="breadcrumb-item">Ételek</li>
-        <li class="breadcrumb-item active">Új étel</li>
+        <li class="breadcrumb-item"><a href="index.html">{{"kezdolap"|translate}}</a></li>
+        <li class="breadcrumb-item">{{"etrend"|translate}}</li>
+        <li class="breadcrumb-item">{{"etelek"|translate}}</li>
+        <li class="breadcrumb-item active">{{"uj_etel"|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -15,13 +15,13 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Étel hozzáadása</h5>
+            <h5 class="card-title">{{"etel_hozzaadasa"|translate}}</h5>
 
             <!-- Horizontal Form -->
             <form [formGroup]="foodForm" (ngSubmit)="onSubmit()">
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label"
-                  >Név</label
+                  >{{"etel_nev"|translate}}</label
                 >
                 <div class="col-sm-10">
                   <input
@@ -40,7 +40,7 @@
               </div>
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label"
-                  >Kalória (100g)</label
+                  >{{"kaloria"|translate}} (100g)</label
                 >
                 <div class="col-sm-10">
                   <div class="input-group">
@@ -70,7 +70,7 @@
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >Szénhidrát (100g)</label
+                  >{{"szenhidrat"|translate}} (100g)</label
                 >
                 <div class="col-sm-10">
                   <div class="input-group">
@@ -100,7 +100,7 @@
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >Fehérje (100g)</label
+                  >{{"fehejer"|translate}} (100g)</label
                 >
                 <div class="col-sm-10">
                   <div class="input-group">
@@ -130,7 +130,7 @@
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >Zsír (100g)</label
+                  >{{"zsir"|translate}} (100g)</label
                 >
                 <div class="col-sm-10">
                   <div class="input-group">
@@ -164,7 +164,7 @@
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Mentés
+                {{"mentes"|translate}}
                 </button>
               </div>
             </form>

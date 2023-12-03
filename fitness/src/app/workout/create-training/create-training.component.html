@@ -1,11 +1,11 @@
 <main class="main" id="main">
   <div class="pagetitle">
-    <h1>Edzés tervezés</h1>
+    <h1>{{'edzes_tervezes'|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-        <li class="breadcrumb-item">Edzés</li>
-        <li class="breadcrumb-item active">Edzés tervezés</li>
+        <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
+        <li class="breadcrumb-item">{{'edzes'|translate}}</li>
+        <li class="breadcrumb-item active">{{'edzes_tervezes'|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -13,7 +13,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header">Dátum</div>
+          <div class="card-header">{{'datum'|translate}}</div>
           <div class="card-body">
             <div class="form-floating mb-3 mt-3">
               <input
@@ -22,25 +22,25 @@
                 id="floatingInput"
                 [(ngModel)]="date"
               />
-              <label for="floatingInput">Dátum</label>
+              <label for="floatingInput">{{'datum'|translate}}</label>
             </div>
           </div>
         </div>
       </div>
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header">Edzés tervezés</div>
+          <div class="card-header">{{'edzes_tervezes'|translate}}</div>
           <div class="card-body">
             <button (click)="addWorkout()" class="btn btn-primary mt-3">
-              Új gyakorlat
+              {{'uj_gyakorlat'|translate}}
             </button>
             <table class="table table-bordered mt-3">
               <thead>
                 <tr>
-                  <th>Gyakorlat</th>
-                  <th>Sorozatszám</th>
-                  <th>Ismétlésszám</th>
-                  <th>Művelet</th>
+                  <th>{{'gyakorlat'|translate}}</th>
+                  <th>{{'sorozatszam'|translate}}</th>
+                  <th>{{'ismetlesszam'|translate}}</th>
+                  <th>{{'muvelet'|translate}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,7 +75,7 @@
               </tbody>
             </table>
             <button (click)="saveWorkout()" class="btn btn-success mt-3">
-                Mentés
+              {{'mentes'|translate}}
               </button>
           </div>
         </div>

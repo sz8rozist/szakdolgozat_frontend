@@ -1,12 +1,12 @@
 <main class="main" id="main">
   <div class="pagetitle">
-    <h1>Új gyakorlat</h1>
+    <h1>{{'uj_gyakorlat'|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-        <li class="breadcrumb-item">Edzés</li>
-        <li class="breadcrumb-item">Gyakorlatok</li>
-        <li class="breadcrumb-item active">Új gyakorlat</li>
+        <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
+        <li class="breadcrumb-item">{{'edzes'|translate}}</li>
+        <li class="breadcrumb-item">{{'gyakorlatok'|translate}}</li>
+        <li class="breadcrumb-item active">{{'uj_gyakorlat'|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -15,11 +15,11 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Gyakorlat hozzáadása</h5>
+            <h5 class="card-title">{{'gyakorlat_hozzaadasa'|translate}}</h5>
             <form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label"
-                  >Név</label
+                  >{{'nev'|translate}}</label
                 >
                 <div class="col-sm-10">
                   <input
@@ -38,7 +38,7 @@
               </div>
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label"
-                  >Leírás</label
+                  >{{'leiras'|translate}}</label
                 >
                 <div class="col-sm-10">
                   <input
@@ -56,19 +56,19 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Célzott testrész</label>
+                <label class="col-sm-2 col-form-label">{{'celzott_testresz'|translate}}</label>
                 <div class="col-sm-10">
                   <select
                     formControlName="targetedBodyPart"
                     class="form-select"
                     aria-label="Default select example"
                   >
-                    <option value="CHEST">Mell</option>
-                    <option value="LEGS">Láb</option>
-                    <option value="BACK">Hát</option>
-                    <option value="ARMS">Kar</option>
-                    <option value="SHOULDER">Váll</option>
-                    <option value="ABS">Has</option>
+                    <option value="CHEST">{{'mell'|translate}}</option>
+                    <option value="LEGS">{{'lab'|translate}}</option>
+                    <option value="BACK">{{'hat'|translate}}</option>
+                    <option value="ARMS">{{'kar'|translate}}</option>
+                    <option value="SHOULDER">{{'kar'|translate}}</option>
+                    <option value="ABS">{{'has'|translate}}</option>
                   </select>
                   <span
                     class="text-danger"
@@ -84,7 +84,7 @@
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Mentés
+                {{'mentes'|translate}}
                 </button>
               </div>
             </form>

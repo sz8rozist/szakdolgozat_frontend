@@ -8,6 +8,9 @@ import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditWorkoutComponent } from './edit-workout/edit-workout.component';
 import { SharedModule } from '../shared/shared.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpLoaderFactory } from '../app.module';
 
 
 
@@ -24,7 +27,14 @@ import { SharedModule } from '../shared/shared.module';
     WorkoutRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ]
 })
 export class WorkoutModule { }

@@ -11,14 +11,14 @@
     <li *ngIf="auth?.guest != null" class="nav-item">
       <a class="nav-link" routerLink="trainer">
         <i class="bi bi-person-plus"></i>
-        <span>Edző kiválasztása</span>
+        <span>{{'edzo_kivalasztas_menu'|translate}}</span>
       </a>
     </li>
 
     <li class="nav-item" *ngIf="auth?.trainer != null">
       <a routerLink="trainer/trainer-guests" class="nav-link">
         <i class="bi bi-people"></i>
-        <span>Vendégeim</span>
+        <span>{{'vendegeim' | translate}}</span>
       </a>
     </li>
 
@@ -31,7 +31,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-shop-window"></i><span>Étrend</span
+        <i class="bi bi-shop-window"></i><span>{{'etrend' | translate}}</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </span>
       <ul
@@ -42,25 +42,25 @@
       >
         <li>
           <a routerLink="diet/food">
-            <i class="bi bi-circle"></i><span>Ételek</span>
+            <i class="bi bi-circle"></i><span>{{'etelek'|translate}}</span>
           </a>
         </li>
         <li *ngIf="auth?.guest; else trainerLink">
           <a routerLink="diet/create">
-            <i class="bi bi-circle"></i><span>Étrend tervezés</span>
+            <i class="bi bi-circle"></i><span>{{'etrend_tervezes'|translate}}</span>
           </a>
         </li>
         <ng-template #trainerLink>
           <li>
             <a routerLink="diet/create-trainer">
-              <i class="bi bi-circle"></i><span>Étrend tervezés</span>
+              <i class="bi bi-circle"></i><span>{{'etrend_tervezes'|translate}}</span>
             </a>
           </li>
         </ng-template>
         
         <li *ngIf="auth?.guest != null">
           <a routerLink="diet/diary">
-            <i class="bi bi-circle"></i><span>Étkezési napló</span>
+            <i class="bi bi-circle"></i><span>{{'etkezesi_naplo'|translate}}</span>
           </a>
         </li>
       </ul>
@@ -76,7 +76,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-heart-pulse"></i><span>Edzés</span
+        <i class="bi bi-heart-pulse"></i><span>{{'edzes'|translate}}</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </span>
       <ul
@@ -87,17 +87,17 @@
       >
         <li>
           <a routerLink="workout/exercises">
-            <i class="bi bi-circle"></i><span>Gyakorlatok</span>
+            <i class="bi bi-circle"></i><span>{{'gyakorlatok'|translate}}</span>
           </a>
         </li>
         <li>
           <a routerLink="workout/create">
-            <i class="bi bi-circle"></i><span>Edzés tervezés</span>
+            <i class="bi bi-circle"></i><span>{{'edzes_tervezes'|translate}}</span>
           </a>
         </li>
         <li *ngIf="auth?.guest != null">
           <a routerLink="workout/training-log">
-            <i class="bi bi-circle"></i><span>Edzés napló</span>
+            <i class="bi bi-circle"></i><span>{{'edzes_naplo'|translate}}</span>
           </a>
         </li>
       </ul>

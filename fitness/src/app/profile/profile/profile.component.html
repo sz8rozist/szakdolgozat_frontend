@@ -1,10 +1,10 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Profile</h1>
+    <h1>{{'profil'|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-        <li class="breadcrumb-item active">Profil</li>
+        <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
+        <li class="breadcrumb-item active">{{'profil'|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -26,8 +26,8 @@
               {{ trainer?.first_name || guest?.first_name }}
               {{ trainer?.last_name || guest?.last_name }}
             </h2>
-            <h3 *ngIf="trainer">Edző</h3>
-            <h3 *ngIf="guest">Vendég</h3>
+            <h3 *ngIf="trainer">{{'edzo'|translate}}</h3>
+            <h3 *ngIf="guest">{{'vendeg'|translate}}</h3>
             <div class="social-links mt-2">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -48,7 +48,7 @@
                   [class.active]="activeTab === 'overview'"
                   (click)="setActiveTab('overview')"
                 >
-                  Áttekintés
+                {{'attekintes'|translate}}
                 </button>
               </li>
               <li class="nav-item">
@@ -57,7 +57,7 @@
                   [class.active]="activeTab === 'edit'"
                   (click)="setActiveTab('edit')"
                 >
-                  Profil módosítás
+                {{'profil_modositas'|translate}}
                 </button>
               </li>
               <li *ngIf="guest" class="nav-item">
@@ -66,7 +66,7 @@
                   [class.active]="activeTab === 'settings'"
                   (click)="setActiveTab('settings')"
                 >
-                  Edző
+                {{'edzo'|translate}}
                 </button>
               </li>
               <li class="nav-item">
@@ -75,7 +75,7 @@
                   [class.active]="activeTab === 'change-password'"
                   (click)="setActiveTab('change-password')"
                 >
-                  Jelszó változtatás
+                {{'jelszo_valtoztatas'|translate}}
                 </button>
               </li>
             </ul>
@@ -88,43 +88,43 @@
               >
                 <!--<h5 class="card-title">About</h5>
                   <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>-->
-                <h5 class="card-title">Profil Adatok</h5>
+                <h5 class="card-title">{{'profil_adatok'|translate}}</h5>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Vezetéknév</div>
+                  <div class="col-lg-3 col-md-4 label">{{'veznev'|translate}}</div>
                   <div class="col-lg-9 col-md-8">
                     {{ trainer?.first_name || guest?.first_name }}
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Keresztnév</div>
+                  <div class="col-lg-3 col-md-4 label">{{'kernev'|translate}}</div>
                   <div class="col-lg-9 col-md-8">
                     {{ trainer?.last_name || guest?.last_name }}
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Email cím</div>
+                  <div class="col-lg-3 col-md-4 label">{{'email'|translate}}</div>
                   <div class="col-lg-9 col-md-8">
                     {{ trainer?.email || guest?.email }}
                   </div>
                 </div>
 
                 <div class="row" *ngIf="trainer?.type">
-                  <div class="col-lg-3 col-md-4 label">Típus</div>
+                  <div class="col-lg-3 col-md-4 label">{{'tipus'|translate}}</div>
                   <div class="col-lg-9 col-md-8">{{ trainer?.type }}</div>
                 </div>
 
                 <div class="row" *ngIf="guest?.age">
-                  <div class="col-lg-3 col-md-4 label">Életkor</div>
+                  <div class="col-lg-3 col-md-4 label">{{'eletkor'|translate}}</div>
                   <div class="col-lg-9 col-md-8">{{ guest?.age }}</div>
                 </div>
 
                 <div class="row" *ngIf="guest?.age">
-                  <div class="col-lg-3 col-md-4 label">Magasság</div>
+                  <div class="col-lg-3 col-md-4 label">{{'magassag'|translate}}</div>
                   <div class="col-lg-9 col-md-8">{{ guest?.height }} cm</div>
                 </div>
 
                 <div class="row" *ngIf="guest?.weight">
-                  <div class="col-lg-3 col-md-4 label">Testsúly</div>
+                  <div class="col-lg-3 col-md-4 label">{{'testsuly'|translate}}</div>
                   <div class="col-lg-9 col-md-8">{{ guest?.weight }} kg</div>
                 </div>
               </div>
@@ -140,7 +140,7 @@
                     <label
                       for="profileImage"
                       class="col-md-4 col-lg-3 col-form-label"
-                      >Profilkép</label
+                      >{{'profilkep'|translate}}</label
                     >
                     <div class="col-md-8 col-lg-9">
                       <img [src]="profileImageSrc" alt="Profile" />
@@ -161,7 +161,7 @@
                     <label
                       for="fullName"
                       class="col-md-4 col-lg-3 col-form-label"
-                      >Vezetéknév</label
+                      >{{'veznev'|translate}}</label
                     >
                     <div class="col-md-8 col-lg-9">
                       <input
@@ -175,14 +175,14 @@
                         *ngIf="this.profileForm.get('firstName')?.errors?.['required'] && this.profileForm.get('firstName')?.touched"
                         class="text-danger"
                       >
-                        Kötelező kitölteni!
+                      {{'kot_veznev'|translate}}
                       </span>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label for="about" class="col-md-4 col-lg-3 col-form-label"
-                      >Keresztnév</label
+                      >{{'kernev'|translate}}</label
                     >
                     <div class="col-md-8 col-lg-9">
                       <input
@@ -196,7 +196,7 @@
                         *ngIf="this.profileForm.get('lastName')?.errors?.['required'] && this.profileForm.get('lastName')?.touched"
                         class="text-danger"
                       >
-                        Kötelező kitölteni!
+                      {{'kot_kernev'|translate}}
                       </span>
                     </div>
                   </div>
@@ -205,7 +205,7 @@
                     <label
                       for="company"
                       class="col-md-4 col-lg-3 col-form-label"
-                      >Email cím</label
+                      >{{'email'|translate}}</label
                     >
                     <div class="col-md-8 col-lg-9">
                       <input
@@ -219,20 +219,20 @@
                         *ngIf="this.profileForm.get('email')?.errors?.['required'] && this.profileForm.get('email')?.touched"
                         class="text-danger"
                       >
-                        Kötelező kitölteni!
+                      {{'kot_email'|translate}}
                       </span>
                       <span
                         *ngIf="this.profileForm.get('email')?.errors?.['email'] && this.profileForm.get('email')?.touched"
                         class="text-danger"
                       >
-                        Hibás formátum!
+                      {{'hibas_email'|translate}}
                       </span>
                     </div>
                   </div>
                   <ng-container *ngIf="guest">
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label"
-                        >Életkor</label
+                        >{{'eletkor'|translate}}</label
                       >
                       <div class="col-md-8 col-lg-9">
                         <div class="input-group">
@@ -244,7 +244,7 @@
                             formControlName="age"
                           />
                           <span class="input-group-text" id="basic-addon2"
-                            >év</span
+                            >{{'ev'|translate}}</span
                           >
                         </div>
                         <span
@@ -257,7 +257,7 @@
                     </div>
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label"
-                        >Magasság</label
+                        >{{'magassag'|translate}}</label
                       >
                       <div class="col-md-8 col-lg-9">
                         <div class="input-group">
@@ -283,7 +283,7 @@
                     </div>
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label"
-                        >Testsúly</label
+                        >{{'testsuly'|translate}}</label
                       >
                       <div class="col-md-8 col-lg-9">
                         <div class="input-group">
@@ -310,7 +310,7 @@
                   <ng-container *ngIf="trainer">
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label"
-                        >Típus</label
+                        >{{'tipus'|translate}}</label
                       >
                       <div class="col-md-8 col-lg-9">
                         <input
@@ -325,10 +325,10 @@
                   </ng-container>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid" (click)="updateProfile()">
-                      Módosítások mentése
+                      {{'modositasok_mentese'|translate}}
                     </button>
                     <button type="submit" class="btn btn-primary ms-2" (click)="uploadProfilePicture()">
-                      Profilkép feltöltése
+                      {{'profilkep_feltoltes'|translate}}
                     </button>
                   </div>
                 </form>
@@ -342,33 +342,33 @@
               >
                 <!-- Settings Form -->
                 <ng-container *ngIf="guestTrainer != null">
-                  <h5 class="card-title">Edző Adatok</h5>
+                  <h5 class="card-title">{{'edzo'|translate}}</h5>
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Vezetéknév</div>
+                    <div class="col-lg-3 col-md-4 label">{{'veznev'|translate}}</div>
                     <div class="col-lg-9 col-md-8">
                       {{ guestTrainer.first_name }}
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Keresztnév</div>
+                    <div class="col-lg-3 col-md-4 label">{{'kernev'|translate}}</div>
                     <div class="col-lg-9 col-md-8">
                       {{  guestTrainer.last_name }}
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email cím</div>
+                    <div class="col-lg-3 col-md-4 label">{{'email'|translate}}</div>
                     <div class="col-lg-9 col-md-8">
                       {{  guestTrainer.email }}
                     </div>
                   </div>
   
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Típus</div>
+                    <div class="col-lg-3 col-md-4 label">{{'tipus'|translate}}</div>
                     <div class="col-lg-9 col-md-8">{{ guestTrainer.type }}</div>
                   </div>
                 </ng-container>                
                 <ng-container *ngIf="guestTrainer == null">
-                  <p>Nincs rögzítve edző.</p>
+                  <p>{{'nincs_rogzitve_edzo'|translate}}</p>
                 </ng-container>
                 <!-- End settings Form -->
               </div>
@@ -385,7 +385,7 @@
                     <label
                       for="currentPassword"
                       class="col-md-4 col-lg-3 col-form-label"
-                      >Jelenlegi jelszó</label
+                      >{{'jelenlegi_jelszo'|translate}}</label
                     >
                     <div class="col-md-8 col-lg-9">
                       <input
@@ -404,7 +404,7 @@
                     <label
                       for="newPassword"
                       class="col-md-4 col-lg-3 col-form-label"
-                      >Új jelszó</label
+                      >{{'uj_jelszo'|translate}}</label
                     >
                     <div class="col-md-8 col-lg-9">
                       <input
@@ -422,7 +422,7 @@
                     <label
                       for="renewPassword"
                       class="col-md-4 col-lg-3 col-form-label"
-                      >Új jelszó mégegyszer</label
+                      >{{'uj_jelszo_megegyszer'|translate}}</label
                     >
                     <div class="col-md-8 col-lg-9">
                       <input
@@ -439,7 +439,7 @@
 
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary" (click)="changePassword()" [disabled]="this.newPasswordForm.invalid">
-                      Jelszó változtatás
+                      {{'jelszo_valtoztatas'|translate}}
                     </button>
                   </div>
                 </form>

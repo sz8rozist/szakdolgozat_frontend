@@ -1,11 +1,11 @@
 <main class="main" id="main">
   <div class="pagetitle">
-    <h1>Gyakorlatok</h1>
+    <h1>{{'gyakorlatok'|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-        <li class="breadcrumb-item">Edzés</li>
-        <li class="breadcrumb-item active">Gyakorlatok</li>
+        <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
+        <li class="breadcrumb-item">{{'edzes'|translate}}</li>
+        <li class="breadcrumb-item active">{{'gyakorlatok'|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -16,7 +16,7 @@
           <div class="card-body">
             <div class="card-title">
               <button routerLink="/workout/addExercise" class="btn btn-primary">
-                Új gyakorlat
+                {{'uj_gyakorlat'|translate}}
               </button>
             </div>
             <!-- Table with stripped rows -->
@@ -26,16 +26,16 @@
                 role="alert"
               >
                 <i class="bi bi-exclamation-triangle me-1"></i>
-                Nincs rögzítve gyakorlat.
+                {{'nincs_rogzitve_gyakorlat'|translate}}
               </div>
             </div>
             <table *ngIf="exercises.length > 0" class="table datatable">
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Név</th>
-                  <th scope="col">Leírás</th>
-                  <th scope="col">Testrész</th>
+                  <th scope="col">{{'nev'|translate}}</th>
+                  <th scope="col">{{'leiras'|translate}}</th>
+                  <th scope="col">{{'testresz'|translate}}</th>
                 </tr>
               </thead>
               <tbody>

@@ -14,10 +14,10 @@
               <div class="card-body">
                 <div class="pt-4 pb-2">
                   <h5 class="card-title text-center pb-0 fs-4">
-                    Készíts egy fiókot
+                    {{'keszits_egy_fiokot'|translate}}
                   </h5>
                   <p class="text-center small">
-                    Add meg a személyes adataidat hogy elkészüljön a fiókod
+                    {{'szemelyes_adatok'|translate}}
                   </p>
                 </div>
                 <form
@@ -26,7 +26,7 @@
                   (ngSubmit)="onSubmit()"
                 >
                   <div class="col-6">
-                    <label for="yourName" class="form-label">Vezetéknév</label>
+                    <label for="yourName" class="form-label">{{'veznev' |translate}}</label>
                     <input
                       type="text"
                       name="name"
@@ -39,11 +39,11 @@
                       class="invalid-feedback"
                       [ngClass]="{'display-block': this.signupForm.get('firstName')?.errors?.['required'] && (this.signupForm.get('firstName')?.dirty || this.signupForm.get('firstName')?.touched)}"
                     >
-                      A vezetéknév megadása kötelező.
+                      {{'kot_veznev'|translate}}
                     </div>
                   </div>
                   <div class="col-6">
-                    <label for="yourEmail" class="form-label">Keresztnév</label>
+                    <label for="yourEmail" class="form-label">{{'kernev'|translate}}</label>
                     <input
                       type="email"
                       name="email"
@@ -56,11 +56,11 @@
                       class="invalid-feedback"
                       [ngClass]="{'display-block': this.signupForm.get('lastName')?.errors?.['required'] && (this.signupForm.get('lastName')?.dirty || this.signupForm.get('lastName')?.touched)}"
                     >
-                      A keresztnév megadása kötelező.
+                      {{'kot_kernev' | translate}}
                     </div>
                   </div>
                   <div class="col-12">
-                    <label for="yourUsername" class="form-label">Email</label>
+                    <label for="yourUsername" class="form-label">{{'email'| translate}}</label>
                     <div class="input-group has-validation">
                       <span class="input-group-text" id="inputGroupPrepend"
                         ><i class="fa-solid fa-at"></i
@@ -77,19 +77,19 @@
                         class="invalid-feedback"
                         [ngClass]="{'display-block': this.signupForm.get('email')?.errors?.['required'] && (this.signupForm.get('email')?.dirty || this.signupForm.get('email')?.touched)}"
                       >
-                        Az email cím megadása kötelező.
+                        {{'kot_email'|translate}}
                       </div>
                       <div
                         class="invalid-feedback"
                         [ngClass]="{'display-block': this.signupForm.get('email')?.errors?.['email']}"
                       >
-                        Hibás email formátum.
+                        {{'hibas_email'|translate}}
                       </div>
                     </div>
                   </div>
                   <div class="col-12">
                     <label for="yourUsername" class="form-label"
-                      >Felhasználónév</label
+                      >{{'felhasznalonev'|translate}}</label
                     >
                     <div class="input-group has-validation">
                       <span class="input-group-text" id="inputGroupPrepend"
@@ -107,12 +107,12 @@
                         class="invalid-feedback"
                         [ngClass]="{'display-block': this.signupForm.get('username')?.errors?.['required'] && (this.signupForm.get('username')?.dirty || this.signupForm.get('username')?.touched)}"
                       >
-                        A felhasználónév megadása kötelező.
+                        {{'kot_felhasznalonev'|translate}}
                       </div>
                     </div>
                   </div>
                   <div class="col-12">
-                    <label for="yourPassword" class="form-label">Jelszó</label>
+                    <label for="yourPassword" class="form-label">{{'jelszo'|translate}}</label>
                     <div class="input-group">
                       <span class="input-group-text" id="inputGroupPrepend"
                         ><i class="fa-solid fa-key"></i
@@ -130,13 +130,13 @@
                       class="invalid-feedback"
                       [ngClass]="{'display-block': this.signupForm.get('password')?.errors?.['required'] && (this.signupForm.get('password')?.dirty || this.signupForm.get('password')?.touched)}"
                     >
-                      A jelszó megadása kötelező.
+                      {{'kot_jelszo'|translate}}
                     </div>
                     <div
                       class="invalid-feedback"
                       [ngClass]="{'display-block': this.signupForm.get('password')?.errors?.['minlength']}"
                     >
-                      A jelszónak minimum 8 karakter hosszúnak kell lennie.
+                      {{'jelszo_hossz'|translate}}
                     </div>
                   </div>
                   <div class="col-12">
@@ -147,15 +147,15 @@
                         aria-label="Floating label select example"
                         formControlName="role"
                       >
-                        <option value="GUEST">Vendég</option>
-                        <option value="TRAINER">Edző</option>
+                        <option value="GUEST">{{'vendeg'|translate}}</option>
+                        <option value="TRAINER">{{'edzo'|translate}}</option>
                       </select>
-                      <label for="floatingSelect">Jogosultság</label>
+                      <label for="floatingSelect">{{'jogosultsag'|translate}}</label>
                       <div
                       class="invalid-feedback"
                       [ngClass]="{'display-block': this.signupForm.get('role')?.errors?.['required'] && (this.signupForm.get('role')?.dirty || this.signupForm.get('role')?.touched)}"
                     >
-                      A jogosultság kiválasztása kötelező.
+                      {{'kot_jogosultsag'|translate}}
                     </div>
                     </div>
                   </div>
@@ -165,13 +165,13 @@
                       type="submit"
                       [disabled]="signupForm.invalid"
                     >
-                      Regisztráció
+                      {{'regisztracio'|translate}}
                     </button>
                   </div>
                   <div class="col-12">
                     <p class="small mb-0">
-                      Van már fiókod?
-                      <a href="#" routerLink="/signin">Jelentkezz be</a>
+                      {{'van_mar_fiokod'|translate}}
+                      <a href="#" routerLink="/signin">{{'jelentkezz_be_signup'|translate}}</a>
                     </p>
                   </div>
                 </form>

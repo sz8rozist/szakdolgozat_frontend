@@ -1,11 +1,11 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Étrend napló</h1>
+    <h1>{{'etkezesi_naplo'|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-        <li class="breadcrumb-item">Étrend</li>
-        <li class="breadcrumb-item active">Étrend napló</li>
+        <li class="breadcrumb-item"><a href="index.html">{{"kezdolap" | translate}}</a></li>
+        <li class="breadcrumb-item">{{"etrend"|translate}}</li>
+        <li class="breadcrumb-item active">{{'etkezesi_naplo'|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -16,7 +16,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-lg-6">
-                <p>Dátum kiválasztása</p>
+                <p>{{"datum"|translate}}</p>
               </div>
               <div class="col-lg-6 text-end">
                 <button
@@ -40,7 +40,7 @@
                 (blur)="loadDietByDate()"
                 id=""
               />
-              <label for="floatingSelect">Dátum</label>
+              <label for="floatingSelect">{{"datum"|translate}}</label>
             </div>
           </div>
         </div>
@@ -48,19 +48,19 @@
           Ehhez a naphoz nem található étrend.
         </div>
         <div *ngIf="diet && diet.diet.length > 0" class="card">
-          <div class="card-header">Ételek</div>
+          <div class="card-header">{{"etelek"|translate}}</div>
           <div class="card-body">
             <table class="table table-bordered mt-3">
               <thead>
                 <tr>
-                  <th>Étel neve</th>
-                  <th>Mennyiség</th>
-                  <th>Típus</th>
-                  <th class="text-end">Szénhidrát (g)</th>
-                  <th class="text-end">Fehérje (g)</th>
-                  <th class="text-end">Zsír (g)</th>
-                  <th class="text-end">Kalória (kCal)</th>
-                  <th>Művelet</th>
+                  <th>{{"etel_nev"|translate}}</th>
+                  <th>{{"mennyiseg"|translate}}</th>
+                  <th>{{"tipus"|translate}}</th>
+                  <th class="text-end">{{"szenhidrat"|translate}} (g)</th>
+                  <th class="text-end">{{"feherje"|translate}} (g)</th>
+                  <th class="text-end">{{"zsir"|translate}} (g)</th>
+                  <th class="text-end">{{"kaloria"|translate}} (kCal)</th>
+                  <th>{{"muvelet"|translate}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -77,21 +77,21 @@
                       class="btn btn-primary btn-sm me-2"
                       routerLink="/diet/edit-food/{{ food.dietId }}"
                     >
-                      Szerkesztés
+                    {{"szerkesztes"|translate}}
                     </button>
                     <button
                     class="btn btn-success btn-sm  me-2"
                     (click)="sendNotificationToTrainer(food)"
                     *ngIf="!food.eated"
                   >
-                    Elfogyasztás
+                  {{"elfogyasztas"|translate}}
                   </button>
                   <button
                     class="btn btn-success btn-sm  me-2"
                     *ngIf="food.eated"
                     disabled
                   >
-                  <i class="bi bi-check" *ngIf="food.eated"></i> Elfogyasztva
+                  <i class="bi bi-check" *ngIf="food.eated"></i> {{"elfogyasztva"|translate}}
                   </button>
                     <button
                       (click)="removeFood(food.dietId)"
@@ -102,7 +102,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <th colspan="3">Összesen:</th>
+                  <th colspan="3">{{"osszesen"|translate}}:</th>
                   <td class="text-end">{{ diet.carbonhydrateSum }}</td>
                   <td class="text-end">{{ diet.proteinSum }}</td>
                   <td class="text-end">{{ diet.fatSum }}</td>
@@ -116,7 +116,7 @@
       </div>
       <div class="col-lg-4">
         <div class="card">
-          <div class="card-header mb-3">Makrotápanyagok</div>
+          <div class="card-header mb-3">{{"makrotapanyagok"|translate}}</div>
           <div class="card-body">
             <canvas
               baseChart

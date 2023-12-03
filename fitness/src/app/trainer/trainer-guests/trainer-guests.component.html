@@ -1,11 +1,11 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Vendégeim</h1>
+      <h1>{{'vendegeim'|translate}}</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-          <li class="breadcrumb-item active">Vendégeim</li>
+          <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
+          <li class="breadcrumb-item active">{{'vendegeim'|translate}}</li>
         </ol>
       </nav>
     </div>
@@ -18,10 +18,10 @@
                 <div class="card-title">
                     <div class="row">
                         <div class="col-lg-9">
-                            <button routerLink="/diet/addFood" class="btn btn-success">Új vendég</button>
+                            <button routerLink="/diet/addFood" class="btn btn-success">{{'uj_vendeg'|translate}}</button>
                         </div>
                         <div class="col-lg-3 text-end">
-                            <input type="text" [(ngModel)]="searchInput" (input)="onSearch()" class="form-control" placeholder="Keresés név alapján...">
+                            <input type="text" [(ngModel)]="searchInput" (input)="onSearch()" class="form-control" placeholder="{{'kereses_nev_alapjan'|translate}}...">
                         </div>
                     </div>
                 </div>
@@ -29,18 +29,18 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Név</th>
-                      <th scope="col">Kor</th>
-                      <th scope="col">Magasság (cm)</th>
-                      <th scope="col">Súly (kg)</th>
-                      <th scope="col">Elérhetőség</th>
+                      <th scope="col">{{'nev'|translate}}</th>
+                      <th scope="col">{{'eletkor'|translate}}</th>
+                      <th scope="col">{{'magassag'|translate}} (cm)</th>
+                      <th scope="col">{{'testsuly'|translate}} (kg)</th>
+                      <th scope="col">{{'elerhetoseg'|translate}}</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngIf="displayedGuest.length == 0">
                         <td colspan="6">
                             <div class="alert alert-info" >
-                                Nincs a keresési feltételnek megfelelő találat.
+                              {{'nincs_talalat'|translate}}
                             </div>
                         </td>
                     </tr>

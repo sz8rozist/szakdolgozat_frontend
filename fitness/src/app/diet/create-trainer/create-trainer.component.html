@@ -1,11 +1,11 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Étrend tervezés</h1>
+    <h1>{{'etrend_tervezes'| translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-        <li class="breadcrumb-item">Étrend</li>
-        <li class="breadcrumb-item active">Étrend tervezés</li>
+        <li class="breadcrumb-item"><a href="index.html">{{"kezdolap" | translate}}</a></li>
+        <li class="breadcrumb-item">{{"etrend"|translate}}</li>
+        <li class="breadcrumb-item active">{{"etrend_tervezes"|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -13,7 +13,7 @@
     <div class="row">
       <div class="col-lg-8">
         <div class="card">
-          <div class="card-header">Vendég kiválasztása</div>
+          <div class="card-header">{{"vendeg_kivalasztasa"|translate}}</div>
           <div class="card-body mt-3">
             <div class="form-floating mb-3">
               <select [(ngModel)]="selectedGuest" class="form-select">
@@ -21,12 +21,12 @@
                   {{ guest.first_name + " " + guest.last_name }}
                 </option>
               </select>
-              <label for="floatingSelect">Vendég</label>
+              <label for="floatingSelect">{{"vendeg"|translate}}</label>
             </div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header">Étel kiválasztása</div>
+          <div class="card-header">{{"etel_kivalasztasa"| translate}}</div>
           <div class="card-body mt-3">
             <div class="row">
               <div class="col-lg-6">
@@ -48,7 +48,7 @@
                     >
                       Az étel kiválasztása kötelező!
                     </span>
-                    <label for="floatingSelect">Étel</label>
+                    <label for="floatingSelect">{{"etel"|translate}}</label>
                   </div>
                   <div class="form-floating mb-3">
                     <select
@@ -57,10 +57,10 @@
                       formControlName="type"
                       aria-label="Floating label select example"
                     >
-                      <option value="BREAKFAST">Reggeli</option>
-                      <option value="LUNCH">Ebéd</option>
-                      <option value="DINNER">Vacsora</option>
-                      <option value="SNACK">Snack</option>
+                      <option value="BREAKFAST">{{"reggeli"|translate}}</option>
+                      <option value="LUNCH">{{"ebed"|translate}}</option>
+                      <option value="DINNER">{{"vacsora"|translate}}</option>
+                      <option value="SNACK">{{"snack"|translate}}</option>
                     </select>
                     <span
                       class="text-danger"
@@ -68,7 +68,7 @@
                     >
                       Az étel típusának kiválasztása kötelező!
                     </span>
-                    <label for="floatingSelect">Étel típusa</label>
+                    <label for="floatingSelect">{{"etel_tipus"|translate}}</label>
                   </div>
                   <div class="form-floating mb-3">
                     <input
@@ -90,7 +90,7 @@
                     >
                       A mennyiség kitöltése kötelező!
                     </span>
-                    <label for="floatingInput">Mennyiség</label>
+                    <label for="floatingInput">{{"mennyiseg"|translate}}</label>
                   </div>
                   <div class="card-footer">
                     <button
@@ -98,7 +98,7 @@
                       class="btn btn-primary"
                       (click)="addFoodToDiet()"
                     >
-                      Hozzáad
+                      {{"hozzaad"|translate}}
                     </button>
                   </div>
                 </form>
@@ -123,21 +123,21 @@
                 >
                   A dátum kitöltése kötelező!
                 </span>
-                <label for="floatingInput">Dátum</label>
+                <label for="floatingInput">{{"datum"|translate}}</label>
               </div>
             </div>
             <div class="card-body">
               <table class="table table-bordered mt-3">
                 <thead>
                   <tr>
-                    <th>Étel neve</th>
-                    <th>Mennyiség</th>
-                    <th>Típus</th>
-                    <th>Szénhidrát (g)</th>
-                    <th>Fehérje (g)</th>
-                    <th>Zsír (g)</th>
-                    <th>Kalória (kCal)</th>
-                    <th>Művelet</th>
+                    <th>{{"etel_nev"|translate}}</th>
+                    <th>{{"mennyiseg"|translate}}</th>
+                    <th>{{"tipus"|translate}}</th>
+                    <th>{{"szenhidrat"|translate}} (g)</th>
+                    <th>{{"feherje"|translate}} (g)</th>
+                    <th>{{"zsir"|translate}} (g)</th>
+                    <th>{{"kaloria"|translate}} (kCal)</th>
+                    <th>{{"muvelet"|translate}}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -161,7 +161,7 @@
                     </tr>
                   </ng-container>
                   <tr>
-                    <th colspan="3">Összesen:</th>
+                    <th colspan="3">{{"osszesen"|translate}}:</th>
                     <td class="text-end">{{ sum.carbonhydrate }}</td>
                     <td class="text-end">{{ sum.protein }}</td>
                     <td class="text-end">{{ sum.fat }}</td>
@@ -177,7 +177,7 @@
                 [disabled]="dietForm.invalid || dietFoods.length == 0"
                 class="btn btn-primary"
               >
-                Étrend mentése
+                {{"mentes"| translate}}
               </button>
             </div>
           </form>
@@ -185,7 +185,7 @@
       </div>
       <div class="col-lg-4">
         <div class="card">
-          <div class="card-header mb-3">Makrotápanyagok</div>
+          <div class="card-header mb-3">{{'makrotapanyagok'|translate}}</div>
           <div class="card-body">
             <canvas
               baseChart

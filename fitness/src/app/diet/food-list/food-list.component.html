@@ -1,11 +1,11 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Ételek</h1>
+    <h1>{{"etelek"|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Kezdőlap</a></li>
-        <li class="breadcrumb-item">Étrend</li>
-        <li class="breadcrumb-item active">Ételek</li>
+        <li class="breadcrumb-item"><a href="index.html">{{"kezdolap"|translate}}</a></li>
+        <li class="breadcrumb-item">{{"etrend"|translate}}</li>
+        <li class="breadcrumb-item active">{{"etelek"|translate}}</li>
       </ol>
     </nav>
   </div>
@@ -15,18 +15,18 @@
         <div class="card">
           <div class="card-body">
             <div class="card-title">
-              <button routerLink="/diet/addFood" class="btn btn-primary">Új étel</button>
+              <button routerLink="/diet/addFood" class="btn btn-primary">{{"uj_etel"|translate}}</button>
             </div>
             <!-- Table with stripped rows -->
             <table class="table datatable">
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Név</th>
-                  <th scope="col">Kalória (100g)</th>
-                  <th scope="col">Szénhidrát (100g)</th>
-                  <th scope="col">Fehérje (100g)</th>
-                  <th scope="col">Zsír (100g)</th>
+                  <th scope="col">{{"etel_nev"|translate}}</th>
+                  <th scope="col">{{"kaloria"|translate}} (100g)</th>
+                  <th scope="col">{{"szenhidrat"|translate}} (100g)</th>
+                  <th scope="col">{{"feherje"|translate}} (100g)</th>
+                  <th scope="col">{{"zsir"|translate}} (100g)</th>
                 </tr>
               </thead>
               <tbody>
