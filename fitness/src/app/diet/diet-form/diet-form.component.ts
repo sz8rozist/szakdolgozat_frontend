@@ -5,8 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { NgToastModule, NgToastService } from 'ng-angular-popup';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { NgToastService } from 'ng-angular-popup';
 import { BaseChartDirective } from 'ng2-charts';
 import { Diet } from '../../model/Diet';
 import { DietFood } from '../../model/DietFood';
@@ -14,7 +14,6 @@ import { Food } from '../../model/Food';
 import { DietService } from '../../service/diet.service';
 import { AuthService } from '../../service/auth.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
-import { UserDto } from 'src/app/model/dto/UserDto';
 @Component({
   selector: 'app-diet-form',
   templateUrl: './diet-form.component.html',

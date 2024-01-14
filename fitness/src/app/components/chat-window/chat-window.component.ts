@@ -3,7 +3,6 @@ import { User } from 'src/app/model/User';
 import { MessageDto } from 'src/app/model/dto/MessageDto';
 import { AuthService } from 'src/app/service/auth.service';
 import { ChatService } from 'src/app/service/chat.service';
-import { MessageService } from 'src/app/service/message.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -20,7 +19,6 @@ export class ChatWindowComponent {
   constructor(
     private authService: AuthService,
     private chatService: ChatService,
-    private messageService: MessageService,
     private userService: UserService
   ) {}
 
@@ -28,7 +26,7 @@ export class ChatWindowComponent {
     if (this.user) {
       this.showWindow = true;
       const token = this.authService.getDecodedToken();
-      this.messageService.getAll(token.sub as number, this.user.id).subscribe((messages: MessageDto[]) =>{
+      this.chatService.getAllMessage(token.sub as number, this.user.id).subscribe((messages: MessageDto[]) =>{
         this.messages = [...messages];
       })
     } else {

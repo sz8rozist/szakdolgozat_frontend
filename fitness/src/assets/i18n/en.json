@@ -70,7 +70,7 @@
   "osszesen": "Total",
   "mentes": "Save",
   "szerkesztes": "Edit",
-  "elfogyasztas": "Consumption",
+  "elfogyasztas": "Consume",
   "elfogyasztva": "Consumed",
   "makrotapanyagok": "Macronutrients",
   "etkezes_szerkesztes": "Edit Meal",
@@ -114,5 +114,9 @@
   "gyakorlat_szerkesztese": "Edit Exercise",
   "nincs_rogzitve_gyakorlat": "No exercise recorded",
   "testresz": "Body Part",
-  "modositas": "Modify"
+  "modositas": "Modify",
+  "app_name": "Movement Master",
+  "tapertek_ajanlas": "Nutrition value recommendation"
+
+
 }

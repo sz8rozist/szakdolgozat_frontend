@@ -7,13 +7,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
+import { DietRecommedationComponent } from './diet-recommedation/diet-recommedation.component';
 
 
 
 @NgModule({
   declarations: [
     TrainerComponent,
-    TrainerGuestsComponent
+    TrainerGuestsComponent,
+    DietRecommedationComponent
   ],
   imports: [
     CommonModule,

@@ -1,12 +1,15 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>{{"uj_etel"|translate}}</h1>
+    <h1>{{ "tapertek_ajanlas" | translate }}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">{{"kezdolap"|translate}}</a></li>
-        <li class="breadcrumb-item">{{"etrend"|translate}}</li>
-        <li class="breadcrumb-item">{{"etelek"|translate}}</li>
-        <li class="breadcrumb-item active">{{"uj_etel"|translate}}</li>
+        <li class="breadcrumb-item">
+          <a href="index.html">{{ "kezdolap" | translate }}</a>
+        </li>
+        <li class="breadcrumb-item">{{ "vendegeim" | translate }}</li>
+        <li class="breadcrumb-item active">
+          {{ "tapertek_ajanlas" | translate }}
+        </li>
       </ol>
     </nav>
   </div>
@@ -15,33 +18,36 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">{{"etel_hozzaadasa"|translate}}</h5>
+            <h5 class="card-title">{{ "tapertek_ajanlas" | translate }}</h5>
 
             <!-- Horizontal Form -->
-            <form [formGroup]="foodForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="dietRecommedationForm" (ngSubmit)="onSubmit()">
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label"
-                  >{{"etel_nev"|translate}}</label
-                >
+                  >{{ "datum" | translate }}
+                </label>
                 <div class="col-sm-10">
-                  <input
-                    type="text"
-                    formControlName="name"
-                    class="form-control"
-                    id="inputText"
-                  />
+                  <div class="input-group">
+                    <input
+                      formControlName="date"
+                      type="date"
+                      class="form-control"
+                      id="floatingInput"
+                      placeholder="name@example.com"
+                    />
+                  </div>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('name')?.errors?.['required'] && this.foodForm.get('name')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('date')?.errors?.['required'] && this.dietRecommedationForm.get('date')?.touched"
                   >
-                    A név kitöltése kötelező!
+                    A dátum kitöltése kötelező!
                   </span>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label"
-                  >{{"kaloria"|translate}} (100g)</label
-                >
+                  >{{ "kaloria" | translate }}
+                </label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input
@@ -50,19 +56,17 @@
                       class="form-control"
                       id="inputEmail"
                     />
-                    <span class="input-group-text" id="basic-addon2"
-                      >kcal</span
-                    >
+                    <span class="input-group-text" id="basic-addon2">kcal</span>
                   </div>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('calorie')?.errors?.['pattern'] && this.foodForm.get('calorie')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('calorie')?.errors?.['pattern'] && this.dietRecommedationForm.get('calorie')?.touched"
                   >
                     A kalória csak szám lehet!
                   </span>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('calorie')?.errors?.['required'] && this.foodForm.get('calorie')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('calorie')?.errors?.['required'] && this.dietRecommedationForm.get('calorie')?.touched"
                   >
                     A kalória kitöltése kötelező!
                   </span>
@@ -70,8 +74,8 @@
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >{{"szenhidrat"|translate}} (100g)</label
-                >
+                  >{{ "szenhidrat" | translate }}
+                </label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input
@@ -86,13 +90,13 @@
                   </div>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['pattern'] && this.foodForm.get('carbonhydrate')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('carbonhydrate')?.errors?.['pattern'] && this.dietRecommedationForm.get('carbonhydrate')?.touched"
                   >
                     A szénhidrát csak szám lehet!
                   </span>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['required'] && this.foodForm.get('carbonhydrate')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('carbonhydrate')?.errors?.['required'] && this.dietRecommedationForm.get('carbonhydrate')?.touched"
                   >
                     A szénhidrát kitöltése kötelező!
                   </span>
@@ -100,8 +104,8 @@
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >{{"feherje"|translate}} (100g)</label
-                >
+                  >{{ "feherje" | translate }}
+                </label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input
@@ -116,13 +120,13 @@
                   </div>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('protein')?.errors?.['pattern'] && this.foodForm.get('protein')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('protein')?.errors?.['pattern'] && this.dietRecommedationForm.get('protein')?.touched"
                   >
                     A fehérje csak szám lehet!
                   </span>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('protein')?.errors?.['required'] && this.foodForm.get('protein')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('protein')?.errors?.['required'] && this.dietRecommedationForm.get('protein')?.touched"
                   >
                     A fehérje kitöltése kötelező!
                   </span>
@@ -130,8 +134,8 @@
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >{{"zsir"|translate}} (100g)</label
-                >
+                  >{{ "zsir" | translate }}
+                </label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input
@@ -146,13 +150,13 @@
                   </div>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('fat')?.errors?.['pattern'] && this.foodForm.get('fat')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('fat')?.errors?.['pattern'] && this.dietRecommedationForm.get('fat')?.touched"
                   >
                     A zsír csak szám lehet!
                   </span>
                   <span
                     class="text-danger"
-                    *ngIf="this.foodForm.get('fat')?.errors?.['required'] && this.foodForm.get('fat')?.touched"
+                    *ngIf="this.dietRecommedationForm.get('fat')?.errors?.['required'] && this.dietRecommedationForm.get('fat')?.touched"
                   >
                     A zsír kitöltése kötelező!
                   </span>
@@ -160,11 +164,11 @@
               </div>
               <div class="text-center">
                 <button
-                  [disabled]="foodForm.invalid"
+                  [disabled]="dietRecommedationForm.invalid"
                   type="submit"
                   class="btn btn-primary"
                 >
-                {{"mentes"|translate}}
+                  {{ "mentes" | translate }}
                 </button>
               </div>
             </form>

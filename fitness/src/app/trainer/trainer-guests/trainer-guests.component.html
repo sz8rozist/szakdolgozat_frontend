@@ -21,7 +21,11 @@
                             <button routerLink="/diet/addFood" class="btn btn-success">{{'uj_vendeg'|translate}}</button>
                         </div>
                         <div class="col-lg-3 text-end">
+                          <div class="input-group mb-3">
                             <input type="text" [(ngModel)]="searchInput" (input)="onSearch()" class="form-control" placeholder="{{'kereses_nev_alapjan'|translate}}...">
+                            <span class="input-group-text" id="basic-addon2"><i class="bi bi-search"></i></span>
+                          </div>
+                          
                         </div>
                     </div>
                 </div>
@@ -34,12 +38,14 @@
                       <th scope="col">{{'magassag'|translate}} (cm)</th>
                       <th scope="col">{{'testsuly'|translate}} (kg)</th>
                       <th scope="col">{{'elerhetoseg'|translate}}</th>
+                      <th scope="col">{{'muvelet'|translate}}</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngIf="displayedGuest.length == 0">
                         <td colspan="6">
                             <div class="alert alert-info" >
+                              <i class="bi bi-info-circle me-1"></i>
                               {{'nincs_talalat'|translate}}
                             </div>
                         </td>
@@ -51,6 +57,9 @@
                         <td>{{guest.height}}</td>
                         <td>{{guest.weight}}</td>
                         <td>{{guest.email}}</td>
+                        <td>
+                          <a routerLink="/trainer/dietRecommedation/{{guest.id}}" class="btn btn-primary">Étrend ajánlás</a>
+                        </td>
                       </tr>
                   </tbody>
                 </table>
