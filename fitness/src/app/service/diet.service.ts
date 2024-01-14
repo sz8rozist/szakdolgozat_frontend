@@ -7,6 +7,7 @@ import { DietResponse } from '../model/DietResponse';
 import { DietUpdateRequest } from '../model/DietUpdateRequest';
 import { WebsocketService } from './websocket.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
+import { DietSummary } from '../model/DietSummary';
 @Injectable({
   providedIn: 'root',
 })
@@ -66,5 +67,9 @@ export class DietService {
 
   updateDiet(data: DietUpdateRequest, dietId: number){
     return this.http.put(`${this.apiUrlService.getApiUrl()}/diet/${dietId}`, data);
+  }
+  getMacronutrienseStatistics(guestUserId: number){
+    return this.http.get<DietSummary[]>(`${this.apiUrlService.getApiUrl()}/diet/macronutriense/${guestUserId}`);
+
   }
 }

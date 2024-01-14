@@ -17,11 +17,11 @@ import { HttpClient } from '@angular/common/http';
 @NgModule({
   declarations: [
     DietDiaryComponent,
-   FoodFormComponent,
+    FoodFormComponent,
     FoodListComponent,
     DietFormComponent,
     EditFoodComponent,
-    CreateTrainerComponent
+    CreateTrainerComponent,
   ],
   imports: [
     CommonModule,
@@ -35,12 +35,12 @@ import { HttpClient } from '@angular/common/http';
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
-    { provide: NgChartsConfiguration, useValue: { generateColors: false }}
-  ]
+    { provide: NgChartsConfiguration, useValue: { generateColors: false } },
+  ],
 })
-export class DietModule { }
+export class DietModule {}

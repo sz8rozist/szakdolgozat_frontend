@@ -19,6 +19,8 @@ import { SharedModule } from './shared/shared.module';
 import { ChatWindowComponent } from './components/chat-window/chat-window.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 export function HttpLoaderFactory(http:HttpClient){
   return new TranslateHttpLoader(http);
@@ -43,6 +45,7 @@ export function HttpLoaderFactory(http:HttpClient){
     NgToastModule,
     SharedModule,
     FormsModule,
+    NgChartsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

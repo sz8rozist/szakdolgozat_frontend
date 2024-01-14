@@ -241,6 +241,7 @@ export class DietFormComponent {
       },
       (error) => {
         console.log(error);
+        this.recommendation = undefined;
       }
     );
   }
