@@ -14,6 +14,8 @@ import { Food } from '../../model/Food';
 import { DietService } from '../../service/diet.service';
 import { AuthService } from '../../service/auth.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
+import { DietRecommendationService } from 'src/app/service/diet-recommendation.service';
+import { DietRecommendation } from 'src/app/model/DietRecommendation';
 @Component({
   selector: 'app-diet-form',
   templateUrl: './diet-form.component.html',
@@ -37,10 +39,18 @@ export class DietFormComponent {
   };
   etelForm: FormGroup;
   dietForm: FormGroup;
+  recommendation?: DietRecommendation;
+  percentages: { name: string; value: number }[] = [
+    { name: 'Kalória', value: 0 },
+    { name: 'Szénhidrát', value: 0 },
+    { name: 'Fehérje', value: 0 },
+    { name: 'Zsír', value: 0 },
+  ];
   constructor(
     private dietService: DietService,
     private toast: NgToastService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dietRecommendationService: DietRecommendationService
   ) {
     this.loadFoods();
     this.etelForm = new FormGroup({
@@ -108,6 +118,8 @@ export class DietFormComponent {
           this.sum.fat += data.fat;
         }
       });
+      this.calculatePercentages();
+
       this.pieChartData.datasets[0].data = [];
       this.pieChartData.datasets[0].backgroundColor = [];
       this.pieChartData.datasets[0].backgroundColor = [
@@ -136,8 +148,6 @@ export class DietFormComponent {
   }
 
   removeEtelFromDiet(food: DietFood) {
-    console.log(food);
-
     // Szűrd ki azokat a DietFood objektumokat, amelyek nem egyeznek a törölni kívánt objektummal
     this.dietFoods = this.dietFoods.filter((item) => item !== food);
 
@@ -146,41 +156,55 @@ export class DietFormComponent {
     this.sum.carbonhydrate -= food.carbonhydrate;
     this.sum.protein -= food.protein;
     this.sum.fat -= food.fat;
+    this.calculatePercentages();
     this.uploadChartData();
   }
 
   saveEtrend() {
     if (this.dietForm.valid && this.dietFoods.length > 0) {
+      if (
+        this.recommendation &&
+        this.sum.calorie > this.recommendation.calorie
+      ) {
+        this.toast.warning({
+          detail: 'Figyelmeztetés',
+          summary: 'Figyelem túllépted a napi tápértéket!',
+          duration: 2000,
+          type: 'warning',
+        });
+        return;
+      }
       const token = this.authService.getDecodedToken();
       const authData = this.authService.getUserById(token.sub).toPromise();
-      authData.then((authData) => {
-        this.dietFoods.forEach((elem) => {
-          const data: Diet = {
-            foodId: elem.id as number,
-            quantity: elem.quantity,
-            type: elem.type,
-            date: this.dietForm.get('date')?.value,
-            guestId: authData?.guest.id,
-            trainerId: null,
-          };
-          this.arr.push(data);
-        });
-        console.log(this.arr);
-        this.dietService.saveDiet(this.arr).subscribe(() => {
-          this.toast.success({
-            detail: 'Sikeres',
-            summary: 'Sikeres étrend mentés!',
-            duration: 2000,
-            type: 'success',
+      authData
+        .then((authData) => {
+          this.dietFoods.forEach((elem) => {
+            const data: Diet = {
+              foodId: elem.id as number,
+              quantity: elem.quantity,
+              type: elem.type,
+              date: this.dietForm.get('date')?.value,
+              guestId: authData?.guest.id,
+              trainerId: null,
+            };
+            this.arr.push(data);
           });
-          this.dietForm.reset();
-          this.etelForm.reset();
-          this.dietFoods = [];
+          this.dietService.saveDiet(this.arr).subscribe(() => {
+            this.toast.success({
+              detail: 'Sikeres',
+              summary: 'Sikeres étrend mentés!',
+              duration: 2000,
+              type: 'success',
+            });
+            this.dietForm.reset();
+            this.etelForm.reset();
+            this.dietFoods = [];
+          });
+        })
+        .catch((error) => {
+          // Hibakezelés
+          console.error(error);
         });
-      }).catch((error) => {
-        // Hibakezelés
-        console.error(error);
-      });
     }
   }
 
@@ -204,5 +228,55 @@ export class DietFormComponent {
       this.sum.fat,
     ];
     this.chart?.update();
+  }
+
+  onDateChange(event: any) {
+    const date = event.target.value;
+    const token = this.authService.getDecodedToken();
+    //Itt még ellenőrizni kéne hogy személyi edző nem e csinált már erre a napra étrendet?
+    this.dietRecommendationService.getRecommendation(token.sub, date).subscribe(
+      (result: DietRecommendation) => {
+        console.log(result);
+        this.recommendation = result;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  calculatePercentages() {
+    if (this.recommendation) {
+      const percentageCalorie =
+        (this.sum.calorie / this.recommendation.calorie) * 100;
+      const percentageCarbonhydrate =
+        (this.sum.carbonhydrate / this.recommendation.carbonhydrate) * 100;
+      const percentageProtein =
+        (this.sum.protein / this.recommendation.protein) * 100;
+      const percentageFat = (this.sum.fat / this.recommendation.fat) * 100;
+      // Beállítjuk a kiszámolt százalékokat a percentages tömbben
+      this.percentages[0].value = Math.min(percentageCalorie, 100);
+      this.percentages[1].value = Math.min(percentageCarbonhydrate, 100);
+      this.percentages[2].value = Math.min(percentageProtein, 100);
+      this.percentages[3].value = Math.min(percentageFat, 100);
+    }
+  }
+
+  getRecommendationLabel(percentageName: string): string {
+    if (this.recommendation) {
+      switch (percentageName) {
+        case 'Kalória':
+          return this.recommendation.calorie.toString();
+        case 'Szénhidrát':
+          return this.recommendation.carbonhydrate.toString();
+        case 'Fehérje':
+          return this.recommendation.protein.toString();
+        case 'Zsír':
+          return this.recommendation.fat.toString();
+        default:
+          return '';
+      }
+    }
+    return '';
   }
 }

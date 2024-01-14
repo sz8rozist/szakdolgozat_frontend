@@ -1,11 +1,15 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>{{"etrend_tervezes"|translate}}</h1>
+    <h1>{{ "etrend_tervezes" | translate }}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">{{"kezdolap"|translate}}</a></li>
-        <li class="breadcrumb-item">{{"etrend"|translate}}</li>
-        <li class="breadcrumb-item active">{{"etrend_tervezes"|translate}}</li>
+        <li class="breadcrumb-item">
+          <a href="index.html">{{ "kezdolap" | translate }}</a>
+        </li>
+        <li class="breadcrumb-item">{{ "etrend" | translate }}</li>
+        <li class="breadcrumb-item active">
+          {{ "etrend_tervezes" | translate }}
+        </li>
       </ol>
     </nav>
   </div>
@@ -13,7 +17,33 @@
     <div class="row">
       <div class="col-lg-8">
         <div class="card">
-          <div class="card-header">{{"etel_kivalasztasa"|translate}}</div>
+          <form [formGroup]="dietForm">
+            <div class="card-header">
+              {{ "datum" | translate }}
+            </div>
+            <div class="card-body mt-3">
+              <div class="form-floating mb-3">
+                <input
+                  formControlName="date"
+                  type="date"
+                  (change)="onDateChange($event)"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="this.dietForm.get('date')?.errors?.['required'] && this.dietForm.get('date')?.touched"
+                >
+                  A dátum kitöltése kötelező!
+                </span>
+                <label for="floatingInput">{{ "datum" | translate }}</label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-header">{{ "etel_kivalasztasa" | translate }}</div>
           <div class="card-body mt-3">
             <div class="row">
               <div class="col-lg-6">
@@ -35,7 +65,7 @@
                     >
                       Az étel kiválasztása kötelező!
                     </span>
-                    <label for="floatingSelect">{{"etel"|translate}}</label>
+                    <label for="floatingSelect">{{ "etel" | translate }}</label>
                   </div>
                   <div class="form-floating mb-3">
                     <select
@@ -44,10 +74,14 @@
                       formControlName="type"
                       aria-label="Floating label select example"
                     >
-                      <option value="BREAKFAST">{{"reggeli"|translate}}</option>
-                      <option value="LUNCH">{{"ebed"|translate}}</option>
-                      <option value="DINNER">{{"vacsora"|translate}}</option>
-                      <option value="SNACK">{{"snack"|translate}}</option>
+                      <option value="BREAKFAST">
+                        {{ "reggeli" | translate }}
+                      </option>
+                      <option value="LUNCH">{{ "ebed" | translate }}</option>
+                      <option value="DINNER">
+                        {{ "vacsora" | translate }}
+                      </option>
+                      <option value="SNACK">{{ "snack" | translate }}</option>
                     </select>
                     <span
                       class="text-danger"
@@ -55,7 +89,9 @@
                     >
                       Az étel típusának kiválasztása kötelező!
                     </span>
-                    <label for="floatingSelect">{{"etel_tipus"|translate}}</label>
+                    <label for="floatingSelect">{{
+                      "etel_tipus" | translate
+                    }}</label>
                   </div>
                   <div class="form-floating mb-3">
                     <input
@@ -63,7 +99,6 @@
                       type="text"
                       class="form-control"
                       id="floatingInput"
-                      placeholder="name@example.com"
                     />
                     <span
                       class="text-danger"
@@ -77,7 +112,9 @@
                     >
                       A mennyiség kitöltése kötelező!
                     </span>
-                    <label for="floatingInput">{{"mennyiseg"|translate}}</label>
+                    <label for="floatingInput">{{
+                      "mennyiseg" | translate
+                    }}</label>
                   </div>
                   <div class="card-footer">
                     <button
@@ -85,7 +122,7 @@
                       class="btn btn-primary"
                       (click)="addFoodToDiet()"
                     >
-                    {{"hozzaad"|translate}}
+                      {{ "hozzaad" | translate }}
                     </button>
                   </div>
                 </form>
@@ -94,79 +131,70 @@
           </div>
         </div>
         <div class="card">
-          <form [formGroup]="dietForm">
-            <div class="card-header">
-              <div class="form-floating mb-3">
-                <input
-                  formControlName="date"
-                  type="date"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder="name@example.com"
-                />
-                <span
-                  class="text-danger"
-                  *ngIf="this.dietForm.get('date')?.errors?.['required'] && this.dietForm.get('date')?.touched"
-                >
-                  A dátum kitöltése kötelező!
-                </span>
-                <label for="floatingInput">{{"datum"|translate}}</label>
-              </div>
-            </div>
-            <div class="card-body">
-              <table class="table table-bordered mt-3">
-                <thead>
-                  <tr>
-                    <th>{{"etel_nev"|translate}}</th>
-                    <th>{{"mennyiseg"|translate}}</th>
-                    <th>{{"tipus"|translate}}</th>
-                    <th>{{"szenhidrat"|translate}} (g)</th>
-                    <th>{{"feherje"|translate}} (g)</th>
-                    <th>{{"zsir"|translate}} (g)</th>
-                    <th>{{"kaloria"|translate}} (kCal)</th>
-                    <th>{{"muvelet"|translate}}</th>
+          <div class="card-header">
+            {{ "etelek" | translate }}
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th>{{ "etel_nev" | translate }}</th>
+                  <th>{{ "mennyiseg" | translate }}</th>
+                  <th>{{ "tipus" | translate }}</th>
+                  <th>{{ "szenhidrat" | translate }} (g)</th>
+                  <th>{{ "feherje" | translate }} (g)</th>
+                  <th>{{ "zsir" | translate }} (g)</th>
+                  <th>{{ "kaloria" | translate }} (kCal)</th>
+                  <th>{{ "muvelet" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="dietFoods.length > 0">
+                  <tr *ngFor="let food of dietFoods">
+                    <td>{{ food.name }}</td>
+                    <td>{{ food.quantity }}</td>
+                    <td>{{ translateType(food.type) }}</td>
+                    <td class="text-end">{{ food.carbonhydrate }}</td>
+                    <td class="text-end">{{ food.protein }}</td>
+                    <td class="text-end">{{ food.fat }}</td>
+                    <td class="text-end">{{ food.calorie }}</td>
+                    <td>
+                      <button
+                        (click)="removeEtelFromDiet(food)"
+                        class="btn btn-danger"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  <ng-container *ngIf="dietFoods.length > 0">
-                    <tr *ngFor="let food of dietFoods">
-                      <td>{{ food.name }}</td>
-                      <td>{{ food.quantity }}</td>
-                      <td>{{ translateType(food.type) }}</td>
-                      <td class="text-end">{{ food.carbonhydrate }}</td>
-                      <td class="text-end">{{ food.protein }}</td>
-                      <td class="text-end">{{ food.fat }}</td>
-                      <td class="text-end">{{ food.calorie }}</td>
-                      <td>
-                        <button
-                          (click)="removeEtelFromDiet(food)"
-                          class="btn btn-danger"
-                        >
-                          <i class="bi bi-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </ng-container>
-                  <tr>
-                    <th colspan="3">{{"osszesen"|translate}}:</th>
-                    <td class="text-end">{{ sum.carbonhydrate }}</td>
-                    <td class="text-end">{{ sum.protein }}</td>
-                    <td class="text-end">{{ sum.fat }}</td>
-                    <td class="text-end">{{ sum.calorie }}</td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="card-footer">
-              <button (click)="saveEtrend()" [disabled]="dietForm.invalid || dietFoods.length == 0" class="btn btn-primary">{{"mentes"|translate}}</button>
-            </div>
-          </form>
+                </ng-container>
+                <tr>
+                  <th colspan="3">{{ "osszesen" | translate }}:</th>
+                  <td class="text-end">{{ sum.carbonhydrate }}</td>
+                  <td class="text-end">{{ sum.protein }}</td>
+                  <td class="text-end">{{ sum.fat }}</td>
+                  <td class="text-end">{{ sum.calorie }}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer">
+            <button
+              (click)="saveEtrend()"
+              [disabled]="dietForm.invalid || dietFoods.length == 0"
+              class="btn btn-primary"
+            >
+              {{ "mentes" | translate }}
+            </button>
+          </div>
         </div>
       </div>
       <div class="col-lg-4">
         <div class="card">
-          <div class="card-header mb-3">{{"makrotapanyagok"|translate}}</div>
+          <div class="card-header mb-3">
+            {{ "makrotapanyagok" | translate }}
+          </div>
           <div class="card-body">
             <canvas
               baseChart
@@ -176,6 +204,36 @@
               [options]="pieChartOptions"
             >
             </canvas>
+          </div>
+        </div>
+        <div class="card" *ngIf="recommendation">
+          <div class="card-header mb-3">
+            {{ "max_makrotapanyagok" | translate }}
+          </div>
+          <div class="card-body">
+            <div *ngFor="let percentage of percentages" class="mb-3">
+              <div class="d-flex justify-content-between">
+                <div>{{ percentage.name }}</div>
+              </div>
+              <div class="progress" style="position: relative;">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  [style.width.%]="percentage.value"
+                  [attr.aria-valuenow]="percentage.value"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [ngClass]="{'bg-success': percentage.value < 100, 'bg-danger': percentage.value === 100}"
+                >
+                  {{ percentage.value }}%
+                  <!-- Fixen elhelyezett címke a végén jobb oldalon -->
+                  <div style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%);" [ngStyle]="{'color: black': percentage.value < 100, 'color: white': percentage.value === 100}">
+                    {{ getRecommendationLabel(percentage.name) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>

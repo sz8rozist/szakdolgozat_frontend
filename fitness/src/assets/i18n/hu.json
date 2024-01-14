@@ -116,5 +116,6 @@
   "testresz": "Testrész",
   "modositas": "Módosítás",
   "app_name": "Mozgás Mester",
-  "tapertek_ajanlas": "Tápérték ajánlás"
+  "tapertek_ajanlas": "Tápérték ajánlás",
+  "max_makrotapanyagok": "Maximum tápértékek"
 }

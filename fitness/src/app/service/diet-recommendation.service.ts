@@ -12,4 +12,7 @@ export class DietRecommendationService {
   saveRecommendation(dietRecommendation: DietRecommendation, guestId: string, trainerId: string) {
     return this.http.post<DietRecommendation>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/${guestId}/${trainerId}`, dietRecommendation);
   }
+  getRecommendation(guestUserId: string, date: string){
+    return this.http.get<DietRecommendation>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/${guestUserId}/${date}`);
+  }
 }
