@@ -12,7 +12,11 @@ import { DietSummary } from '../model/DietSummary';
   providedIn: 'root',
 })
 export class DietService {
-  constructor(private http: HttpClient, private apiUrlService: ApiUrlService, private webSocketService: WebsocketService) {}
+  constructor(
+    private http: HttpClient,
+    private apiUrlService: ApiUrlService,
+    private webSocketService: WebsocketService
+  ) {}
 
   createFood(food: Food) {
     return this.http.post<Food>(`${this.apiUrlService.getApiUrl()}/food`, food);
@@ -50,26 +54,47 @@ export class DietService {
     );
   }
 
-    
   deleteFood(dietId: number, guestId: number) {
     return this.http.delete(
       `${this.apiUrlService.getApiUrl()}/diet/food/${dietId}/${guestId}`
     );
   }
 
-  getDietById(dietId: number){
-    return this.http.get<Diet>(`${this.apiUrlService.getApiUrl()}/diet/${dietId}`);
+  getDietById(dietId: number) {
+    return this.http.get<Diet>(
+      `${this.apiUrlService.getApiUrl()}/diet/${dietId}`
+    );
   }
 
-  getFoodById(foodId: number){
-    return this.http.get<Food>(`${this.apiUrlService.getApiUrl()}/food/${foodId}`);
+  getFoodById(foodId: number) {
+    return this.http.get<Food>(
+      `${this.apiUrlService.getApiUrl()}/food/${foodId}`
+    );
   }
 
-  updateDiet(data: DietUpdateRequest, dietId: number){
-    return this.http.put(`${this.apiUrlService.getApiUrl()}/diet/${dietId}`, data);
+  updateDiet(data: DietUpdateRequest, dietId: number) {
+    return this.http.put(
+      `${this.apiUrlService.getApiUrl()}/diet/${dietId}`,
+      data
+    );
   }
-  getMacronutrienseStatistics(guestUserId: number){
-    return this.http.get<DietSummary[]>(`${this.apiUrlService.getApiUrl()}/diet/macronutriense/${guestUserId}`);
-
+  getMacronutrienseStatistics(guestUserId: number) {
+    return this.http.get<DietSummary[]>(
+      `${this.apiUrlService.getApiUrl()}/diet/macronutriense/${guestUserId}`
+    );
+  }
+  getMacronutrienseStatisticsByDay(guestUserId: number) {
+    var currentDate = new Date();
+    var formattedDate = currentDate.toISOString().split('T')[0];
+    return this.http.get<DietSummary[]>(
+      `${this.apiUrlService.getApiUrl()}/diet/macronutrienseByDate/${guestUserId}/${formattedDate}`
+    );
+  }
+  getMacronutrienseStatisticsByYear(guestUserId: number) {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    return this.http.get<DietSummary[]>(
+      `${this.apiUrlService.getApiUrl()}/diet/macronutrienseByYear/${guestUserId}/${currentYear}`
+    );
   }
 }

@@ -10,34 +10,12 @@ import { DietService } from 'src/app/service/diet.service';
 })
 export class DashboardComponent {
   datasets: any = [];
-  isShowFilter = false;
-  filter: string = 'Aktuális hónap';
   dietSummarys: DietSummary[] = [];
   labels: string[] = [];
   constructor(
     private authService: AuthService,
     private dietService: DietService
   ) {}
-
-  toggleFilter() {
-    this.isShowFilter = !this.isShowFilter;
-  }
-
-  changeFilter(filter: string) {
-    switch (filter) {
-      case 'nap':
-        this.filter = 'Napi';
-        break;
-      case 'havi':
-        this.filter = 'Aktuális hónap';
-        break;
-      case 'ev':
-        this.filter = 'Aktuális év';
-        break;
-      default:
-        this.filter = 'Aktuális hónap';
-    }
-  }
 
   ngOnInit() {
     const token = this.authService.getDecodedToken();
@@ -53,8 +31,9 @@ export class DashboardComponent {
   }
 
   createDataset() {
+    console.log(this.dietSummarys);
     this.dietSummarys.forEach((dataObj, index) => {
-      this.labels.push(dataObj.date);
+      this.labels.push(this.getFoodType(dataObj.foodType));
       if (index === 0) {
         // Első elem esetén létrehozzuk az adatokat
         this.datasets.push({
@@ -106,5 +85,20 @@ export class DashboardComponent {
     const b = Math.floor(Math.random() * 256);
     const alpha = Math.random().toFixed(2); // Két tizedes pontig
     return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  getFoodType(type: string): string{
+    switch(type){
+      case "DINNER":
+        return "Vacsora";
+      case "BREAKFAST":
+        return "Reggeli";
+      case "LUNCH":
+        return "Ebéd";
+      case "SNACK":
+        return "Snack";
+      default:
+        return "";
+    }
   }
 }

@@ -127,22 +127,8 @@
             <!-- Reports -->
             <div class="col-12">
               <div class="card">
-  
-                <div class="filter">
-                  <a class="icon" style="cursor: pointer;" (click)="toggleFilter()" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" [ngClass]="{'show': isShowFilter}" [ngStyle]="{'position': 'absolute', 'inset': '0px 0px auto auto', 'margin': '0px', 'transform': 'translate(0px, 30px)'}">
-                    <li class="dropdown-header text-start">
-                      <h6>Szűrő</h6>
-                    </li>
-  
-                    <li><a (click)="changeFilter('nap')" class="dropdown-item">Mai nap</a></li>
-                    <li><a (click)="changeFilter('havi')" class="dropdown-item">Havi</a></li>
-                    <li><a (click)="changeFilter('ev')" class="dropdown-item">Éves</a></li>
-                  </ul>
-                </div>
-  
                 <div class="card-body">
-                  <h5 class="card-title">{{ "makrotapanyagok" | translate }} <span>/{{filter}}</span></h5>
+                  <h5 class="card-title">{{ "makrotapanyagok" | translate }} <span>/Napi</span></h5>
   
                   <!-- Line Chart -->
                   <div id="reportsChart">

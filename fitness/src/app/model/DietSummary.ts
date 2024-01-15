@@ -5,4 +5,5 @@ export interface DietSummary{
       totalFat: number;
       date: string;
       guestId: number;
+      foodType: string;
 }
