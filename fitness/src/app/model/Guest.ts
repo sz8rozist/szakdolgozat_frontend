@@ -12,4 +12,5 @@ export interface Guest{
     trainer: Trainer
     diets: []
     workouts: []
+    trainer_guest?: boolean
 }

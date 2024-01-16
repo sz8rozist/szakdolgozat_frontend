@@ -1,86 +1,153 @@
-
 <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>{{'vendegeim'|translate}}</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
-          <li class="breadcrumb-item active">{{'vendegeim'|translate}}</li>
-        </ol>
-      </nav>
-    </div>
+  <div class="pagetitle">
+    <h1>{{ "vendegek" | translate }}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">{{ "kezdolap" | translate }}</a>
+        </li>
+        <li class="breadcrumb-item active">{{ "vendegek" | translate }}</li>
+      </ol>
+    </nav>
+  </div>
 
-    <section class="section">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <button routerLink="/diet/addFood" class="btn btn-success">{{'uj_vendeg'|translate}}</button>
-                        </div>
-                        <div class="col-lg-3 text-end">
-                          <div class="input-group mb-3">
-                            <input type="text" [(ngModel)]="searchInput" (input)="onSearch()" class="form-control" placeholder="{{'kereses_nev_alapjan'|translate}}...">
-                            <span class="input-group-text" id="basic-addon2"><i class="bi bi-search"></i></span>
-                          </div>
-                          
-                        </div>
-                    </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-3 d-flex align-items-stretch">
+        <div class="card">
+          <div class="card-body" style="padding-top: 20px">
+            <div class="row">
+              <div class="col-lg-12 text-end">
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    [(ngModel)]="searchInput"
+                    (input)="onSearch()"
+                    class="form-control"
+                    placeholder="{{ 'kereses_nev_alapjan' | translate }}..."
+                  />
+                  <span class="input-group-text" id="basic-addon2"
+                    ><i class="bi bi-search"></i
+                  ></span>
                 </div>
-                <table class="table datatable">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">{{'nev'|translate}}</th>
-                      <th scope="col">{{'eletkor'|translate}}</th>
-                      <th scope="col">{{'magassag'|translate}} (cm)</th>
-                      <th scope="col">{{'testsuly'|translate}} (kg)</th>
-                      <th scope="col">{{'elerhetoseg'|translate}}</th>
-                      <th scope="col">{{'muvelet'|translate}}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngIf="displayedGuest.length == 0">
-                        <td colspan="6">
-                            <div class="alert alert-info" >
-                              <i class="bi bi-info-circle me-1"></i>
-                              {{'nincs_talalat'|translate}}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr *ngFor="let guest of displayedGuest">
-                        <th scope="row">{{guest.id}}</th>
-                        <td>{{guest.first_name + ' ' + guest.last_name}}</td>
-                        <td>{{guest.age}}</td>
-                        <td>{{guest.height}}</td>
-                        <td>{{guest.weight}}</td>
-                        <td>{{guest.email}}</td>
-                        <td>
-                          <a routerLink="/trainer/dietRecommedation/{{guest.id}}" class="btn btn-primary">Étrend ajánlás</a>
-                        </td>
-                      </tr>
-                  </tbody>
-                </table>
-                <nav *ngIf="pageNumbers.length > 1" aria-label="Page navigation example">
-                    <ul *ngIf="allGuests.length > 0" class="pagination">
-                      <li class="page-item" [class.disabled]="currentPage === 1">
-                        <span style="cursor: pointer;" (click)="onPageChanged(currentPage - 1)"  class="page-link" href="#" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                        </span>
-                      </li>
-                      <li *ngFor="let page of pageNumbers; index as i" class="page-item" [class.active]="currentPage === page"><span style="cursor: pointer;" (click)="onPageChanged(page)" class="page-link" href="#">{{page}}</span></li>
-                      <li class="page-item" [class.disabled]="currentPage * pageSize >= allGuests.length">
-                        <span style="cursor: pointer;" (click)="onPageChanged(currentPage + 1)" class="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                        </span>
-                      </li>
-                    </ul>
-                  </nav>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-check form-switch">
+                  <input
+                  [(ngModel)]="switch"
+                  (change)="onChange()"
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckDefault"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="flexSwitchCheckDefault"
+                    >{{ "vendegeim" | translate }}</label
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+      <div class="col-lg-9">
+        <div class="card">
+          <div class="card-body" style="padding-top: 20px">
+            <table class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">{{ "nev" | translate }}</th>
+                  <th scope="col">{{ "eletkor" | translate }}</th>
+                  <th scope="col">{{ "magassag" | translate }} (cm)</th>
+                  <th scope="col">{{ "testsuly" | translate }} (kg)</th>
+                  <th scope="col">{{ "elerhetoseg" | translate }}</th>
+                  <th scope="col">{{ "muvelet" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="displayedGuest.length == 0">
+                  <td colspan="6">
+                    <div class="alert alert-info">
+                      <i class="bi bi-info-circle me-1"></i>
+                      {{ "nincs_talalat" | translate }}
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngFor="let guest of displayedGuest">
+                  <th scope="row">{{ guest.id }}</th>
+                  <td>{{ guest.first_name + " " + guest.last_name }}</td>
+                  <td>{{ guest.age }}</td>
+                  <td>{{ guest.height }}</td>
+                  <td>{{ guest.weight }}</td>
+                  <td>{{ guest.email }}</td>
+                  <td>
+                    <a
+                      *ngIf="guest.trainer_guest"
+                      routerLink="/trainer/dietRecommedation/{{ guest.id }}"
+                      class="btn btn-primary"
+                      >{{ "etrend_ajanlas" | translate }}</a
+                    >
+                    <button
+                      *ngIf="!guest.trainer_guest"
+                      class="btn btn-success"
+                    >
+                      {{ "hozzaad" | translate }}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <nav
+              *ngIf="pageNumbers.length > 1"
+              aria-label="Page navigation example"
+            >
+              <ul *ngIf="allGuests.length > 0" class="pagination">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <span
+                    style="cursor: pointer"
+                    (click)="onPageChanged(currentPage - 1)"
+                    class="page-link"
+                    href="#"
+                    aria-label="Previous"
+                  >
+                    <span aria-hidden="true">&laquo;</span>
+                  </span>
+                </li>
+                <li
+                  *ngFor="let page of pageNumbers; index as i"
+                  class="page-item"
+                  [class.active]="currentPage === page"
+                >
+                  <span
+                    style="cursor: pointer"
+                    (click)="onPageChanged(page)"
+                    class="page-link"
+                    href="#"
+                    >{{ page }}</span
+                  >
+                </li>
+                <li
+                  class="page-item"
+                  [class.disabled]="currentPage * pageSize >= allGuests.length"
+                >
+                  <span
+                    style="cursor: pointer"
+                    (click)="onPageChanged(currentPage + 1)"
+                    class="page-link"
+                    href="#"
+                    aria-label="Next"
+                  >
+                    <span aria-hidden="true">&raquo;</span>
+                  </span>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>

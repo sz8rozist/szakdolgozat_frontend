@@ -7,18 +7,10 @@
         <span>{{'kezdolap'| translate}}</span>
       </a>
     </li>
-    <!-- End Dashboard Nav -->
-    <li *ngIf="auth?.guest != null" class="nav-item">
-      <a class="nav-link" routerLink="trainer">
-        <i class="bi bi-person-plus"></i>
-        <span>{{'edzo_kivalasztas_menu'|translate}}</span>
-      </a>
-    </li>
-
     <li class="nav-item" *ngIf="auth?.trainer != null">
-      <a routerLink="trainer/trainer-guests" class="nav-link">
+      <a routerLink="trainer" class="nav-link">
         <i class="bi bi-people"></i>
-        <span>{{'vendegeim' | translate}}</span>
+        <span>{{'vendegek' | translate}}</span>
       </a>
     </li>
 

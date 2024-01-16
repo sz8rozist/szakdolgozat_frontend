@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TrainerComponent } from './trainer/trainer.component';
 import { TrainerRoutingModule } from './trainer-routing';
 import { TrainerGuestsComponent } from './trainer-guests/trainer-guests.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,9 +12,8 @@ import { DietRecommedationComponent } from './diet-recommedation/diet-recommedat
 
 @NgModule({
   declarations: [
-    TrainerComponent,
     TrainerGuestsComponent,
-    DietRecommedationComponent
+    DietRecommedationComponent,
   ],
   imports: [
     CommonModule,

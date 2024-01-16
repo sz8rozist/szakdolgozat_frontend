@@ -3,6 +3,7 @@ import { Guest } from 'src/app/model/Guest';
 import { Trainer } from 'src/app/model/Trainer';
 import { User } from 'src/app/model/User';
 import { AuthService } from 'src/app/service/auth.service';
+import { GuestService } from 'src/app/service/guest.service';
 
 @Component({
   selector: 'app-trainer-guests',
@@ -19,14 +20,38 @@ export class TrainerGuestsComponent {
   currentPage = 1;
   pageNumbers: number[] = [];
   searchInput: string = '';
-
-  constructor(private authService: AuthService) {}
+  switch: boolean = false;
+  trainerId?: number;
+  constructor(
+    private guestService: GuestService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.authService.getAuthData().subscribe((response: User) => {
-      this.allGuests = [...response.trainer.guests];
-      this.calculatePageNumbers();
-      this.updateDisplayedItems();
+    this.authService.getAuthData().subscribe((authResponse: User) => {
+      const authTrainerId = authResponse.trainer.id;
+      this.trainerId = authTrainerId;
+
+      this.guestService.getAllGuest().subscribe((guestResult: Guest[]) => {
+        // Szűrjük a vendégeket a trainerId alapján
+        const matchingGuests = guestResult.filter(
+          (guest) =>
+            guest.trainer == null ||
+            (guest.trainer != null && guest.trainer.id === authTrainerId)
+        );
+
+        if (matchingGuests.length > 0) {
+          // Beállítjuk a trainer_guest értékét azoknál, ahol a trainerId egyezik
+          matchingGuests.forEach((matchingGuest) => {
+            matchingGuest.trainer_guest =
+              matchingGuest.trainer != null &&
+              matchingGuest.trainer.id === authTrainerId;
+          });
+        }
+        this.allGuests = [...matchingGuests];
+        this.calculatePageNumbers();
+        this.updateDisplayedItems();
+      });
     });
   }
 
@@ -75,5 +100,18 @@ export class TrainerGuestsComponent {
         .toLowerCase()
         .includes(query.toLowerCase())
     );
+  }
+
+  onChange() {
+    console.log(this.switch);
+    if (this.switch) {
+      // Szűrjük a trainer_guest értékek alapján
+      const filtered = this.displayedGuest.filter((elem) => elem.trainer_guest);
+      console.log(filtered);
+      this.displayedGuest = filtered;
+    } else {
+      // Ha a switch hamis, akkor visszaállítjuk a kezdeti állapotba
+      this.displayedGuest = [...this.allGuests];
+    }
   }
 }

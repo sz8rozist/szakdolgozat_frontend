@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiUrlService } from './api-url.service';
 import { HttpClient } from '@angular/common/http';
 import { Trainer } from '../model/Trainer';
+import { Guest } from '../model/Guest';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class GuestService {
 
   findTrainer(guestId: number){
     return this.http.get<Trainer>(`${this.apiUrlService.getApiUrl()}/guest/${guestId}`);
+  }
+
+  getAllGuest(){
+    return this.http.get<Guest[]>(`${this.apiUrlService.getApiUrl()}/guest`);
   }
 
 }
