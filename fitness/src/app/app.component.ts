@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from './service/auth.service';
 import { UserDto } from './model/dto/UserDto';
-import { DietService } from './service/diet.service';
 import { NgToastService } from 'ng-angular-popup';
 import { NotificationModel } from './model/NotificationModel';
 import { NotificationService } from './service/notification.service';
 import { NotificationDto } from './model/dto/NotificationDto';
-import { User } from './model/User';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

@@ -11,6 +11,8 @@ import { DietService } from 'src/app/service/diet.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { User } from 'src/app/model/User';
 import { Trainer } from 'src/app/model/Trainer';
+import { Guest } from 'src/app/model/Guest';
+import { GuestService } from 'src/app/service/guest.service';
 
 @Component({
   selector: 'app-create-trainer',
@@ -24,6 +26,7 @@ export class CreateTrainerComponent {
   arr: Diet[] = [];
   selectedGuest?: number;
   trainer?:Trainer;
+  guests: Guest[] = [];
   sum: {
     calorie: number;
     carbonhydrate: number;
@@ -40,7 +43,8 @@ export class CreateTrainerComponent {
   constructor(
     private dietService: DietService,
     private toast: NgToastService,
-    private authService: AuthService
+    private authService: AuthService,
+    private guestService: GuestService
   ) {
     this.loadFoods();
     this.etelForm = new FormGroup({
@@ -56,6 +60,9 @@ export class CreateTrainerComponent {
     });
     this.authService.getAuthData().subscribe((response: User) => {
       this.trainer = response.trainer;
+      this.guestService.getTrainerGuests(response.trainer.id as number).subscribe((resp: Guest[]) =>{
+        this.guests = [...resp];
+      });
     });
   }
 

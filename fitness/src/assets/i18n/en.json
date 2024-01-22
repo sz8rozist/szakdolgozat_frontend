@@ -119,6 +119,7 @@
   "tapertek_ajanlas": "Nutrition value recommendation",
   "max_makrotapanyagok": "Maximum macronutrients",
   "vendegek": "Guests",
-  "etrend_ajanlas": "Diet recommendation"
-
+  "etrend_ajanlas": "Diet recommendation",
+  "panel": "Dashboard",
+  "nincs_vendeg": "There are no guests recorded in the system."
 }

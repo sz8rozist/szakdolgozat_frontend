@@ -3,5 +3,6 @@ export interface UserDto{
     username: string,
     profilePictureName: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    lastMessage: string,
 }

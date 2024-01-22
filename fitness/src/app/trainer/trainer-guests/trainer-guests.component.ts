@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgToastService } from 'ng-angular-popup';
 import { Guest } from 'src/app/model/Guest';
 import { Trainer } from 'src/app/model/Trainer';
 import { User } from 'src/app/model/User';
@@ -24,7 +25,8 @@ export class TrainerGuestsComponent {
   trainerId?: number;
   constructor(
     private guestService: GuestService,
-    private authService: AuthService
+    private authService: AuthService,
+    private toast: NgToastService
   ) {}
 
   ngOnInit() {
@@ -33,6 +35,7 @@ export class TrainerGuestsComponent {
       this.trainerId = authTrainerId;
 
       this.guestService.getAllGuest().subscribe((guestResult: Guest[]) => {
+        console.log(guestResult);
         // Szűrjük a vendégeket a trainerId alapján
         const matchingGuests = guestResult.filter(
           (guest) =>
@@ -68,6 +71,7 @@ export class TrainerGuestsComponent {
     const endIndex = startIndex + this.pageSize;
     this.displayedGuest = filteredItems.slice(startIndex, endIndex);
   }
+
   calculatePageNumbers() {
     const totalItems = this.allGuests.length;
     const totalPages = Math.ceil(totalItems / this.pageSize);
@@ -103,15 +107,31 @@ export class TrainerGuestsComponent {
   }
 
   onChange() {
-    console.log(this.switch);
     if (this.switch) {
       // Szűrjük a trainer_guest értékek alapján
       const filtered = this.displayedGuest.filter((elem) => elem.trainer_guest);
-      console.log(filtered);
       this.displayedGuest = filtered;
     } else {
       // Ha a switch hamis, akkor visszaállítjuk a kezdeti állapotba
       this.displayedGuest = [...this.allGuests];
     }
+  }
+
+  addGuest(guestId: any){
+    this.guestService.addTrainerToGuest(guestId, this.trainerId as any).subscribe(response =>{
+      if(response){
+        this.toast.success({
+          detail: 'Sikeres',
+          summary: 'Sikeres felvétel!',
+          duration: 2000,
+          type: 'success',
+        })
+        const foundGuest = this.displayedGuest.find(guest => guest.id === guestId);
+        if (foundGuest) {
+          foundGuest.trainer_guest = true;
+        } else {
+          console.warn(`Nem található személy az ID alapján: ${guestId}`);
+        }      }
+    },(error) => {console.log(error)});
   }
 }

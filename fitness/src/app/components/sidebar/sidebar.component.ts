@@ -44,7 +44,9 @@ export class SidebarComponent {
   }
 
   fetchAllUser(){
-    this.userService.getAllUser().subscribe((response: UserDto[]) =>{
+    const token = this.authService.getDecodedToken();
+    this.userService.getAllUser(token.sub).subscribe((response: UserDto[]) =>{
+      console.log(response);
       this.users = [...response];
       this.users.forEach(user => {
         if (user.profilePictureName) {

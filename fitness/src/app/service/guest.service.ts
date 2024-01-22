@@ -19,4 +19,14 @@ export class GuestService {
     return this.http.get<Guest[]>(`${this.apiUrlService.getApiUrl()}/guest`);
   }
 
+  getTrainerGuests(trainerId: number){
+    return this.http.get<Guest[]>(`${this.apiUrlService.getApiUrl()}/guest/${trainerId}/getTrainerGuests`);
+  }
+
+  addTrainerToGuest(guestId: string, trainerId: string){
+    const data = new FormData();
+    data.append('guestId', guestId);
+    data.append('trainerId', trainerId);
+    return this.http.post(`${this.apiUrlService.getApiUrl()}/guest/addTrainerToGuest`, data);
+  }
 }

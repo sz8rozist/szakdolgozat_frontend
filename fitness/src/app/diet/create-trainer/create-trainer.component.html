@@ -10,14 +10,20 @@
     </nav>
   </div>
   <section class="section">
-    <div class="row">
+    <div *ngIf="guests.length == 0">
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-1"></i>
+        {{"nincs_vendeg" | translate}}
+      </div>
+    </div>
+    <div class="row" *ngIf="guests.length > 0">
       <div class="col-lg-8">
         <div class="card">
           <div class="card-header">{{"vendeg_kivalasztasa"|translate}}</div>
           <div class="card-body mt-3">
             <div class="form-floating mb-3">
               <select [(ngModel)]="selectedGuest" class="form-select">
-                <option *ngFor="let guest of trainer?.guests" [value]="guest.id">
+                <option  *ngFor="let guest of guests" [value]="guest.id">
                   {{ guest.first_name + " " + guest.last_name }}
                 </option>
               </select>

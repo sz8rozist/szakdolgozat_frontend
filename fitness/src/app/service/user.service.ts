@@ -54,7 +54,7 @@ export class UserService {
     return this.http.put(`${this.apiUrlService.getApiUrl()}/user/password/${userId}`, password);
   }
 
-  getAllUser(){
-    return this.http.get<UserDto[]>(`${this.apiUrlService.getApiUrl()}/user`);
+  getAllUser(userId: number){
+    return this.http.get<UserDto[]>(`${this.apiUrlService.getApiUrl()}/user/userMessages/${userId}`);
   }
 }
