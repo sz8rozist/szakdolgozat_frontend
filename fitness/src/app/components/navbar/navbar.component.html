@@ -28,58 +28,18 @@
   
           <span class="nav-link nav-icon" style="cursor: pointer;" (click)="toggleNotificationFunc()" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">{{notification?.length}}</span>
+            <span class="badge bg-primary badge-number">{{notifications.length}}</span>
           </span><!-- End Notification Icon -->
-  
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" [ngClass]="{'show': toggleNotification}" [ngStyle]="{'position': toggleNotification ? 'absolute' : '', 'inset': toggleNotification ? '0px 0px auto auto' : '', 'margin': toggleNotification? '0px' : '', 'transform': toggleNotification ? 'translate(-25px, 35px)' : ''}">
             <li class="dropdown-header">
-              {{notification?.length}} {{'uj_ertesitesed_van' | translate}}
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">{{'mutasd_mindet' |translate}}</span></a>
+              {{notifications.length}} {{'uj_ertesitesed_van' | translate}}
+              <a href="#" (click)="toggleNotificationFunc()" routerLink="/notification"><span class="badge rounded-pill bg-primary p-2 ms-2">{{'mutasd_mindet' |translate}}</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
   
-            <!--<li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-  
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-  
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-  
-            <li>
-              <hr class="dropdown-divider">
-            </li>-->
-  
-            <li class="notification-item" *ngFor="let n of notification">
+            <li class="notification-item" *ngFor="let n of notifications">
               <i class="bi bi-info-circle text-primary"></i>
               <div>
                 <h4>{{n.guestFirstName + ' ' + n.guestLastName}}</h4>
@@ -92,79 +52,12 @@
               <hr class="dropdown-divider">
             </li>
             <li class="dropdown-footer">
-              <a href="#">{{'mutasd_az_osszes_uj_ertesites' |translate}}</a>
+              <a href="#" (click)="toggleNotificationFunc()" routerLink="/notification">{{'mutasd_az_osszes_uj_ertesites' |translate}}</a>
             </li>
   
           </ul><!-- End Notification Dropdown Items -->
   
-        </li><!-- End Notification Nav -->
-  
-        <li class="nav-item dropdown" >
-  
-          <span class="nav-link nav-icon" style="cursor: pointer;" (click)="toggleMessageDropdownFunc()" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </span><!-- End Messages Icon -->
-  
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" [ngClass]="{'show': toggleMessageDropdown}" [ngStyle]="{'position': toggleMessageDropdown ? 'absolute' : '', 'inset': toggleMessageDropdown ? '0px 0px auto auto' : '', 'margin': toggleMessageDropdown? '0px' : '', 'transform': toggleMessageDropdown ? 'translate(-25px, 35px)' : ''}">
-            <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-  
-          </ul><!-- End Messages Dropdown Items -->
-  
-        </li><!-- End Messages Nav -->
-  
+        </li><!-- End Notification Nav -->  
         <li class="nav-item dropdown pe-3" (click)="toggleProfileDropdownFunc()">
   
           <span class="nav-link nav-profile d-flex align-items-center pe-0" style="cursor: pointer;" data-bs-toggle="dropdown">

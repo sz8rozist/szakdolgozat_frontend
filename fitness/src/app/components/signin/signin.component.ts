@@ -6,6 +6,8 @@ import { NgToastService } from 'ng-angular-popup';
 import { LoginResponse } from 'src/app/model/LoginResponse';
 import { LoginUser } from 'src/app/model/LoginUser';
 import { AuthService } from 'src/app/service/auth.service';
+import { NotificationService } from 'src/app/service/notification.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-signin',
@@ -19,7 +21,9 @@ export class SigninComponent {
     private authService: AuthService,
     private toast: NgToastService,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private notificationService: NotificationService,
+    private userService: UserService
   ) {
     this.lang = localStorage.getItem('lang') || 'hu';
     this.loginForm = new FormGroup({

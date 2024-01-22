@@ -4,7 +4,6 @@ import { UserDto } from './model/dto/UserDto';
 import { NgToastService } from 'ng-angular-popup';
 import { NotificationModel } from './model/NotificationModel';
 import { NotificationService } from './service/notification.service';
-import { NotificationDto } from './model/dto/NotificationDto';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -17,7 +16,6 @@ export class AppComponent {
 
   auth: any;
   user?: UserDto;
-  notification?: NotificationDto[];
 
   constructor(
     public authService: AuthService,
@@ -27,7 +25,6 @@ export class AppComponent {
   ) {}
   ngOnInit() {
     this.getTrainerNotification();
-    this.getLastDietNotificationForTrainer();
     this.translateService.setDefaultLang('hu');
     this.translateService.use(localStorage.getItem('lang') || 'hu');
   }
@@ -53,25 +50,5 @@ export class AppComponent {
           });
         }, 2500);
       });
-  }
-
-  getLastDietNotificationForTrainer() {
-    const authData = this.authService.getAuthData().toPromise();
-    authData.then(
-      (response: any) => {
-        if (response.trainer != null) {
-          this.notificationService
-            .getLastFiveDietNotificationForTrainer(
-              response.trainer.id as number
-            )
-            .subscribe((resp: NotificationDto[]) => {
-              this.notification = resp.filter((obj) => !obj.viewed);
-            });
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 }

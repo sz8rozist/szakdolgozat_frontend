@@ -19,6 +19,8 @@ import { SharedModule } from './shared/shared.module';
 import { ChatWindowComponent } from './components/chat-window/chat-window.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 export function HttpLoaderFactory(http:HttpClient){
   return new TranslateHttpLoader(http);
 }
@@ -36,6 +38,7 @@ export function HttpLoaderFactory(http:HttpClient){
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,

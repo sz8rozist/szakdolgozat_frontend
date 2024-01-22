@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { User } from '../../model/User';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
-import { NotificationDto } from 'src/app/model/dto/NotificationDto';
+import { NotificationService } from 'src/app/service/notification.service';
+import { Notification } from 'src/app/model/Notification';
 
 @Component({
   selector: 'app-navbar',
@@ -12,18 +13,18 @@ import { NotificationDto } from 'src/app/model/dto/NotificationDto';
 })
 export class NavbarComponent {
   @Output() logoutEvent = new EventEmitter<void>();
-  @Input() notification?: NotificationDto[];
   isSpecialRoute: boolean = false;
   toggleNotification: boolean = false;
   toggleProfileDropdown: boolean = false;
-  toggleMessageDropdown: boolean = false;
   auth?: User;
+  notifications: Notification[] = [];
   profileImageSrc: string | null = null;
 
   constructor(
     private router: Router,
     public authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -31,12 +32,12 @@ export class NavbarComponent {
     this.userService.profilePicture$.subscribe((newProfilePictureUrl) => {
       this.getProfilePicture(newProfilePictureUrl);
     });
+    this.notificationService.getNotificationSubject().subscribe((notification: Notification[]) =>{
+      this.notifications = [...notification];
+    });
   }
-  ngOnChanges() {
-    if(this.notification){
-      console.log(this.notification);
-    }
-  }
+
+
   toggleSideBar() {
     const body = document.querySelector('body');
     if (body) {
@@ -51,12 +52,9 @@ export class NavbarComponent {
   toggleNotificationFunc() {
     this.toggleNotification = !this.toggleNotification;
   }
+
   toggleProfileDropdownFunc() {
     this.toggleProfileDropdown = !this.toggleProfileDropdown;
-  }
-
-  toggleMessageDropdownFunc() {
-    this.toggleMessageDropdown = !this.toggleMessageDropdown;
   }
 
   onLogout() {
@@ -80,6 +78,9 @@ export class NavbarComponent {
   getAuthData() {
     this.authService.getAuthData().subscribe((response: User) => {
       this.auth = response;
+      this.notificationService.getAll(response.id as number).subscribe((data: Notification[]) =>{
+        this.notificationService.setNotificationSubject(data);
+      });
       this.getProfilePicture(response.profilePictureName);
     });
   }

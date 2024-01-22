@@ -29,6 +29,11 @@ const routes: Routes = [
     import('./diet/diet.module').then((m) => m.DietModule)
   },
   {
+    path: 'notification',
+    loadChildren: () =>
+    import('./notification/notification.module').then((m) => m.NotificationModule)
+  },
+  {
     path: 'workout',
     loadChildren: () =>
     import('./workout/workout.module').then((m) => m.WorkoutModule)
