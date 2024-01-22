@@ -4,6 +4,9 @@ import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/model/User';
 import { UserDto } from 'src/app/model/dto/UserDto';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { ChatWindowComponent } from '../chat-window/chat-window.component';
+import { ChatService } from 'src/app/service/chat.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +21,19 @@ export class SidebarComponent {
   @Output() chatWindow = new EventEmitter<UserDto>();
   constructor(private authService: AuthService,
     private userService: UserService,
-    private translateService: TranslateService){}
+    private translateService: TranslateService,
+    private chatService: ChatService){
+      this.chatService.messageRead$.subscribe((userId: String) =>{
+        if(userId){
+          const foundedUser = this.users.find((item) => item.id == Number(userId));
+          if(foundedUser){
+            foundedUser.lastMessage = "";
+          }else{
+            console.warn("Nem található user: " + userId);
+          }
+        }
+      });
+    }
 
   getAuthData(){
     this.authService.getAuthData().subscribe((response: User) =>{

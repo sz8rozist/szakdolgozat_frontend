@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from 'src/app/model/User';
 import { MessageDto } from 'src/app/model/dto/MessageDto';
 import { AuthService } from 'src/app/service/auth.service';
@@ -13,6 +13,7 @@ import { UserService } from 'src/app/service/user.service';
 export class ChatWindowComponent {
   showWindow: boolean = false;
   @Input() user: any;
+  @Output() messageRead = new EventEmitter<number>();
   message: string = '';
   messages: MessageDto[] = [];
   senderUser?: User;
@@ -27,6 +28,14 @@ export class ChatWindowComponent {
       this.showWindow = true;
       const token = this.authService.getDecodedToken();
       this.chatService.getAllMessage(token.sub as number, this.user.id).subscribe((messages: MessageDto[]) =>{
+        const message = messages.find((item) => !item.readed);
+        this.chatService.updateReaded(message?.id as number).subscribe(response =>{
+          if(response.status === 200){
+            this.chatService.updateMessageRead(this.user.id);
+          }else{
+            console.error(response);
+          }
+        });
         this.messages = [...messages];
       })
     } else {

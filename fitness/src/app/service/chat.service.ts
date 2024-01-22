@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StompConfig, Client } from '@stomp/stompjs';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from './auth.service';
 import { MessageDto } from '../model/dto/MessageDto';
 import { WebsocketService } from './websocket.service';
@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ChatService {
+  private messageReadSubject = new BehaviorSubject<String>("");
+  messageRead$ = this.messageReadSubject.asObservable();
   constructor(private webSocketService: WebsocketService, private apiUrlService: ApiUrlService, private http: HttpClient) {}
 
   sendPrivateMessage(message: MessageDto) {
@@ -22,5 +24,13 @@ export class ChatService {
 
   getAllMessage(senderUserId: number, receiverUserId:number){
     return this.http.get<MessageDto[]>(`${this.apiUrlService.getApiUrl()}/message/${senderUserId}/${receiverUserId}`);
+  }
+
+  updateMessageRead(userId: String): void {
+    this.messageReadSubject.next(userId);
+  }
+
+  updateReaded(messageId: number){
+    return this.http.post(`${this.apiUrlService.getApiUrl()}/message/${messageId}/markAsRead`, {}, { observe: 'response' });
   }
 }
