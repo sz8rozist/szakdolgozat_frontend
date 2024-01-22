@@ -3,7 +3,7 @@ export interface DietSummary{
       totalCarbonhydrate: number;
       totalCalorie: number;
       totalFat: number;
-      date: string;
+      day: string;
       guestId: number;
       foodType: string;
 }

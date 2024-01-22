@@ -1,9 +1,7 @@
-import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
-import { Chart, ChartConfiguration, ChartType, ChartEvent } from 'chart.js';
+import { Component, Input, ViewChild } from '@angular/core';
+import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { DietSummary } from 'src/app/model/DietSummary';
-import { AuthService } from 'src/app/service/auth.service';
-import { DietService } from 'src/app/service/diet.service';
+
 
 @Component({
   selector: 'app-line-chart',

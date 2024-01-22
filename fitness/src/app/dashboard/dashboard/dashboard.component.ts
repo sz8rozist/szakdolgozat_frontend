@@ -44,7 +44,7 @@ export class DashboardComponent {
   createDataset() {
     console.log(this.dietSummarys);
     this.dietSummarys.forEach((dataObj, index) => {
-      this.labels.push(this.getFoodType(dataObj.foodType));
+      this.labels.push(this.getDayName(dataObj.day));
       if (index === 0) {
         // Első elem esetén létrehozzuk az adatokat
         this.datasets.push({
@@ -98,16 +98,22 @@ export class DashboardComponent {
     return `rgba(${r},${g},${b},${alpha})`;
   }
 
-  getFoodType(type: string): string{
+  getDayName(type: string): string{
     switch(type){
-      case "DINNER":
-        return "Vacsora";
-      case "BREAKFAST":
-        return "Reggeli";
-      case "LUNCH":
-        return "Ebéd";
-      case "SNACK":
-        return "Snack";
+      case "Monday":
+        return "Hétfő";
+      case "Tuesday":
+        return "Kedd";
+      case "Wednesday":
+        return "Szerda";
+      case "Thursday":
+        return "Csütörtök";
+      case "Friday":
+        return "Péntek";
+      case "Saturday":
+        return "Szombat";
+      case "Sunday":
+        return "Vasárnap";
       default:
         return "";
     }
