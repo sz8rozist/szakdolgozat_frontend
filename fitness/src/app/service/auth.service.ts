@@ -74,4 +74,12 @@ export class AuthService {
   checkPassword(userId: number, password: ChangePassword){
    return this.http.post<boolean>(`${this.apiUrlService.getApiUrl()}/user/password/${userId}`, password, {observe: 'response'}); 
   }
+
+  isTrainer(){
+    const token = this.getDecodedToken();
+    if(token && token.role && Array.isArray(token.role)){
+      return token.role.some((item: any) => item.role === "TRAINER");
+    }
+    return throwError("Nincs bejelentkezve felhasználó: Nincs érvényes token!");
+  }
 }

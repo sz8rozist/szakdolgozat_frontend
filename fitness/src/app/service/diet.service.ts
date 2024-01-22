@@ -8,6 +8,7 @@ import { DietUpdateRequest } from '../model/DietUpdateRequest';
 import { WebsocketService } from './websocket.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
 import { DietSummary } from '../model/DietSummary';
+import { CaloriesSum } from '../model/CaloriesSum';
 @Injectable({
   providedIn: 'root',
 })
@@ -96,5 +97,8 @@ export class DietService {
     return this.http.get<DietSummary[]>(
       `${this.apiUrlService.getApiUrl()}/diet/macronutrienseByYear/${guestUserId}/${currentYear}`
     );
+  }
+  getCalories(userId: number){
+    return this.http.get<CaloriesSum>(`${this.apiUrlService.getApiUrl()}/diet/caloriesSum/${userId}`);
   }
 }

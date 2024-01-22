@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {  faDrumstickBite, faFish, faHamburger } from '@fortawesome/free-solid-svg-icons';
+import { CaloriesSum } from 'src/app/model/CaloriesSum';
 import { DietSummary } from 'src/app/model/DietSummary';
 import { AuthService } from 'src/app/service/auth.service';
 import { DietService } from 'src/app/service/diet.service';
@@ -12,6 +14,11 @@ export class DashboardComponent {
   datasets: any = [];
   dietSummarys: DietSummary[] = [];
   labels: string[] = [];
+  caloriesSum?: CaloriesSum;
+  faHamburger = faHamburger;
+  drumstickBite = faDrumstickBite;
+  faFish = faFish;
+  isTrainer = this.authService.isTrainer();
   constructor(
     private authService: AuthService,
     private dietService: DietService
@@ -19,6 +26,7 @@ export class DashboardComponent {
 
   ngOnInit() {
     const token = this.authService.getDecodedToken();
+    console.log(token);
     this.dietService.getMacronutrienseStatistics(token.sub).subscribe(
       (result: DietSummary[]) => {
         this.dietSummarys = [...result];
@@ -28,6 +36,9 @@ export class DashboardComponent {
         console.log(error);
       }
     );
+    this.dietService.getCalories(token.sub).subscribe((response: CaloriesSum) =>{
+      this.caloriesSum = response;
+    }, (error) =>{console.log(error)})
   }
 
   createDataset() {
