@@ -16,6 +16,8 @@ import { ChangePassword } from '../model/ChangePassword';
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
+  private rememberMeSubject = new BehaviorSubject<boolean>(false);
+  rememberme$ = this.rememberMeSubject.asObservable();
   constructor(private apiUrlService: ApiUrlService, private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router) {
     const token = localStorage.getItem('token');
     this._isLoggedIn$.next(!!token);
@@ -28,6 +30,10 @@ export class AuthService {
         localStorage.setItem("token", response.token);
       })
     );
+  }
+
+  addRememberme(value: boolean){
+    this.rememberMeSubject.next(value);
   }
 
   signup(signupUser: SignupUser){

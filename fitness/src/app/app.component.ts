@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from './service/auth.service';
 import { UserDto } from './model/dto/UserDto';
 import { NgToastService } from 'ng-angular-popup';
@@ -85,6 +85,16 @@ export class AppComponent {
         });
         this.notificationService.addNotification(response);
       }, 2500);
+    });
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event: Event) {
+    console.log('Az oldal bezárásra kerül.');
+    this.authService.rememberme$.subscribe((response: boolean) =>{
+      if(!response){
+        localStorage.removeItem("token");
+      }
     });
   }
 }

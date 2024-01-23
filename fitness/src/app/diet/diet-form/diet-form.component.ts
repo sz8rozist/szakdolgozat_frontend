@@ -178,7 +178,7 @@ export class DietFormComponent {
     if (this.dietForm.valid && this.dietFoods.length > 0) {
       if (
         this.recommendation &&
-        this.sum.calorie > this.recommendation.calorie
+        (this.sum.calorie > this.recommendation.calorie || this.sum.carbonhydrate > this.recommendation.carbonhydrate || this.sum.protein > this.recommendation.protein || this.sum.fat > this.recommendation.fat)
       ) {
         this.toast.warning({
           detail: 'Figyelmeztetés',
@@ -270,10 +270,10 @@ export class DietFormComponent {
         (this.sum.protein / this.recommendation.protein) * 100;
       const percentageFat = (this.sum.fat / this.recommendation.fat) * 100;
       // Beállítjuk a kiszámolt százalékokat a percentages tömbben
-      this.percentages[0].value = Math.min(percentageCalorie, 100);
-      this.percentages[1].value = Math.min(percentageCarbonhydrate, 100);
-      this.percentages[2].value = Math.min(percentageProtein, 100);
-      this.percentages[3].value = Math.min(percentageFat, 100);
+      this.percentages[0].value = parseFloat(Math.min(percentageCalorie, 100).toFixed(2));
+      this.percentages[1].value = parseFloat(Math.min(percentageCarbonhydrate, 100).toFixed(2));
+      this.percentages[2].value = parseFloat(Math.min(percentageProtein, 100).toFixed(2));
+      this.percentages[3].value = parseFloat(Math.min(percentageFat, 100).toFixed(2));
     }
   }
 

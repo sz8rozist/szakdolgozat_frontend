@@ -29,6 +29,7 @@ export class SigninComponent {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
+      rememberme: new FormControl('')
     });
     this.authService.isLoggedIn$.subscribe((resp) => {
       if (resp) {
@@ -39,6 +40,7 @@ export class SigninComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
+      console.log(this.loginForm.get('rememberme')?.value);
       const loginUser: LoginUser = {
         username: this.loginForm.get('username')?.value,
         password: this.loginForm.get('password')?.value,
@@ -52,6 +54,9 @@ export class SigninComponent {
               duration: 2000,
               type: 'success',
             });
+            if(this.loginForm.get('rememberme')?.value){
+              this.authService.addRememberme(this.loginForm.get('rememberme')?.value);
+            }
             this.router.navigate(['/dashboard']);
           }
         },
