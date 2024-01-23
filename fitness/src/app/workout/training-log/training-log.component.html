@@ -70,6 +70,21 @@
                     <button *ngIf="!workout.trainer" class="btn btn-danger" (click)="deleteExercise(workout.workoutId)">
                       <i class="bi bi-trash"></i>
                     </button>
+                    <button
+                      class="btn btn-success btn-sm me-2"
+                      (click)="sendNotificationToTrainer(workout)"
+                      *ngIf="!workout.done"
+                    >
+                      {{ "elvegez" | translate }}
+                    </button>
+                    <button
+                      class="btn btn-success btn-sm me-2"
+                      *ngIf="workout.done"
+                      disabled
+                    >
+                      <i class="bi bi-check" *ngIf="workout.done"></i>
+                      {{ "elvegezve" | translate }}
+                    </button>
                   </td>
                 </tr>
               </tbody>

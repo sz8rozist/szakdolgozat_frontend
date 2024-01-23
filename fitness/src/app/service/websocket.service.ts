@@ -4,8 +4,8 @@ import { Subject, Observable } from 'rxjs';
 import { MessageDto } from '../model/dto/MessageDto';
 import { AuthService } from './auth.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
-import { NotificationModel } from '../model/NotificationModel';
 import { Notification } from '../model/Notification';
+import { SocketWorkoutDto } from '../model/dto/SocketWorkoutDto';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,7 @@ export class WebsocketService {
   private stompClient: Client = new Client();
   private messageSubject: Subject<MessageDto> = new Subject<MessageDto>();
   private dietSubject: Subject<Notification> = new Subject<Notification>();
+  private workoutSubject: Subject<Notification> = new Subject<Notification>();
 
   constructor(private authService: AuthService) {
     this.initializeWebSocketConnection();
@@ -41,6 +42,12 @@ export class WebsocketService {
                 this.dietSubject.next(JSON.parse(message.body));
               }
             );
+            this.stompClient.subscribe(
+              `/queue/trainerWorkoutNotification/${token.sub}`,
+              (message) => {
+                this.workoutSubject.next(JSON.parse(message.body));
+              }
+            )
           }, 1000);
         }
       },
@@ -67,7 +74,17 @@ export class WebsocketService {
     });
   }
 
+  sendWorkoutNotification(message: SocketWorkoutDto){
+    this.stompClient.publish({
+      destination: `/app/trainer.workout/${message.trainerId}`,
+      body: JSON.stringify(message),
+    });
+  }
+
   getDietNotificationToTrainer() {
     return this.dietSubject.asObservable();
+  }
+  getWorkoutNotificationToTrainer(){
+    return this.workoutSubject.asObservable();
   }
 }

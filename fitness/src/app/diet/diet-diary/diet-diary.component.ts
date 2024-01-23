@@ -204,7 +204,6 @@ export class DietDiaryComponent {
   }
 
   sendNotificationToTrainer(food: DietDto) {
-    console.log(food.foodId);
     const token = this.authService.getDecodedToken();
     const trainer = this.guestService.findTrainer(token.sub).toPromise();
     trainer.then(

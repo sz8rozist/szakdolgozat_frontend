@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { Exercise } from 'src/app/model/Exercise';
+import { Trainer } from 'src/app/model/Trainer';
 import { User } from 'src/app/model/User';
 import { Workout } from 'src/app/model/Workout';
+import { SocketDietDto } from 'src/app/model/dto/SocketDietDto';
+import { SocketWorkoutDto } from 'src/app/model/dto/SocketWorkoutDto';
 import { AuthService } from 'src/app/service/auth.service';
 import { ExerciseService } from 'src/app/service/exercise.service';
+import { GuestService } from 'src/app/service/guest.service';
+import { NotificationService } from 'src/app/service/notification.service';
 import { WorkoutService } from 'src/app/service/workout.service';
 
 @Component({
@@ -21,7 +26,9 @@ export class TrainingLogComponent {
     private authService: AuthService,
     private workoutService: WorkoutService,
     private toast: NgToastService,
-    private exerciseService: ExerciseService
+    private exerciseService: ExerciseService,
+    private guestService: GuestService,
+    private notificationService: NotificationService
   ) {}
 
   loadWorkout(date: string) {
@@ -102,5 +109,26 @@ export class TrainingLogComponent {
           });
       }
     });
+  }
+
+  sendNotificationToTrainer(workout: Workout){
+    const token = this.authService.getDecodedToken();
+    const trainer = this.guestService.findTrainer(token.sub).toPromise();
+    trainer.then(
+      (response: Trainer | any) => {
+        //console.log(response);
+        const data: SocketWorkoutDto = {
+          guestId: token.sub as number,
+          trainerId: response.id,
+          exerciseId: workout.exercise.id as number,
+          workoutId: workout.workoutId as number,
+        };
+        this.notificationService.sendWorkoutNotificationToTrainer(data);
+        this.loadWorkout(this.date);
+      },
+      (error) => {
+        console.log(error.mesage);
+      }
+    );
   }
 }

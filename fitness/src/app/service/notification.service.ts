@@ -5,6 +5,7 @@ import { WebsocketService } from './websocket.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
 import { Notification } from 'src/app/model/Notification';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { SocketWorkoutDto } from '../model/dto/SocketWorkoutDto';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,10 @@ export class NotificationService {
     this.webSocketService.sendDietNotification(message);
   }
 
+  sendWorkoutNotificationToTrainer(message: SocketWorkoutDto){
+    this.webSocketService.sendWorkoutNotification(message);
+  }
+
   getNotificationSubject(): Observable<Notification[]> {
     return this.notificationSubject.asObservable();
   }
@@ -32,6 +37,10 @@ export class NotificationService {
 
   getTrainerNotification() {
     return this.webSocketService.getDietNotificationToTrainer();
+  }
+
+  getTrainerWorkoutNotification(){
+    return this.webSocketService.getWorkoutNotificationToTrainer();
   }
 
   getAll(userId: number) {
