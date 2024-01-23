@@ -5,6 +5,7 @@ import { MessageDto } from '../model/dto/MessageDto';
 import { AuthService } from './auth.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
 import { NotificationModel } from '../model/NotificationModel';
+import { Notification } from '../model/Notification';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ import { NotificationModel } from '../model/NotificationModel';
 export class WebsocketService {
   private stompClient: Client = new Client();
   private messageSubject: Subject<MessageDto> = new Subject<MessageDto>();
-  private dietSubject: Subject<NotificationModel> = new Subject<NotificationModel>();
+  private dietSubject: Subject<Notification> = new Subject<Notification>();
 
   constructor(private authService: AuthService) {
     this.initializeWebSocketConnection();

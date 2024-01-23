@@ -9,6 +9,7 @@ import { WebsocketService } from './websocket.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
 import { DietSummary } from '../model/DietSummary';
 import { CaloriesSum } from '../model/CaloriesSum';
+import { MealFrequency } from '../model/MealFrequency';
 @Injectable({
   providedIn: 'root',
 })
@@ -84,21 +85,10 @@ export class DietService {
       `${this.apiUrlService.getApiUrl()}/diet/macronutriense/${guestUserId}`
     );
   }
-  getMacronutrienseStatisticsByDay(guestUserId: number) {
-    var currentDate = new Date();
-    var formattedDate = currentDate.toISOString().split('T')[0];
-    return this.http.get<DietSummary[]>(
-      `${this.apiUrlService.getApiUrl()}/diet/macronutrienseByDate/${guestUserId}/${formattedDate}`
-    );
-  }
-  getMacronutrienseStatisticsByYear(guestUserId: number) {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    return this.http.get<DietSummary[]>(
-      `${this.apiUrlService.getApiUrl()}/diet/macronutrienseByYear/${guestUserId}/${currentYear}`
-    );
-  }
   getCalories(userId: number){
     return this.http.get<CaloriesSum>(`${this.apiUrlService.getApiUrl()}/diet/caloriesSum/${userId}`);
+  }
+  getMealFrequency(userId: number){
+    return this.http.get<MealFrequency[]>(`${this.apiUrlService.getApiUrl()}/diet/mealFrequency/${userId}`);
   }
 }

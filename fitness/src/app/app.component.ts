@@ -5,6 +5,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { NotificationModel } from './model/NotificationModel';
 import { NotificationService } from './service/notification.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Notification } from './model/Notification';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +41,7 @@ export class AppComponent {
   getTrainerNotification() {
     this.notificationService
       .getTrainerNotification()
-      .subscribe((response: NotificationModel) => {
+      .subscribe((response: Notification) => {
         setTimeout(() => {
           this.toast.info({
             detail: 'Értesítés',
@@ -49,6 +50,7 @@ export class AppComponent {
             type: 'info',
           });
         }, 2500);
+        this.notificationService.addNotification(response);
       });
   }
 }

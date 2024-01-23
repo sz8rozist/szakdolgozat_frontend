@@ -10,12 +10,14 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    LineChartComponent
+    LineChartComponent,
+    PieChartComponent,
   ],
   imports: [
     CommonModule,

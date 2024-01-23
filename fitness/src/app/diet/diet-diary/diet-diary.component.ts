@@ -11,6 +11,7 @@ import { DietDto } from 'src/app/model/dto/DietDto';
 import { GuestService } from 'src/app/service/guest.service';
 import { Trainer } from 'src/app/model/Trainer';
 import { NotificationService } from 'src/app/service/notification.service';
+import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-diet-diary',
   templateUrl: './diet-diary.component.html',
@@ -35,8 +36,23 @@ export class DietDiaryComponent {
     responsive: true,
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: 'bottom',
+      },
+      datalabels: {
+        color: 'white',
+      anchor: 'end',
+      align: 'start',
+      offset: 0,
+      borderWidth: 2,
+      borderColor: '#F44336',
+      borderRadius: 4,
+      backgroundColor: '#F44336',
+        formatter: (value: any, ctx: any) => {
+          if (ctx.chart.data.labels) {
+            return ctx.chart.data.labels[ctx.dataIndex];
+          }
+        },
       },
     },
   };
@@ -57,7 +73,7 @@ export class DietDiaryComponent {
     private guestService: GuestService,
     private notificationService: NotificationService
   ) {}
-
+  public pieChartPlugins = [DatalabelsPlugin];
   ngOnInit() {}
 
   loadDietByDate() {

@@ -59,4 +59,15 @@ export class NotificationService {
       { observe: 'response' }
     );
   }
+
+  addNotification(notification: Notification) {
+    // Először lekérjük az aktuális értéket
+    const currentNotifications = this.notificationSubject.getValue();
+
+    // Hozzáadjuk az új értesítést
+    currentNotifications.push(notification);
+
+    // Frissítjük a BehaviorSubject értékét az új tömbbel
+    this.notificationSubject.next(currentNotifications);
+  }
 }

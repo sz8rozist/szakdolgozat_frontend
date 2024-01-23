@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import {  faDrumstickBite, faFish, faHamburger } from '@fortawesome/free-solid-svg-icons';
+import {
+  faDrumstickBite,
+  faFish,
+  faHamburger,
+} from '@fortawesome/free-solid-svg-icons';
 import { CaloriesSum } from 'src/app/model/CaloriesSum';
 import { DietSummary } from 'src/app/model/DietSummary';
+import { MealFrequency } from 'src/app/model/MealFrequency';
 import { AuthService } from 'src/app/service/auth.service';
 import { DietService } from 'src/app/service/diet.service';
 
@@ -19,6 +24,9 @@ export class DashboardComponent {
   drumstickBite = faDrumstickBite;
   faFish = faFish;
   isTrainer = this.authService.isTrainer();
+  mealFreqency: MealFrequency[] = [];
+  pieDatasets: any = [];
+  pieLabels: string[] = [];
   constructor(
     private authService: AuthService,
     private dietService: DietService
@@ -26,7 +34,33 @@ export class DashboardComponent {
 
   ngOnInit() {
     const token = this.authService.getDecodedToken();
-    console.log(token);
+
+    if (!this.isTrainer) {
+      this.createMacronutrienseStatistics(token);
+      this.createCaloriesStatistics(token);
+      this.createMealFrequency(token);
+    }
+  }
+
+  createMealFrequency(token: any){
+    this.dietService.getMealFrequency(token.sub).subscribe((response: MealFrequency[]) =>{
+      this.mealFreqency = [...response];
+      this.createPieChartDataset();
+    });
+  }
+
+  createCaloriesStatistics(token: any) {
+    this.dietService.getCalories(token.sub).subscribe(
+      (response: CaloriesSum) => {
+        this.caloriesSum = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  createMacronutrienseStatistics(token: any) {
     this.dietService.getMacronutrienseStatistics(token.sub).subscribe(
       (result: DietSummary[]) => {
         this.dietSummarys = [...result];
@@ -36,13 +70,16 @@ export class DashboardComponent {
         console.log(error);
       }
     );
-    this.dietService.getCalories(token.sub).subscribe((response: CaloriesSum) =>{
-      this.caloriesSum = response;
-    }, (error) =>{console.log(error)})
+  }
+
+  createPieChartDataset(){
+    this.mealFreqency.forEach((dataObj, index) =>{
+      this.pieLabels.push(dataObj.mealName);
+      this.pieDatasets.push(dataObj.count);
+    });
   }
 
   createDataset() {
-    console.log(this.dietSummarys);
     this.dietSummarys.forEach((dataObj, index) => {
       this.labels.push(this.getDayName(dataObj.day));
       if (index === 0) {
@@ -98,24 +135,24 @@ export class DashboardComponent {
     return `rgba(${r},${g},${b},${alpha})`;
   }
 
-  getDayName(type: string): string{
-    switch(type){
-      case "Monday":
-        return "Hétfő";
-      case "Tuesday":
-        return "Kedd";
-      case "Wednesday":
-        return "Szerda";
-      case "Thursday":
-        return "Csütörtök";
-      case "Friday":
-        return "Péntek";
-      case "Saturday":
-        return "Szombat";
-      case "Sunday":
-        return "Vasárnap";
+  getDayName(type: string): string {
+    switch (type) {
+      case 'Monday':
+        return 'Hétfő';
+      case 'Tuesday':
+        return 'Kedd';
+      case 'Wednesday':
+        return 'Szerda';
+      case 'Thursday':
+        return 'Csütörtök';
+      case 'Friday':
+        return 'Péntek';
+      case 'Saturday':
+        return 'Szombat';
+      case 'Sunday':
+        return 'Vasárnap';
       default:
-        return "";
+        return '';
     }
   }
 }
