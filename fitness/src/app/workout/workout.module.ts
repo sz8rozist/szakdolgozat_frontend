@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
+import { CreateTrainerComponent } from './create-trainer/create-trainer.component';
 
 
 
@@ -20,7 +21,8 @@ import { HttpLoaderFactory } from '../app.module';
     TrainingLogComponent,
     CreateTrainingComponent,
     AddExerciseComponent,
-    EditWorkoutComponent
+    EditWorkoutComponent,
+    CreateTrainerComponent
   ],
   imports: [
     CommonModule,

@@ -21,6 +21,7 @@ export class DietDiaryComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   date: string = '';
   diet?: DietResponse;
+  giveByTrainer: boolean = false;
   sum: {
     calorie: number;
     carbonhydrate: number;
@@ -41,13 +42,13 @@ export class DietDiaryComponent {
       },
       datalabels: {
         color: 'white',
-      anchor: 'end',
-      align: 'start',
-      offset: 0,
-      borderWidth: 2,
-      borderColor: '#F44336',
-      borderRadius: 4,
-      backgroundColor: '#F44336',
+        anchor: 'end',
+        align: 'start',
+        offset: 0,
+        borderWidth: 2,
+        borderColor: '#F44336',
+        borderRadius: 4,
+        backgroundColor: '#F44336',
         formatter: (value: any, ctx: any) => {
           if (ctx.chart.data.labels) {
             return ctx.chart.data.labels[ctx.dataIndex];
@@ -78,6 +79,8 @@ export class DietDiaryComponent {
 
   loadDietByDate() {
     this.loadDiet(this.date);
+    this.giveByTrainer = (this.diet?.diet &&
+      this.diet?.diet.every((workout) => workout.trainerId != null)) as boolean;
   }
 
   loadDiet(date: string) {
@@ -200,22 +203,25 @@ export class DietDiaryComponent {
     });
   }
 
-  sendNotificationToTrainer(food: DietDto){
+  sendNotificationToTrainer(food: DietDto) {
     console.log(food.foodId);
     const token = this.authService.getDecodedToken();
     const trainer = this.guestService.findTrainer(token.sub).toPromise();
-    trainer.then((response: Trainer | any) =>{
-      //console.log(response);
-      const data: SocketDietDto = {
-        guestId: token.sub as number,
-        trainerId: response.id,
-        foodId: food.foodId,
-        dietId: food.dietId
+    trainer.then(
+      (response: Trainer | any) => {
+        //console.log(response);
+        const data: SocketDietDto = {
+          guestId: token.sub as number,
+          trainerId: response.id,
+          foodId: food.foodId,
+          dietId: food.dietId,
+        };
+        this.notificationService.sendNotificationToTrainer(data);
+        this.loadDiet(this.date);
+      },
+      (error) => {
+        console.log(error.mesage);
       }
-      this.notificationService.sendNotificationToTrainer(data);
-      this.loadDiet(this.date);
-    }, error =>{
-      console.log(error.mesage);
-    });
+    );
   }
 }

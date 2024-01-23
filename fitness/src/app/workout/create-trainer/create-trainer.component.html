@@ -1,0 +1,105 @@
+<main class="main" id="main">
+    <div class="pagetitle">
+      <h1>{{'edzes_tervezes'|translate}}</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
+          <li class="breadcrumb-item">{{'edzes'|translate}}</li>
+          <li class="breadcrumb-item active">{{'edzes_tervezes'|translate}}</li>
+        </ol>
+      </nav>
+    </div>
+    <section class="section">
+        <div *ngIf="guests.length == 0">
+            <div class="alert alert-info">
+              <i class="bi bi-info-circle me-1"></i>
+              {{"nincs_vendeg" | translate}}
+            </div>
+          </div>
+      <div class="row" *ngIf="guests.length > 0">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">{{"vendeg_kivalasztasa"|translate}}</div>
+                <div class="card-body mt-3">
+                  <div class="form-floating mb-3">
+                    <select [(ngModel)]="selectedGuest" class="form-select">
+                      <option  *ngFor="let guest of guests" [value]="guest.id">
+                        {{ guest.first_name + " " + guest.last_name }}
+                      </option>
+                    </select>
+                    <label for="floatingSelect">{{"vendeg"|translate}}</label>
+                  </div>
+                </div>
+              </div>
+          <div class="card">
+            <div class="card-header">{{'datum'|translate}}</div>
+            <div class="card-body">
+              <div class="form-floating mb-3 mt-3">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="floatingInput"
+                  [(ngModel)]="date"
+                />
+                <label for="floatingInput">{{'datum'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">{{'edzes_tervezes'|translate}}</div>
+            <div class="card-body">
+              <button (click)="addWorkout()" class="btn btn-primary mt-3">
+                {{'uj_gyakorlat'|translate}}
+              </button>
+              <table class="table table-bordered mt-3">
+                <thead>
+                  <tr>
+                    <th>{{'gyakorlat'|translate}}</th>
+                    <th>{{'sorozatszam'|translate}}</th>
+                    <th>{{'ismetlesszam'|translate}}</th>
+                    <th>{{'muvelet'|translate}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let workout of workouts; let i = index">
+                    <td>
+                      <select class="form-select" name="exerciseId{{i}}" [(ngModel)]="workout.exerciseId" id="">
+                          <option *ngFor="let exercise of exercises" [value]="exercise.id">{{exercise.name}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="workout.sets"
+                        name="sets{{ i }}"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="workout.repetitions"
+                        name="reps{{ i }}"
+                      />
+                    </td>
+                    <td>
+                      <button class="btn btn-danger" (click)="removeWorkout(i)">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button (click)="saveWorkout()" class="btn btn-success mt-3">
+                {{'mentes'|translate}}
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  

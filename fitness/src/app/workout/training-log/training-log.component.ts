@@ -10,80 +10,96 @@ import { WorkoutService } from 'src/app/service/workout.service';
 @Component({
   selector: 'app-training-log',
   templateUrl: './training-log.component.html',
-  styleUrls: ['./training-log.component.css']
+  styleUrls: ['./training-log.component.css'],
 })
 export class TrainingLogComponent {
-  date: string = "";
+  date: string = '';
   workouts: Workout[] = [];
   exercises: Exercise[] = [];
-
+  giveByTrainer: boolean = false;
   constructor(
     private authService: AuthService,
     private workoutService: WorkoutService,
     private toast: NgToastService,
     private exerciseService: ExerciseService
-  ){}
+  ) {}
 
-  loadWorkout(date: string){
+  loadWorkout(date: string) {
     const token = this.authService.getDecodedToken();
-    this.workoutService.getWorkouts(token.sub as number, date).subscribe((resp: Workout[]) =>{
-      if(resp.length == 0){
-        this.toast.warning({
-          detail: 'Figyelmeztetés',
-          summary: 'Ehhez a dátumhoz nem tartozik edzésterv!',
-          duration: 2000,
-          type: 'warning',
-        });
-      }
-      this.workouts = [...resp];
-    });
+    this.workoutService
+      .getWorkouts(token.sub as number, date)
+      .subscribe((resp: Workout[]) => {
+        if (resp.length == 0) {
+          this.toast.warning({
+            detail: 'Figyelmeztetés',
+            summary: 'Ehhez a dátumhoz nem tartozik edzésterv!',
+            duration: 2000,
+            type: 'warning',
+          });
+        }
+        console.log(resp);
+        this.workouts = [...resp];
+      });
   }
 
-  change(){
+  change() {
     this.loadWorkout(this.date);
+    this.giveByTrainer = this.workouts.every((workout) => !!workout.trainer);
+
   }
 
-  targetedBodyPart(part: string){
-    switch(part){
-      case "CHEST": return "Mell";
-      case "SHOULDER": return "Váll";
-      case "ABS": return "Has";
-      case "BACK": return "Hát";
-      case "ARMS": return "Kar";
-      case "LEGS": return "Láb";
-      default: return "";
+  targetedBodyPart(part: string) {
+    switch (part) {
+      case 'CHEST':
+        return 'Mell';
+      case 'SHOULDER':
+        return 'Váll';
+      case 'ABS':
+        return 'Has';
+      case 'BACK':
+        return 'Hát';
+      case 'ARMS':
+        return 'Kar';
+      case 'LEGS':
+        return 'Láb';
+      default:
+        return '';
     }
   }
 
-  deleteExercise(workoutId: any){
-    this.authService.getAuthData().subscribe((resp: User) =>{
-      if(resp && resp.guest != null){
-        this.exerciseService.deleteExercise(workoutId, resp.guest.id as number).subscribe(() =>{
-          this.loadWorkout(this.date);
-          this.toast.success({
-            detail: 'Sikeres',
-            summary: 'Sikeres törlés!',
-            duration: 2000,
-            type: 'success',
+  deleteExercise(workoutId: any) {
+    this.authService.getAuthData().subscribe((resp: User) => {
+      if (resp && resp.guest != null) {
+        this.exerciseService
+          .deleteExercise(workoutId, resp.guest.id as number)
+          .subscribe(() => {
+            this.loadWorkout(this.date);
+            this.toast.success({
+              detail: 'Sikeres',
+              summary: 'Sikeres törlés!',
+              duration: 2000,
+              type: 'success',
+            });
           });
-        });
       }
     });
   }
 
-  deleteWorkout(){
-    this.authService.getAuthData().subscribe((resp: User) =>{
-      if(resp && resp.guest != null){
-        this.workoutService.deleteWorkout(resp.guest.id as number, this.date).subscribe(() =>{
-          this.workouts = [];
-          this.date = "";
-          this.toast.success({
-            detail: 'Sikeres',
-            summary: 'Sikeres törlés!',
-            duration: 2000,
-            type: 'success',
+  deleteWorkout() {
+    this.authService.getAuthData().subscribe((resp: User) => {
+      if (resp && resp.guest != null) {
+        this.workoutService
+          .deleteWorkout(resp.guest.id as number, this.date)
+          .subscribe(() => {
+            this.workouts = [];
+            this.date = '';
+            this.toast.success({
+              detail: 'Sikeres',
+              summary: 'Sikeres törlés!',
+              duration: 2000,
+              type: 'success',
+            });
           });
-        });
       }
     });
   }

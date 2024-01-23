@@ -24,7 +24,7 @@
               </div>
               <div class="col-lg-6 text-end">
                 <button
-                  *ngIf="diet && diet.diet.length > 0"
+                  *ngIf="diet && diet.diet.length > 0 && giveByTrainer"
                   class="btn btn-danger"
                   (click)="deleteDiet()"
                 >
@@ -77,6 +77,7 @@
                   <td class="text-end">{{ food.calorie }}</td>
                   <td>
                     <button
+                    *ngIf="!food.trainerId"
                       class="btn btn-primary btn-sm me-2"
                       routerLink="/diet/edit-food/{{ food.dietId }}"
                     >
@@ -98,6 +99,7 @@
                       {{ "elfogyasztva" | translate }}
                     </button>
                     <button
+                    *ngIf="!food.trainerId"
                       (click)="removeFood(food.dietId)"
                       class="btn btn-danger btn-sm"
                     >

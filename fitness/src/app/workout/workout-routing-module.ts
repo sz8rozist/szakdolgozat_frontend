@@ -6,6 +6,7 @@ import { TrainingLogComponent } from './training-log/training-log.component';
 import { CreateTrainingComponent } from './create-training/create-training.component';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { EditWorkoutComponent } from './edit-workout/edit-workout.component';
+import { CreateTrainerComponent } from './create-trainer/create-trainer.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'training-log', component: TrainingLogComponent, canActivate: [AuthGuard]},
   {path: 'create', component: CreateTrainingComponent, canActivate: [AuthGuard]},
   {path: 'addExercise', component: AddExerciseComponent, canActivate: [AuthGuard]},
-  {path: 'edit/:id', component: EditWorkoutComponent, canActivate: [AuthGuard]}
+  {path: 'edit/:id', component: EditWorkoutComponent, canActivate: [AuthGuard]},
+  {path: 'create-trainer', component: CreateTrainerComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

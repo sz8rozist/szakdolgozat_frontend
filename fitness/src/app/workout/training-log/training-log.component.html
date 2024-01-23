@@ -19,7 +19,7 @@
                 <p>{{'datum'|translate}}</p>
               </div>
               <div class="col-lg-6 text-end">
-                <button *ngIf="date != ''" class="btn btn-danger" (click)="deleteWorkout()"><i class="bi bi-trash"></i></button>
+                <button *ngIf="date != '' && !giveByTrainer" class="btn btn-danger" (click)="deleteWorkout()"><i class="bi bi-trash"></i></button>
               </div>
             </div>
           </div>
@@ -61,12 +61,13 @@
                   <td>{{ workout.repetitions }}</td>
                   <td>
                     <button
+                    *ngIf="!workout.trainer"
                       class="btn btn-warning me-2 text-white"
-                      routerLink="/workout/edit/{{ workout.id }}"
+                      routerLink="/workout/edit/{{ workout.workoutId }}"
                     >
                     {{'modositas'|translate}}
                     </button>
-                    <button class="btn btn-danger" (click)="deleteExercise(workout.id)">
+                    <button *ngIf="!workout.trainer" class="btn btn-danger" (click)="deleteExercise(workout.workoutId)">
                       <i class="bi bi-trash"></i>
                     </button>
                   </td>
