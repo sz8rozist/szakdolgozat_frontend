@@ -6,6 +6,7 @@ import { SocketDietDto } from '../model/dto/SocketDietDto';
 import { Notification } from 'src/app/model/Notification';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SocketWorkoutDto } from '../model/dto/SocketWorkoutDto';
+import { SocketFeedBackDto } from '../model/dto/SocketFeedbackDto';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,10 @@ export class NotificationService {
     this.webSocketService.sendWorkoutNotification(message);
   }
 
+  sendFeedbackNotification(message: SocketFeedBackDto, notificationId: number){
+    this.webSocketService.sendFeedbackNotification(message, notificationId);
+  }
+
   getNotificationSubject(): Observable<Notification[]> {
     return this.notificationSubject.asObservable();
   }
@@ -41,6 +46,10 @@ export class NotificationService {
 
   getTrainerWorkoutNotification(){
     return this.webSocketService.getWorkoutNotificationToTrainer();
+  }
+
+  getFeedbackNotification(){
+    return this.webSocketService.getFeedbackNotification();
   }
 
   getAll(userId: number) {

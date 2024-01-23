@@ -19,7 +19,7 @@
               <div class="col-lg-6"><h6 class="m-0">Értesítések</h6></div>
               <div class="col-lg-6 text-end">
                 <button
-                *ngIf="displayNotifications.length > 0"
+                  *ngIf="displayNotifications.length > 0"
                   class="btn btn-outline-primary btn-sm"
                   (click)="markAllAsViewed()"
                 >
@@ -66,10 +66,20 @@
                 </div>
                 <span class="ms-auto">
                   <fa-icon
+                    *ngIf="
+                      notification.type == 'DIET' ||
+                      notification.type == 'EXERCISE'
+                    "
+                    [icon]="faComment"
+                    style="cursor: pointer"
+                    class="fa-lg me-2 text-primary"
+                    routerLink="/notification/comment/{{notification.notificationId}}"
+                  ></fa-icon>
+                  <fa-icon
                     *ngIf="!notification.viewed"
                     [icon]="faRead"
                     style="cursor: pointer"
-                    class="fa-lg"
+                    class="fa-lg text-success"
                     (click)="markAsViewed(notification.notificationId)"
                   ></fa-icon>
                   <fa-icon

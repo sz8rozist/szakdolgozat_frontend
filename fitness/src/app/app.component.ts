@@ -27,6 +27,7 @@ export class AppComponent {
   ngOnInit() {
     this.getTrainerNotification();
     this.getTrainerWorkoutNotification();
+    this.getFeedbackNotification();
     this.translateService.setDefaultLang('hu');
     this.translateService.use(localStorage.getItem('lang') || 'hu');
   }
@@ -69,5 +70,21 @@ export class AppComponent {
           this.notificationService.addNotification(response);
         }, 2500);
       });
+  }
+
+  getFeedbackNotification(){
+    this.notificationService
+    .getFeedbackNotification()
+    .subscribe((response: Notification) => {
+      setTimeout(() => {
+        this.toast.info({
+          detail: 'Értesítés',
+          summary: response.message,
+          duration: 2000,
+          type: 'info',
+        });
+        this.notificationService.addNotification(response);
+      }, 2500);
+    });
   }
 }

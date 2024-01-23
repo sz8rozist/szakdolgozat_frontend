@@ -33,6 +33,7 @@ export class NotificationComponent {
   loading = false;
   notifications: Notification[] = [];
   faDiet = faFish;
+  faComment = faComment;
   faFeedback = faComment;
   faExercise = faDumbbell;
   faRead = faBookOpenReader;

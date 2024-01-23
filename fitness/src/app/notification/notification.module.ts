@@ -7,15 +7,19 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CommentComponent } from './comment/comment.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
-    NotificationComponent
+    NotificationComponent,
+    CommentComponent
   ],
   imports: [
     CommonModule,
     NotificationRoutingModule,
     SharedModule,
     FontAwesomeModule,
+    FormsModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

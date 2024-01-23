@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
 import { Notification } from '../model/Notification';
 import { SocketWorkoutDto } from '../model/dto/SocketWorkoutDto';
+import { SocketFeedBackDto } from '../model/dto/SocketFeedbackDto';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class WebsocketService {
   private messageSubject: Subject<MessageDto> = new Subject<MessageDto>();
   private dietSubject: Subject<Notification> = new Subject<Notification>();
   private workoutSubject: Subject<Notification> = new Subject<Notification>();
-
+  private feedbackSubject: Subject<Notification> = new Subject<Notification>();
   constructor(private authService: AuthService) {
     this.initializeWebSocketConnection();
   }
@@ -47,7 +48,13 @@ export class WebsocketService {
               (message) => {
                 this.workoutSubject.next(JSON.parse(message.body));
               }
-            )
+            );
+            this.stompClient.subscribe(
+              `/queue/guestFeedback/${token.sub}`,
+              (message) => {
+                this.feedbackSubject.next(JSON.parse(message.body));
+              }
+            );
           }, 1000);
         }
       },
@@ -74,9 +81,16 @@ export class WebsocketService {
     });
   }
 
-  sendWorkoutNotification(message: SocketWorkoutDto){
+  sendWorkoutNotification(message: SocketWorkoutDto) {
     this.stompClient.publish({
       destination: `/app/trainer.workout/${message.trainerId}`,
+      body: JSON.stringify(message),
+    });
+  }
+
+  sendFeedbackNotification(message: SocketFeedBackDto, notificationId: number) {
+    this.stompClient.publish({
+      destination: `/app/guest.feedback/${notificationId}`,
       body: JSON.stringify(message),
     });
   }
@@ -84,7 +98,10 @@ export class WebsocketService {
   getDietNotificationToTrainer() {
     return this.dietSubject.asObservable();
   }
-  getWorkoutNotificationToTrainer(){
+  getWorkoutNotificationToTrainer() {
     return this.workoutSubject.asObservable();
+  }
+  getFeedbackNotification() {
+    return this.feedbackSubject.asObservable();
   }
 }

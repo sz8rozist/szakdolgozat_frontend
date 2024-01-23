@@ -1,0 +1,32 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>{{ "hsz" | translate }}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">{{ "kezdolap" | translate }}</a>
+        </li>
+        <li class="breadcrumb-item">{{ "ertesites" | translate }}</li>
+        <li class="breadcrumb-item active">{{ "hsz" | translate }}</li>
+
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">Visszajelzés írása</div>
+                <div class="card-body">
+                    <div class="mb-3 mt-3">
+                        <textarea [(ngModel)]="feedback" name="" class="form-control" id="" style="resize: none;" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <button class="btn btn-primary" (click)="onSubmit()" [disabled]="feedback == ''">Küldés</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+</main>
