@@ -33,7 +33,8 @@ export class NavbarComponent {
       this.getProfilePicture(newProfilePictureUrl);
     });
     this.notificationService.getNotificationSubject().subscribe((notification: Notification[]) =>{
-      this.notifications = [...notification];
+      const filter = notification.filter((elem) => !elem.viewed);
+      this.notifications = [...filter];
     });
   }
 

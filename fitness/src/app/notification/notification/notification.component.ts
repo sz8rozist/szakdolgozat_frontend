@@ -18,15 +18,18 @@ import { trigger, style, animate, transition } from '@angular/animations';
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
-        style({ opacity: 0 ,transform: 'translateY(5px)' }),
-        animate('500ms ease-in-out', style({ opacity: 1, transform: 'translateY(0)' })),
+        style({ opacity: 0, transform: 'translateY(5px)' }),
+        animate(
+          '500ms ease-in-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
       ]),
     ]),
   ],
 })
 export class NotificationComponent {
   page = 1;
-  pageSize = 5;
+  pageSize = 15;
   loading = false;
   notifications: Notification[] = [];
   faDiet = faFish;
@@ -55,10 +58,14 @@ export class NotificationComponent {
           duration: 2000,
           type: 'success',
         });
-        const filtered = this.notifications.filter(
-          (elem) => elem.notificationId != id
+        // Töröld az értesítést mindkét tömbből
+        this.notifications = this.notifications.filter(
+          (notification) => notification.notificationId !== id
         );
-        this.notificationService.setNotificationSubject(filtered);
+        this.displayNotifications = this.displayNotifications.filter(
+          (notification) => notification.notificationId !== id
+        );
+        this.notificationService.setNotificationSubject(this.notifications);
       } else {
         console.error('Sikertelen törlés: ' + id);
       }
@@ -80,6 +87,12 @@ export class NotificationComponent {
         if (notification) {
           notification.viewed = true;
         }
+
+        const displayedNotification = this.displayNotifications.find((elem) => elem.notificationId == id);
+        if(displayedNotification){
+          displayedNotification.viewed = true;
+        }
+        
         this.notificationService.setNotificationSubject(this.notifications);
       } else {
         console.error('Sikertelen frissítés: ' + id);
@@ -135,10 +148,11 @@ export class NotificationComponent {
   }
 
   loadNotifications(): void {
-    const token = this.authService.getDecodedToken();
     this.loading = true;
-    this.notificationService.getAll(token.sub).subscribe(
+    this.notifications = [];
+    this.notificationService.getNotificationSubject().subscribe(
       (response: Notification[]) => {
+        console.log(response, this.notifications);
         this.notifications = [...response];
         this.totalPages = Math.ceil(response.length / this.pageSize);
         this.updatePageData();
@@ -154,10 +168,13 @@ export class NotificationComponent {
   updatePageData(): void {
     const startIndex = (this.page - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    const array = this.notifications.slice(startIndex, endIndex);
-    if (this.displayNotifications.length == 0) {
-      this.displayNotifications = array;
+    const newNotifications = this.notifications.slice(startIndex, endIndex);
+
+    if (this.page === 1) {
+      this.displayNotifications = [...newNotifications];
+    } else {
+      // Ha már voltak korábbi értesítések, akkor csak az újakat adja hozzá
+      this.displayNotifications = [...this.displayNotifications, ...newNotifications];
     }
-    this.displayNotifications = [...this.displayNotifications, ...array];
   }
 }

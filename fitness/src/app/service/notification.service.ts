@@ -4,24 +4,29 @@ import { ApiUrlService } from './api-url.service';
 import { WebsocketService } from './websocket.service';
 import { SocketDietDto } from '../model/dto/SocketDietDto';
 import { Notification } from 'src/app/model/Notification';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
-  private notificationSubject: Subject<Notification[]> = new Subject<Notification[]>();
-  constructor(private http: HttpClient, private apiUrlService: ApiUrlService, private webSocketService: WebsocketService) {}
+  private notificationSubject: BehaviorSubject<Notification[]> =
+    new BehaviorSubject<Notification[]>([]);
+  constructor(
+    private http: HttpClient,
+    private apiUrlService: ApiUrlService,
+    private webSocketService: WebsocketService
+  ) {}
 
   sendNotificationToTrainer(message: SocketDietDto) {
     this.webSocketService.sendDietNotification(message);
   }
 
-  getNotificationSubject(): Observable<Notification[]>{
+  getNotificationSubject(): Observable<Notification[]> {
     return this.notificationSubject.asObservable();
   }
 
-  setNotificationSubject(data: Notification[]){
+  setNotificationSubject(data: Notification[]) {
     this.notificationSubject.next(data);
   }
 
@@ -29,17 +34,29 @@ export class NotificationService {
     return this.webSocketService.getDietNotificationToTrainer();
   }
 
-  getAll(userId: number){
-    return this.http.get<Notification[]>(`${this.apiUrlService.getApiUrl()}/notification/${userId}`);
+  getAll(userId: number) {
+    return this.http.get<Notification[]>(
+      `${this.apiUrlService.getApiUrl()}/notification/${userId}`
+    );
   }
-  delete(id: number){
-    return this.http.delete(`${this.apiUrlService.getApiUrl()}/notification/${id}`, {observe: 'response'});
+  delete(id: number) {
+    return this.http.delete(
+      `${this.apiUrlService.getApiUrl()}/notification/${id}`,
+      { observe: 'response' }
+    );
   }
-  markAsViewed(id: number){
-    return this.http.put(`${this.apiUrlService.getApiUrl()}/notification/${id}`,{}, {observe: 'response'});
+  markAsViewed(id: number) {
+    return this.http.put(
+      `${this.apiUrlService.getApiUrl()}/notification/${id}`,
+      {},
+      { observe: 'response' }
+    );
   }
-  markAllAsViewed(userId: number){
-    return this.http.put(`${this.apiUrlService.getApiUrl()}/notification/all/${userId}`,{}, {observe: 'response'});
-
+  markAllAsViewed(userId: number) {
+    return this.http.put(
+      `${this.apiUrlService.getApiUrl()}/notification/all/${userId}`,
+      {},
+      { observe: 'response' }
+    );
   }
 }
