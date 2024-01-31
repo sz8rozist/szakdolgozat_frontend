@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     DashboardComponent,
     LineChartComponent,
     PieChartComponent,
+    BarChartComponent,
   ],
   imports: [
     CommonModule,

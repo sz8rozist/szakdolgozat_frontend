@@ -6,7 +6,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { CaloriesSum } from 'src/app/model/CaloriesSum';
 import { DietSummary } from 'src/app/model/DietSummary';
+import { ExerciseRegularity } from 'src/app/model/ExerciseRegularity';
 import { MealFrequency } from 'src/app/model/MealFrequency';
+import { RecentlyUsedExercise } from 'src/app/model/RecentlyUsedExercise';
 import { AuthService } from 'src/app/service/auth.service';
 import { DietService } from 'src/app/service/diet.service';
 
@@ -27,6 +29,9 @@ export class DashboardComponent {
   mealFreqency: MealFrequency[] = [];
   pieDatasets: any = [];
   pieLabels: string[] = [];
+  exerciseRegularity: ExerciseRegularity[] = [];
+  recentlyUsedExercise: RecentlyUsedExercise[] = [];
+
   constructor(
     private authService: AuthService,
     private dietService: DietService
@@ -39,14 +44,18 @@ export class DashboardComponent {
       this.createMacronutrienseStatistics(token);
       this.createCaloriesStatistics(token);
       this.createMealFrequency(token);
+      this.createExerciseRegularity(token);
+      this.createRecentlyUsedExercise(token);
     }
   }
 
-  createMealFrequency(token: any){
-    this.dietService.getMealFrequency(token.sub).subscribe((response: MealFrequency[]) =>{
-      this.mealFreqency = [...response];
-      this.createPieChartDataset();
-    });
+  createMealFrequency(token: any) {
+    this.dietService
+      .getMealFrequency(token.sub)
+      .subscribe((response: MealFrequency[]) => {
+        this.mealFreqency = [...response];
+        this.createPieChartDataset();
+      });
   }
 
   createCaloriesStatistics(token: any) {
@@ -64,7 +73,7 @@ export class DashboardComponent {
     this.dietService.getMacronutrienseStatistics(token.sub).subscribe(
       (result: DietSummary[]) => {
         this.dietSummarys = [...result];
-        this.createDataset();
+        this.createBarDataset();
       },
       (error) => {
         console.log(error);
@@ -72,60 +81,47 @@ export class DashboardComponent {
     );
   }
 
-  createPieChartDataset(){
-    this.mealFreqency.forEach((dataObj, index) =>{
+  createExerciseRegularity(token: any) {
+    this.dietService
+      .getExerciseRegularity(token.sub)
+      .subscribe((result: ExerciseRegularity[]) => {
+        this.exerciseRegularity = [...result];
+      });
+  }
+
+  createRecentlyUsedExercise(token: any){
+    this.dietService
+    .getRecentlyUsedExercise(token.sub)
+    .subscribe((result: RecentlyUsedExercise[]) => {
+      this.recentlyUsedExercise = [...result];
+    });
+  }
+
+  createPieChartDataset() {
+    this.mealFreqency.forEach((dataObj, index) => {
       this.pieLabels.push(dataObj.mealName);
       this.pieDatasets.push(dataObj.count);
     });
   }
 
-  createDataset() {
+  createBarDataset() {
+    const ch_obj = { data: [], label: 'Szénhidrát' };
+    const prot_obj = { data: [], label: 'Fehérje' };
+    const fat_obj = { data: [], label: 'Zsír' };
+
     this.dietSummarys.forEach((dataObj, index) => {
       this.labels.push(this.getDayName(dataObj.day));
-      if (index === 0) {
-        // Első elem esetén létrehozzuk az adatokat
-        this.datasets.push({
-          data: [dataObj.totalProtein],
-          label: 'Fehérje',
-          backgroundColor: this.getRandomColor(),
-          borderColor: this.getRandomColor(),
-          pointBackgroundColor: this.getRandomColor(),
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: this.getRandomColor(),
-          fill: 'origin',
-        });
-        this.datasets.push({
-          data: [dataObj.totalCarbonhydrate],
-          label: 'Szénhidrát',
-          backgroundColor: this.getRandomColor(),
-          borderColor: this.getRandomColor(),
-          pointBackgroundColor: this.getRandomColor(),
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: this.getRandomColor(),
-          fill: 'origin',
-          yAxisID: 'y1',
-        });
-        this.datasets.push({
-          data: [dataObj.totalFat],
-          label: 'Zsír',
-          backgroundColor: this.getRandomColor(),
-          borderColor: this.getRandomColor(),
-          pointBackgroundColor: this.getRandomColor(),
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: this.getRandomColor(),
-          fill: 'origin',
-        });
-      } else {
-        this.datasets[0].data.push(dataObj.totalProtein);
-        this.datasets[1].data.push(dataObj.totalCarbonhydrate);
-        this.datasets[2].data.push(dataObj.totalFat);
-      }
+      //@ts-ignore
+      ch_obj.data.push(dataObj.totalCarbonhydrate);
+      //@ts-ignore
+      prot_obj.data.push(dataObj.totalProtein);
+      //@ts-ignore
+      fat_obj.data.push(dataObj.totalFat);
+      this.datasets.push(ch_obj, prot_obj, fat_obj);
     });
   }
 
+ 
   getRandomColor() {
     // Random RGBA szín generálása
     const r = Math.floor(Math.random() * 256);
@@ -137,22 +133,26 @@ export class DashboardComponent {
 
   getDayName(type: string): string {
     switch (type) {
-      case 'Monday':
-        return 'Hétfő';
-      case 'Tuesday':
-        return 'Kedd';
-      case 'Wednesday':
-        return 'Szerda';
-      case 'Thursday':
-        return 'Csütörtök';
-      case 'Friday':
-        return 'Péntek';
-      case 'Saturday':
-        return 'Szombat';
-      case 'Sunday':
-        return 'Vasárnap';
+      case 'January':
+        return 'Január';
+      case 'February':
+        return 'Február';
+      case 'April':
+        return 'Április';
+      case 'May':
+        return 'Május';
+      case 'July':
+        return 'Július';
+      case 'June':
+        return 'Június';
+      case 'March':
+        return 'Március';
+      case 'August':
+        return 'Augusztus';
+      case 'October':
+        return 'Október';
       default:
-        return '';
+        return type;
     }
   }
 }

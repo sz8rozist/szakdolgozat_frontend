@@ -9,6 +9,8 @@ import { DietSummary } from '../model/DietSummary';
 import { CaloriesSum } from '../model/CaloriesSum';
 import { MealFrequency } from '../model/MealFrequency';
 import { DietRecommendation } from '../model/DietRecommendation';
+import { ExerciseRegularity } from '../model/ExerciseRegularity';
+import { RecentlyUsedExercise } from '../model/RecentlyUsedExercise';
 @Injectable({
   providedIn: 'root',
 })
@@ -88,5 +90,11 @@ export class DietService {
   }
   getMealFrequency(userId: number){
     return this.http.get<MealFrequency[]>(`${this.apiUrlService.getApiUrl()}/diet/mealFrequency/${userId}`);
+  }
+  getExerciseRegularity(userId: number){
+    return this.http.get<ExerciseRegularity[]>(`${this.apiUrlService.getApiUrl()}/workout/exerciseRegularity/${userId}`);
+  }
+  getRecentlyUsedExercise(userId: number){
+    return this.http.get<RecentlyUsedExercise[]>(`${this.apiUrlService.getApiUrl()}/workout/recentlyUsedExercise/${userId}`);
   }
 }
