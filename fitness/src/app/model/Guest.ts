@@ -8,7 +8,8 @@ export interface Guest{
     last_name: string
     age: number
     weight: number
-    notification: []
+    notification: [],
+    dietRecommedations?: [],
     trainer: Trainer
     diets: []
     workouts: []

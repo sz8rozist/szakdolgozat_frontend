@@ -36,4 +36,8 @@ export class WorkoutService {
   trainerSaveWorkout(userId: number, date:string, guestId: number, data: WorkoutRequest[]){
     return this.http.post(`${this.apiUrlService.getApiUrl()}/workout/saveTrainer/${userId}/${guestId}/${date}`, data);
   }
+
+  countTrainerWorkoutPlan(trainerId: number){
+    return this.http.get<number>(`${this.apiUrlService.getApiUrl()}/workout/trainerWorkoutPlanCount/${trainerId}`);
+  }
 }

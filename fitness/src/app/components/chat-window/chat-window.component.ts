@@ -27,34 +27,45 @@ export class ChatWindowComponent {
     if (this.user) {
       this.showWindow = true;
       const token = this.authService.getDecodedToken();
-      this.chatService.getAllMessage(token.sub as number, this.user.id).subscribe((messages: MessageDto[]) =>{
-        const message = messages.find((item) => !item.readed);
-        this.chatService.updateReaded(message?.id as number).subscribe(response =>{
-          if(response.status === 200){
-            this.chatService.updateMessageRead(this.user.id);
-          }else{
-            console.error(response);
+      this.chatService
+        .getAllMessage(token.sub as number, this.user.id)
+        .subscribe((messages: MessageDto[]) => {
+          const message = messages.find((item) => !item.readed);
+          if (message != undefined) {
+            this.chatService
+              .updateReaded(message?.id as number)
+              .subscribe((response) => {
+                if (response.status === 200) {
+                  this.chatService.updateMessageRead(this.user.id);
+                } else {
+                  console.error(response);
+                }
+              });
           }
+          console.log(messages);
+          this.messages = [...messages];
         });
-        this.messages = [...messages];
-      })
     } else {
       this.showWindow = false;
     }
+    this.fetchSenderUser();
   }
 
   ngOnInit() {
     this.chatService.getMessages().subscribe((message: MessageDto) => {
       this.messages.push(message);
     });
-    this.fetchSenderUser();
   }
 
   fetchSenderUser() {
     this.authService.getAuthData().subscribe((response: User) => {
+      console.log(response);
       this.senderUser = response;
       if (this.senderUser.profilePictureName) {
-        this.getProfilePicture(this.senderUser.profilePictureName, this.senderUser);
+        this.getProfilePicture(
+          this.senderUser.profilePictureName,
+          this.senderUser
+        );
       }
     });
   }
@@ -83,37 +94,38 @@ export class ChatWindowComponent {
     const day = currentDateTime.getDate().toString().padStart(2, '0');
 
     const formattedDate = `${year}-${month}-${day}`;
-   
-    const messageToSend: MessageDto = {
-      message: this.message,
-      dateTime: formattedDate,
-      senderUserFirstName: "",
-      senderUserLastName: "",
-      receiverUserFirstName: "",
-      receiverUserLastName: "",
-      readed: false,
-      senderUserId: this.senderUser?.id as number,
-      receiverUserId: this.user.id as number,
-    };
-    if(this.senderUser?.guest){
-      messageToSend.senderUserFirstName = this.senderUser.guest.first_name;
-      messageToSend.senderUserLastName = this.senderUser.guest.last_name;
+    console.log(this.senderUser);
+    if (this.senderUser) {
+      const messageToSend: MessageDto = {
+        message: this.message,
+        dateTime: formattedDate,
+        senderUserFirstName: '',
+        senderUserLastName: '',
+        receiverUserFirstName: '',
+        receiverUserLastName: '',
+        readed: false,
+        senderUserId: this.senderUser?.id as number,
+        receiverUserId: this.user.id as number,
+      };
+      if (this.senderUser?.guest) {
+        messageToSend.senderUserFirstName = this.senderUser.guest.first_name;
+        messageToSend.senderUserLastName = this.senderUser.guest.last_name;
+      }
+      if (this.senderUser?.trainer) {
+        messageToSend.senderUserFirstName = this.senderUser.trainer.first_name;
+        messageToSend.senderUserLastName = this.senderUser.trainer.last_name;
+      }
+      if (this.user.guest) {
+        messageToSend.senderUserFirstName = this.user.guest.first_name;
+        messageToSend.senderUserLastName = this.user.guest.last_name;
+      }
+      if (this.user.trainer) {
+        messageToSend.senderUserFirstName = this.user.trainer.first_name;
+        messageToSend.senderUserLastName = this.user.trainer.last_name;
+      }
+      this.messages.push(messageToSend);
+      this.message = '';
+      this.chatService.sendPrivateMessage(messageToSend);
     }
-    if(this.senderUser?.trainer){
-      messageToSend.senderUserFirstName = this.senderUser.trainer.first_name;
-      messageToSend.senderUserLastName = this.senderUser.trainer.last_name;
-    }
-    if(this.user.guest){
-      messageToSend.senderUserFirstName = this.user.guest.first_name;
-      messageToSend.senderUserLastName = this.user.guest.last_name;
-    }
-    if(this.user.trainer){
-      messageToSend.senderUserFirstName = this.user.trainer.first_name;
-      messageToSend.senderUserLastName = this.user.trainer.last_name;
-    }
-    console.log(messageToSend);
-    this.messages.push(messageToSend);
-    this.message = '';
-    this.chatService.sendPrivateMessage(messageToSend);
   }
 }

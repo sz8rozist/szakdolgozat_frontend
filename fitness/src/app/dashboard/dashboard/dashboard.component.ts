@@ -3,14 +3,20 @@ import {
   faDrumstickBite,
   faFish,
   faHamburger,
+  faPersonWalking,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { CaloriesSum } from 'src/app/model/CaloriesSum';
 import { DietSummary } from 'src/app/model/DietSummary';
 import { ExerciseRegularity } from 'src/app/model/ExerciseRegularity';
+import { Guest } from 'src/app/model/Guest';
 import { MealFrequency } from 'src/app/model/MealFrequency';
 import { RecentlyUsedExercise } from 'src/app/model/RecentlyUsedExercise';
+import { User } from 'src/app/model/User';
 import { AuthService } from 'src/app/service/auth.service';
 import { DietService } from 'src/app/service/diet.service';
+import { GuestService } from 'src/app/service/guest.service';
+import { WorkoutService } from 'src/app/service/workout.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,16 +31,22 @@ export class DashboardComponent {
   faHamburger = faHamburger;
   drumstickBite = faDrumstickBite;
   faFish = faFish;
+  faGuest = faUser;
+  faWorkout = faPersonWalking;
   isTrainer = this.authService.isTrainer();
   mealFreqency: MealFrequency[] = [];
   pieDatasets: any = [];
   pieLabels: string[] = [];
   exerciseRegularity: ExerciseRegularity[] = [];
   recentlyUsedExercise: RecentlyUsedExercise[] = [];
-
+  trainerGuest: Guest[] = [];
+  trainerDietRecommendationCount: number = 0;
+  trainerWorkoutPlanCount: number = 0;
   constructor(
     private authService: AuthService,
-    private dietService: DietService
+    private dietService: DietService,
+    private guestService: GuestService,
+    private workoutService: WorkoutService
   ) {}
 
   ngOnInit() {
@@ -46,6 +58,28 @@ export class DashboardComponent {
       this.createMealFrequency(token);
       this.createExerciseRegularity(token);
       this.createRecentlyUsedExercise(token);
+    } else {
+      this.authService.getAuthData().subscribe((resp: User) => {
+        this.guestService
+          .getTrainerGuests(resp.trainer.id as number)
+          .subscribe((response: Guest[]) => {
+            if (response) {
+              console.log(response);
+              response.forEach((item) => {
+                if (item.dietRecommedations) {
+                  this.trainerDietRecommendationCount +=
+                    item.dietRecommedations.length;
+                }
+              });
+              this.trainerGuest = [...response];
+            }
+          });
+        this.workoutService
+          .countTrainerWorkoutPlan(resp.trainer.id as number)
+          .subscribe((count: number) => {
+            this.trainerWorkoutPlanCount = count;
+          });
+      });
     }
   }
 
@@ -89,12 +123,12 @@ export class DashboardComponent {
       });
   }
 
-  createRecentlyUsedExercise(token: any){
+  createRecentlyUsedExercise(token: any) {
     this.dietService
-    .getRecentlyUsedExercise(token.sub)
-    .subscribe((result: RecentlyUsedExercise[]) => {
-      this.recentlyUsedExercise = [...result];
-    });
+      .getRecentlyUsedExercise(token.sub)
+      .subscribe((result: RecentlyUsedExercise[]) => {
+        this.recentlyUsedExercise = [...result];
+      });
   }
 
   createPieChartDataset() {
@@ -121,7 +155,6 @@ export class DashboardComponent {
     });
   }
 
- 
   getRandomColor() {
     // Random RGBA szín generálása
     const r = Math.floor(Math.random() * 256);
@@ -151,6 +184,20 @@ export class DashboardComponent {
         return 'Augusztus';
       case 'October':
         return 'Október';
+      case 'Monday':
+        return 'Hétfő';
+      case 'Tuesday':
+        return 'Kedd';
+      case 'Wednesday':
+        return 'Szerda';
+      case 'Thirsday':
+        return 'Csütörtök';
+      case 'Friday':
+        return 'Péntek';
+      case 'Saturday':
+        return 'Szombat';
+      case 'Sunday':
+        return 'Vasárnap';
       default:
         return type;
     }
