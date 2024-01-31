@@ -87,15 +87,15 @@
                     <a
                       *ngIf="guest.trainer_guest"
                       routerLink="/trainer/dietRecommedation/{{ guest.id }}"
-                      class="btn btn-primary"
-                      >{{ "etrend_ajanlas" | translate }}</a
+                      class="btn btn-primary btn-sm"
+                      ><fa-icon [icon]="faDiet"></fa-icon></a
                     >
                     <button
                       *ngIf="!guest.trainer_guest"
-                      class="btn btn-success"
+                      class="btn btn-success btn-sm"
                       (click)="addGuest(guest.id)"
                     >
-                      {{ "hozzaad" | translate }}
+                    <fa-icon [icon]="faAdd"></fa-icon>
                     </button>
                   </td>
                 </tr>

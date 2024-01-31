@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faAdd, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { NgToastService } from 'ng-angular-popup';
 import { Guest } from 'src/app/model/Guest';
 import { Trainer } from 'src/app/model/Trainer';
@@ -23,6 +24,8 @@ export class TrainerGuestsComponent {
   searchInput: string = '';
   switch: boolean = false;
   trainerId?: number;
+  faAdd = faAdd;
+  faDiet = faUtensils;
   constructor(
     private guestService: GuestService,
     private authService: AuthService,

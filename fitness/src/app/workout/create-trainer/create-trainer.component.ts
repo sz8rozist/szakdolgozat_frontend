@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgToastService } from 'ng-angular-popup';
 import { Exercise } from 'src/app/model/Exercise';
 import { Guest } from 'src/app/model/Guest';
@@ -18,6 +19,7 @@ import { WorkoutService } from 'src/app/service/workout.service';
 export class CreateTrainerComponent {
   workouts: WorkoutRequest[] = [];
   exercises: Exercise[] = [];
+  faTrash = faTrash;
 
   date: string = '';
   selectedGuest?: number;

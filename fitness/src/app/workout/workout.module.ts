@@ -12,6 +12,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
 import { CreateTrainerComponent } from './create-trainer/create-trainer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -30,6 +31,7 @@ import { CreateTrainerComponent } from './create-trainer/create-trainer.componen
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
+    FontAwesomeModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

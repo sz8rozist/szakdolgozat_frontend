@@ -7,6 +7,9 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
 import { DietRecommedationComponent } from './diet-recommedation/diet-recommedation.component';
+import { NewDietRecommedationComponent } from './new-diet-recommedation/new-diet-recommedation.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EditDietRecommendationComponent } from './edit-diet-recommendation/edit-diet-recommendation.component';
 
 
 
@@ -14,12 +17,15 @@ import { DietRecommedationComponent } from './diet-recommedation/diet-recommedat
   declarations: [
     TrainerGuestsComponent,
     DietRecommedationComponent,
+    NewDietRecommedationComponent,
+    EditDietRecommendationComponent,
   ],
   imports: [
     CommonModule,
     TrainerRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

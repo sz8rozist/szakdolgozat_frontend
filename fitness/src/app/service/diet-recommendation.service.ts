@@ -15,4 +15,22 @@ export class DietRecommendationService {
   getRecommendation(guestUserId: string, date: string){
     return this.http.get<DietRecommendation>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/${guestUserId}/${date}`);
   }
+
+  getDietRecommedations(guestId: number, trainerUserId: number){
+    return this.http.get<DietRecommendation[]>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/guest/${guestId}/${trainerUserId}`);
+  }
+
+  deleteRecommendation(id: number){
+    return this.http.delete(`${this.apiUrlService.getApiUrl()}/dietRecommendation/${id}`, {observe: 'response'});
+  }
+  updateRecommendation(id: number, dietRecommendation: DietRecommendation){
+    return this.http.put<DietRecommendation>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/${id}`, dietRecommendation);
+  }
+
+  getById(id: number){
+    return this.http.get<DietRecommendation>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/get/${id}`);
+  }
+  update(id: number, data: DietRecommendation){
+    return this.http.put<DietRecommendation>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/${id}`, data);
+  }
 }

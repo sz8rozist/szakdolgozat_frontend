@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgToastService } from 'ng-angular-popup';
 import { Exercise } from 'src/app/model/Exercise';
 import { WorkoutRequest } from 'src/app/model/WorkoutRequest';
@@ -14,7 +15,7 @@ import { WorkoutService } from 'src/app/service/workout.service';
 export class CreateTrainingComponent {
   workouts: WorkoutRequest[] = [];
   exercises: Exercise[] = [];
-
+  faTrash = faTrash;
   date: string = "";
 
   constructor(

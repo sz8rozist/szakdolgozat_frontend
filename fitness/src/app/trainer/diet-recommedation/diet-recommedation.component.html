@@ -18,161 +18,53 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">{{ "tapertek_ajanlas" | translate }}</h5>
-
-            <!-- Horizontal Form -->
-            <form [formGroup]="dietRecommedationForm" (ngSubmit)="onSubmit()">
-              <div class="row mb-3">
-                <label for="inputEmail3" class="col-sm-2 col-form-label"
-                  >{{ "datum" | translate }}
-                </label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input
-                      formControlName="date"
-                      type="date"
-                      class="form-control"
-                      id="floatingInput"
-                      placeholder="name@example.com"
-                    />
-                  </div>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('date')?.errors?.['required'] && this.dietRecommedationForm.get('date')?.touched"
-                  >
-                    A dátum kitöltése kötelező!
-                  </span>
-                </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <h5 class="card-title">{{ "tapertek_ajanlas" | translate }}</h5>
               </div>
-              <div class="row mb-3">
-                <label for="inputEmail3" class="col-sm-2 col-form-label"
-                  >{{ "kaloria" | translate }}
-                </label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input
-                      type="email"
-                      formControlName="calorie"
-                      class="form-control"
-                      id="inputEmail"
-                    />
-                    <span class="input-group-text" id="basic-addon2">kcal</span>
-                  </div>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('calorie')?.errors?.['pattern'] && this.dietRecommedationForm.get('calorie')?.touched"
-                  >
-                    A kalória csak szám lehet!
-                  </span>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('calorie')?.errors?.['required'] && this.dietRecommedationForm.get('calorie')?.touched"
-                  >
-                    A kalória kitöltése kötelező!
-                  </span>
-                </div>
+              <div class="col-lg-6 text-end">
+                <button routerLink="/trainer/newDietRecommedation/{{ guestId }}" class="btn btn-success mt-3 btn-sm"><fa-icon [icon]="faNew"></fa-icon></button>
               </div>
-              <div class="row mb-3">
-                <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >{{ "szenhidrat" | translate }}
-                </label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input
-                      formControlName="carbonhydrate"
-                      type="text"
-                      class="form-control"
-                      id="inputPassword"
-                    />
-                    <span class="input-group-text" id="basic-addon2"
-                      >gramm</span
-                    >
-                  </div>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('carbonhydrate')?.errors?.['pattern'] && this.dietRecommedationForm.get('carbonhydrate')?.touched"
-                  >
-                    A szénhidrát csak szám lehet!
-                  </span>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('carbonhydrate')?.errors?.['required'] && this.dietRecommedationForm.get('carbonhydrate')?.touched"
-                  >
-                    A szénhidrát kitöltése kötelező!
-                  </span>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >{{ "feherje" | translate }}
-                </label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input
-                      formControlName="protein"
-                      type="text"
-                      class="form-control"
-                      id="inputPassword"
-                    />
-                    <span class="input-group-text" id="basic-addon2"
-                      >gramm</span
-                    >
-                  </div>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('protein')?.errors?.['pattern'] && this.dietRecommedationForm.get('protein')?.touched"
-                  >
-                    A fehérje csak szám lehet!
-                  </span>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('protein')?.errors?.['required'] && this.dietRecommedationForm.get('protein')?.touched"
-                  >
-                    A fehérje kitöltése kötelező!
-                  </span>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputPassword3" class="col-sm-2 col-form-label"
-                  >{{ "zsir" | translate }}
-                </label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input
-                      formControlName="fat"
-                      type="text"
-                      class="form-control"
-                      id="inputPassword"
-                    />
-                    <span class="input-group-text" id="basic-addon2"
-                      >gramm</span
-                    >
-                  </div>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('fat')?.errors?.['pattern'] && this.dietRecommedationForm.get('fat')?.touched"
-                  >
-                    A zsír csak szám lehet!
-                  </span>
-                  <span
-                    class="text-danger"
-                    *ngIf="this.dietRecommedationForm.get('fat')?.errors?.['required'] && this.dietRecommedationForm.get('fat')?.touched"
-                  >
-                    A zsír kitöltése kötelező!
-                  </span>
-                </div>
-              </div>
-              <div class="text-center">
-                <button
-                  [disabled]="dietRecommedationForm.invalid"
-                  type="submit"
-                  class="btn btn-primary"
-                >
-                  {{ "mentes" | translate }}
-                </button>
-              </div>
-            </form>
-            <!-- End Horizontal Form -->
+            </div>
+            <table class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">{{ "kaloria" | translate }} (g)</th>
+                  <th scope="col">{{ "szenhidrat" | translate }} (g)</th>
+                  <th scope="col">{{ "zsir" | translate }} (g)</th>
+                  <th scope="col">{{ "feherje" | translate }} (g)</th>
+                  <th scope="col">{{ "datum" | translate }}</th>
+                  <th scope="col">{{ "muvelet" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="recommedation.length == 0">
+                  <td colspan="7">
+                    <div class="alert alert-info">
+                      <i class="bi bi-info-circle me-1"></i>
+                      {{ "nincs_talalat" | translate }}
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngFor="let item of recommedation">
+                  <th scope="row">{{ item.id }}</th>
+                  <td>{{ item.calorie}}</td>
+                  <td>{{ item.carbonhydrate }}</td>
+                  <td>{{ item.fat }}</td>
+                  <td>{{ item.protein }}</td>
+                  <td>{{ item.date }}</td>
+                  <td>
+                    <button routerLink="/trainer/editDietRecommendation/{{ item.id }}/{{guestId}}" class="btn btn-primary btn-sm me-2">
+                      <fa-icon [icon]="faEdit"></fa-icon>
+                    </button>
+                    <button (click)="onDelete(item.id)" class="btn btn-danger btn-sm">
+                      <fa-icon [icon]="faTrash"></fa-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
