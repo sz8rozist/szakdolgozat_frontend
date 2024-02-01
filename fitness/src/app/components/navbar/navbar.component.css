@@ -2,3 +2,36 @@
     height: 500px;
     overflow: auto;
 }
+.logo img{
+    width: 40% !important;
+}
+
+@media only screen and  (max-width: 1200px) {
+    .logo img {
+      width: 20% !important;
+    }
+  }
+
+  @media only screen and  (max-width: 675px) {
+    .logo img {
+      width: 20% !important;
+    }
+  }
+
+  @media only screen and  (max-width: 578px) {
+    .logo img {
+      width: 20% !important;
+    }
+  }
+
+  @media only screen and  (max-width: 412px) {
+    .logo img {
+      width: 20% !important;
+    }
+  }
+  
+  @media only screen and  (max-width: 375px) {
+    .logo img {
+      width: 40% !important;
+    }
+  }
