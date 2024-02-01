@@ -12,6 +12,7 @@ import { GuestService } from 'src/app/service/guest.service';
 import { Trainer } from 'src/app/model/Trainer';
 import { NotificationService } from 'src/app/service/notification.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
+import { faCheck, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-diet-diary',
   templateUrl: './diet-diary.component.html',
@@ -22,6 +23,9 @@ export class DietDiaryComponent {
   date: string = '';
   diet?: DietResponse;
   giveByTrainer: boolean = false;
+  faTrash = faTrash;
+  faEdit = faEdit;
+  faCheck = faCheck
   sum: {
     calorie: number;
     carbonhydrate: number;
@@ -216,7 +220,10 @@ export class DietDiaryComponent {
           dietId: food.dietId,
         };
         this.notificationService.sendNotificationToTrainer(data);
-        this.loadDiet(this.date);
+        var item = this.diet?.diet.find(item => item.foodId == food.foodId);
+        if(item){
+          item.eated = true;
+        }
       },
       (error) => {
         console.log(error.mesage);

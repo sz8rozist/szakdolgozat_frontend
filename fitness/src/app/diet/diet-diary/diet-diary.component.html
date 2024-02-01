@@ -25,11 +25,11 @@
               <div class="col-lg-6 text-end">
                 <button
                   *ngIf="diet && diet.diet.length > 0 && giveByTrainer"
-                  class="btn btn-danger"
+                  class="btn btn-danger btn-sm"
                   (click)="deleteDiet()"
                 >
-                  <i class="bi bi-trash"></i>
-                </button>
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
               </div>
             </div>
           </div>
@@ -81,8 +81,8 @@
                       class="btn btn-primary btn-sm me-2"
                       routerLink="/diet/edit-food/{{ food.dietId }}"
                     >
-                      {{ "szerkesztes" | translate }}
-                    </button>
+                    <fa-icon [icon]="faEdit"></fa-icon>
+                  </button>
                     <button
                       class="btn btn-success btn-sm me-2"
                       (click)="sendNotificationToTrainer(food)"
@@ -95,7 +95,7 @@
                       *ngIf="food.eated"
                       disabled
                     >
-                      <i class="bi bi-check" *ngIf="food.eated"></i>
+                    <fa-icon [icon]="faCheck" *ngIf="food.eated"></fa-icon>
                       {{ "elfogyasztva" | translate }}
                     </button>
                     <button
@@ -103,8 +103,8 @@
                       (click)="removeFood(food.dietId)"
                       class="btn btn-danger btn-sm"
                     >
-                      <i class="bi bi-trash"></i>
-                    </button>
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </button>
                   </td>
                 </tr>
                 <tr>
