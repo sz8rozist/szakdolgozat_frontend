@@ -48,7 +48,20 @@
         <li class="nav-item dropdown pe-3" (click)="toggleProfileDropdownFunc()">
   
           <span class="nav-link nav-profile d-flex align-items-center pe-0" style="cursor: pointer;" data-bs-toggle="dropdown">
-            <img [src]="profileImageSrc" alt="Profile" class="rounded-circle">
+            <img
+              *ngIf="profileImageSrc; else defaultImage"
+              [src]="profileImageSrc"
+              alt="Profile"
+              class="rounded-circle"
+            />
+
+            <ng-template #defaultImage>
+              <img
+                src="assets/img/no-profile-picture.webp"
+                alt="Default Profile"
+                class="rounded-circle"
+              />
+            </ng-template>
             <span class="d-none d-md-block dropdown-toggle ps-2">{{auth?.username}}</span>
           </span><!-- End Profile Iamge Icon -->
   
