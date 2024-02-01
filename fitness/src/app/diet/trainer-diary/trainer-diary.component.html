@@ -1,0 +1,150 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>{{ "etkezesi_naplo" | translate }}</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="index.html">{{ "kezdolap" | translate }}</a>
+          </li>
+          <li class="breadcrumb-item">{{ "etrend" | translate }}</li>
+          <li class="breadcrumb-item active">
+            {{ "etkezesi_naplo" | translate }}
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <section class="section">
+      <div *ngIf="guests.length == 0">
+        <div class="alert alert-info">
+          <i class="bi bi-info-circle me-1"></i>
+          {{ "nincs_vendeg" | translate }}
+        </div>
+      </div>
+      <div class="row" *ngIf="guests.length > 0">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header">{{ "vendeg_kivalasztasa" | translate }}</div>
+            <div class="card-body mt-3">
+              <div class="form-floating mb-3">
+                <select
+                  (change)="changeGuest()"
+                  [(ngModel)]="selectedGuest"
+                  class="form-select"
+                >
+                  <option *ngFor="let guest of guests" [value]="guest.id">
+                    {{ guest.first_name + " " + guest.last_name }}
+                  </option>
+                </select>
+                <label for="floatingSelect">{{ "vendeg" | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-lg-6">
+                  <p>{{ "datum" | translate }}</p>
+                </div>
+                <div class="col-lg-6 text-end">
+                  <button
+                    *ngIf="diet && diet.diet.length > 0 && giveByTrainer"
+                    class="btn btn-danger btn-sm"
+                    (click)="deleteDiet()"
+                  >
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body mt-3">
+              <div class="form-floating mb-3">
+                <input
+                  (input)="loadDietByDate()"
+                  [(ngModel)]="date"
+                  type="date"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                />
+                <label for="floatingInput">{{ "datum" | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="diet && diet.diet.length == 0" class="alert alert-warning">
+            Ehhez a naphoz nem található étrend.
+          </div>
+          <div *ngIf="diet && diet.diet.length > 0" class="card">
+            <div class="card-header">{{ "etelek" | translate }}</div>
+            <div class="card-body">
+              <table class="table table-bordered mt-3">
+                <thead>
+                  <tr>
+                    <th>{{ "etel_nev" | translate }}</th>
+                    <th>{{ "mennyiseg" | translate }}</th>
+                    <th>{{ "tipus" | translate }}</th>
+                    <th class="text-end">{{ "szenhidrat" | translate }} (g)</th>
+                    <th class="text-end">{{ "feherje" | translate }} (g)</th>
+                    <th class="text-end">{{ "zsir" | translate }} (g)</th>
+                    <th class="text-end">{{ "kaloria" | translate }} (kCal)</th>
+                    <th *ngIf="giveByTrainer">{{ "muvelet" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let food of diet.diet">
+                    <td>{{ food.name }}</td>
+                    <td>{{ food.quantity }}</td>
+                    <td>{{ translateType(food.foodType) }}</td>
+                    <td class="text-end">{{ food.carbonhydrate }}</td>
+                    <td class="text-end">{{ food.protein }}</td>
+                    <td class="text-end">{{ food.fat }}</td>
+                    <td class="text-end">{{ food.calorie }}</td>
+                    <td *ngIf="giveByTrainer">
+                      <button
+                        class="btn btn-primary btn-sm me-2"
+                        routerLink="/diet/edit-food/{{ food.dietId }}"
+                      >
+                      <fa-icon [icon]="faEdit"></fa-icon>
+                      </button>
+                      <button
+                        (click)="removeFood(food.dietId)"
+                        class="btn btn-danger btn-sm"
+                      >
+                      <fa-icon [icon]="faTrash"></fa-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th colspan="3">{{ "osszesen" | translate }}:</th>
+                    <td class="text-end">{{ diet.carbonhydrateSum }}</td>
+                    <td class="text-end">{{ diet.proteinSum }}</td>
+                    <td class="text-end">{{ diet.fatSum }}</td>
+                    <td class="text-end">{{ diet.calorieSum }}</td>
+                    <td *ngIf="giveByTrainer"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-header mb-3">
+              {{ "makrotapanyagok" | translate }}
+            </div>
+            <div class="card-body">
+              <canvas
+                baseChart
+                class="chart"
+                [data]="pieChartData"
+                [type]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+              >
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  

@@ -14,6 +14,8 @@ import { CreateTrainerComponent } from './create-trainer/create-trainer.componen
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
 import { HttpClient } from '@angular/common/http';
+import { TrainerDiaryComponent } from './trainer-diary/trainer-diary.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
   declarations: [
     DietDiaryComponent,
@@ -22,6 +24,7 @@ import { HttpClient } from '@angular/common/http';
     DietFormComponent,
     EditFoodComponent,
     CreateTrainerComponent,
+    TrainerDiaryComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,7 @@ import { HttpClient } from '@angular/common/http';
     NgToastModule,
     FormsModule,
     SharedModule,
+    FontAwesomeModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

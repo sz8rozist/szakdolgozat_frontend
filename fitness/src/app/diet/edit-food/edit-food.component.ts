@@ -5,6 +5,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { Diet } from 'src/app/model/Diet';
 import { DietUpdateRequest } from 'src/app/model/DietUpdateRequest';
 import { Food } from 'src/app/model/Food';
+import { AuthService } from 'src/app/service/auth.service';
 import { DietService } from 'src/app/service/diet.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class EditFoodComponent {
   diet?: Diet;
   foods?: Food[];
 
-  constructor(private dietService: DietService, private route: ActivatedRoute, private router: Router, private toast: NgToastService) {
+  constructor(private dietService: DietService, private route: ActivatedRoute, private router: Router, private toast: NgToastService, private authService: AuthService) {
     this.foodForm = new FormGroup({
       foodId: new FormControl('', [Validators.required]),
       calorie: new FormControl('', [Validators.required,Validators.pattern('^[0-9]*$')]),
@@ -101,7 +102,11 @@ export class EditFoodComponent {
           duration: 2000,
           type: 'success',
         });
-        this.router.navigate(["diet/diary"]);
+        if(this.authService.isTrainer()){
+          this.router.navigate(["diet/trainer-diary"]);
+        }else{
+          this.router.navigate(["diet/diary"]);
+        }
       });
     }
   }
