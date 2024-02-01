@@ -18,6 +18,7 @@ export class SignupComponent {
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       username: new FormControl('', [Validators.required]),
+      gender: new FormControl('', [Validators.required]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -37,6 +38,7 @@ export class SignupComponent {
           this.signupForm.get('role')?.value == Role.Guest
             ? Role.Guest
             : Role.Trainer,
+        gender: this.signupForm.get('gender')?.value,
         password: this.signupForm.get('password')?.value,
       };
 

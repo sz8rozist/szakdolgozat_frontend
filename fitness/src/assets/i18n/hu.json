@@ -126,5 +126,10 @@
   "elvegez": "Elvégez",
   "elvegezve": "Elvégezve",
   "hsz": "Visszajelzés",
-  "uj_ajanlas": "Új tápérték ajánlás"
+  "uj_ajanlas": "Új tápérték ajánlás",
+  "makrotapanyag_szamolas": "Makrotápanyagok kiszámítása",
+  "ferfi": "Férfi",
+  "no": "Nő",
+  "nem": "Nem",
+  "kot_gender": "A nem kiválasztása kötelező"
 }

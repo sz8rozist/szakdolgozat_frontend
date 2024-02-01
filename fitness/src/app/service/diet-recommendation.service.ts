@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { ApiUrlService } from './api-url.service';
 import { WebsocketService } from './websocket.service';
 import { DietRecommendation } from '../model/DietRecommendation';
+import { NutiritonRequest } from '../model/NutiritonRequest';
+import { Nutiriton } from '../model/Nutrition';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +34,9 @@ export class DietRecommendationService {
   }
   update(id: number, data: DietRecommendation){
     return this.http.put<DietRecommendation>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/${id}`, data);
+  }
+
+  calculateNutrition(data: NutiritonRequest){
+    return this.http.post<Nutiriton>(`${this.apiUrlService.getApiUrl()}/dietRecommendation/nutritionCalculate`, data);
   }
 }

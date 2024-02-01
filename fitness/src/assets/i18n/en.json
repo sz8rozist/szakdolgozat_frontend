@@ -126,6 +126,11 @@
   "elvegezve": "Finished",
   "elvegez": "Do it",
   "hsz": "Feedback",
-  "uj_ajanlas": "New diet recommendation"
+  "uj_ajanlas": "New diet recommendation",
+  "makrotapanyag_szamolas": "Calculate macronutriens",
+  "ferfi": "Male",
+  "no": "Female",
+  "nem": "Gender",
+  "kot_gender": "Gender selection is required"
 
 }

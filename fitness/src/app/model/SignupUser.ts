@@ -6,5 +6,6 @@ export interface SignupUser{
     username: string
     password: string
     email: string
-    role: Role
+    role: Role,
+    gender: number
 }

@@ -29,4 +29,9 @@ export class GuestService {
     data.append('trainerId', trainerId);
     return this.http.post(`${this.apiUrlService.getApiUrl()}/guest/addTrainerToGuest`, data);
   }
+
+  getById(guestId: number){
+    return this.http.get<Guest>(`${this.apiUrlService.getApiUrl()}/guest/guestById/${guestId}`);
+
+  }
 }

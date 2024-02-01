@@ -5,4 +5,5 @@ export interface DietRecommendation{
     protein: number,
     carbonhydrate: number,
     fat: number,
+    bodyWeight?: number
 }

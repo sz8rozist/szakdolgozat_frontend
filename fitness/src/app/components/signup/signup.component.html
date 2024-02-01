@@ -133,6 +133,26 @@
                     </div>
                   </div>
                   <div class="col-12">
+                    <div class="form-floating">
+                      <select
+                        class="form-select"
+                        id="floatingSelect"
+                        aria-label="Floating label select example"
+                        formControlName="gender"
+                      >
+                        <option value="1">{{'ferfi'|translate}}</option>
+                        <option value="0">{{'no'|translate}}</option>
+                      </select>
+                      <label for="floatingSelect">{{'nem'|translate}}</label>
+                      <div
+                      class="invalid-feedback"
+                      [ngClass]="{'display-block': this.signupForm.get('gender')?.errors?.['required'] && (this.signupForm.get('gender')?.dirty || this.signupForm.get('gender')?.touched)}"
+                    >
+                      {{'kot_gender'|translate}}
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
                     <div class="form-floating mb-3">
                       <select
                         class="form-select"
