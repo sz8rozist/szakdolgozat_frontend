@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { NgToastService } from 'ng-angular-popup';
 import { Exercise } from 'src/app/model/Exercise';
 import { Trainer } from 'src/app/model/Trainer';
@@ -22,6 +23,8 @@ export class TrainingLogComponent {
   workouts: Workout[] = [];
   exercises: Exercise[] = [];
   giveByTrainer: boolean = false;
+  faTrash = faTrash;
+  faEdit = faEdit;
   constructor(
     private authService: AuthService,
     private workoutService: WorkoutService,
@@ -32,27 +35,30 @@ export class TrainingLogComponent {
   ) {}
 
   loadWorkout(date: string) {
-    const token = this.authService.getDecodedToken();
-    this.workoutService
-      .getWorkouts(token.sub as number, date)
-      .subscribe((resp: Workout[]) => {
-        if (resp.length == 0) {
-          this.toast.warning({
-            detail: 'Figyelmeztetés',
-            summary: 'Ehhez a dátumhoz nem tartozik edzésterv!',
-            duration: 2000,
-            type: 'warning',
-          });
-        }
-        console.log(resp);
-        this.workouts = [...resp];
-      });
+    this.authService.getAuthData().subscribe((response: User)  =>{
+      if(response && response.guest != null){
+        this.workoutService
+        .getWorkouts(response.guest.id as number, date)
+        .subscribe((resp: Workout[]) => {
+          if (resp.length == 0) {
+            this.toast.warning({
+              detail: 'Figyelmeztetés',
+              summary: 'Ehhez a dátumhoz nem tartozik edzésterv!',
+              duration: 2000,
+              type: 'warning',
+            });
+          }
+          console.log(resp);
+          this.workouts = [...resp];
+        });
+      }
+    });
+    
   }
 
   change() {
     this.loadWorkout(this.date);
-    this.giveByTrainer = this.workouts.every((workout) => !!workout.trainer);
-
+    this.giveByTrainer = this.workouts.every((workout) => !workout.trainer);
   }
 
   targetedBodyPart(part: string) {

@@ -50,11 +50,18 @@
           </li>
         </ng-template>
         
-        <li *ngIf="auth?.guest != null">
+        <li *ngIf="auth?.guest != null; else trainerLINK">
           <a routerLink="diet/diary">
             <i class="bi bi-circle"></i><span>{{'etkezesi_naplo'|translate}}</span>
           </a>
         </li>
+        <ng-template #trainerLINK>
+          <li>
+            <a routerLink="workout/trainer-diary">
+              <i class="bi bi-circle"></i><span>{{'etkezesi_naplo'|translate}}</span>
+            </a>
+          </li>
+        </ng-template>
       </ul>
     </li>
     <!-- End Forms Nav -->
@@ -94,11 +101,18 @@
             </a>
           </li>
         </ng-template>
-        <li *ngIf="auth?.guest != null">
+        <li *ngIf="auth?.guest != null; else trainerLInk">
           <a routerLink="workout/training-log">
             <i class="bi bi-circle"></i><span>{{'edzes_naplo'|translate}}</span>
           </a>
         </li>
+        <ng-template #trainerLInk>
+          <li>
+            <a routerLink="workout/trainer-training-log">
+              <i class="bi bi-circle"></i><span>{{'edzes_naplo'|translate}}</span>
+            </a>
+          </li>
+        </ng-template>
       </ul>
     </li>
     <!-- End Forms Nav -->

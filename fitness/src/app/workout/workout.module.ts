@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
 import { CreateTrainerComponent } from './create-trainer/create-trainer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TrainerTrainingLogComponent } from './trainer-training-log/trainer-training-log.component';
 
 
 
@@ -23,7 +24,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CreateTrainingComponent,
     AddExerciseComponent,
     EditWorkoutComponent,
-    CreateTrainerComponent
+    CreateTrainerComponent,
+    TrainerTrainingLogComponent
   ],
   imports: [
     CommonModule,

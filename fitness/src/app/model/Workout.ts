@@ -7,6 +7,6 @@ export interface Workout{
     repetitions: number
     date: string
     exercise: Exercise,
-    trainer?: Trainer,
+    trainer?: number | null,
     done: boolean
 }

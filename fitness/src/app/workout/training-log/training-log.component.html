@@ -1,6 +1,6 @@
 <main class="main" id="main">
   <div class="pagetitle">
-    <h1>{{'edzes_tervezes'|translate}}</h1>
+    <h1>{{'edzes_naplo'|translate}}</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
@@ -62,23 +62,23 @@
                   <td>
                     <button
                     *ngIf="!workout.trainer"
-                      class="btn btn-warning me-2 text-white"
+                      class="btn btn-primary btn-sm me-2 "
                       routerLink="/workout/edit/{{ workout.workoutId }}"
                     >
-                    {{'modositas'|translate}}
-                    </button>
-                    <button *ngIf="!workout.trainer" class="btn btn-danger" (click)="deleteExercise(workout.workoutId)">
-                      <i class="bi bi-trash"></i>
+                    <fa-icon [icon]="faEdit"></fa-icon>
+                  </button>
+                    <button *ngIf="!workout.trainer" class="btn btn-danger btn-sm" (click)="deleteExercise(workout.workoutId)">
+                      <fa-icon [icon]="faTrash"></fa-icon>
                     </button>
                     <button
-                      class="btn btn-success btn-sm me-2"
+                      class="btn btn-success btn-sm ms-2"
                       (click)="sendNotificationToTrainer(workout)"
                       *ngIf="!workout.done"
                     >
                       {{ "elvegez" | translate }}
                     </button>
                     <button
-                      class="btn btn-success btn-sm me-2"
+                      class="btn btn-success btn-sm ms-2"
                       *ngIf="workout.done"
                       disabled
                     >

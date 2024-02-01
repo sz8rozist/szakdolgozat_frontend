@@ -93,7 +93,7 @@ export class AppComponent {
     console.log('Az oldal bezárásra kerül.');
     this.authService.rememberme$.subscribe((response: boolean) =>{
       if(!response){
-        localStorage.removeItem("token");
+       // localStorage.removeItem("token");
       }
     });
   }

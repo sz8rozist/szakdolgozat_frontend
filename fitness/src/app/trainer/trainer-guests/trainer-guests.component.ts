@@ -38,7 +38,6 @@ export class TrainerGuestsComponent {
       this.trainerId = authTrainerId;
 
       this.guestService.getAllGuest().subscribe((guestResult: Guest[]) => {
-        console.log(guestResult);
         // Szűrjük a vendégeket a trainerId alapján
         const matchingGuests = guestResult.filter(
           (guest) =>

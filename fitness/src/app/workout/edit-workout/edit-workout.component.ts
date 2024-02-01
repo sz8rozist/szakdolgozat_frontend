@@ -75,7 +75,7 @@ export class EditWorkoutComponent {
           duration: 2000,
           type: 'success',
         });
-        this.router.navigate(["workout/training-log"]);
+        this.workoutForm.reset();
       });
     }
   }
