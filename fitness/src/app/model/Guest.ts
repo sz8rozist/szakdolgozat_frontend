@@ -4,7 +4,8 @@ export interface Guest{
     id?:number
     email: string
     height: number
-    first_name: string
+    first_name: string,
+    gender: boolean,
     last_name: string
     age: number
     weight: number

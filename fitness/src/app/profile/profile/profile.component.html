@@ -127,6 +127,11 @@
                   <div class="col-lg-3 col-md-4 label">{{'testsuly'|translate}}</div>
                   <div class="col-lg-9 col-md-8">{{ guest?.weight }} kg</div>
                 </div>
+
+                <div class="row" *ngIf="guest">
+                  <div class="col-lg-3 col-md-4 label">{{'nem'|translate}}</div>
+                  <div class="col-lg-9 col-md-8" [innerText]="guest.gender ? 'Férfi' : 'Nő'"></div>
+                </div>
               </div>
               <div
                 class="tab-pane fade profile-edit pt-3"
@@ -304,6 +309,17 @@
                         >
                           A testsúly csak számot tartalmazhat!
                         </span>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label"
+                        >{{'nem'|translate}}</label
+                      >
+                      <div class="col-md-8 col-lg-9">
+                        <select name="" class="form-select" formControlName="gender" id="">
+                          <option value="0">{{"no" | translate}}</option>
+                          <option value="1">{{"ferfi" | translate}}</option>
+                        </select>
                       </div>
                     </div>
                   </ng-container>

@@ -7,4 +7,5 @@ export interface UpdateProfile{
     weight?: number,
     height?: number,
     type?: string
+    gender?: string
 }

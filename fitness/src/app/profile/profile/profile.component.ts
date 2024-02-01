@@ -41,6 +41,7 @@ export class ProfileComponent {
       height: new FormControl('', [Validators.pattern('^[0-9]*$')]),
       weight: new FormControl('', [Validators.pattern('^[0-9]*$')]),
       type: new FormControl(''),
+      gender: new FormControl('', [Validators.required])
     });
     this.newPasswordForm = new FormGroup({
       password: new FormControl('',{validators: [Validators.required], asyncValidators: [PasswordValidator.goodPasswordValidator(this.authService)], updateOn: 'blur'}),
@@ -100,6 +101,7 @@ export class ProfileComponent {
       height: this.guest?.height,
       weight: this.guest?.weight,
       type: this.trainer?.type,
+      gender: this.guest?.gender ? "1" : "0"
     });
   }
 
@@ -157,6 +159,7 @@ export class ProfileComponent {
       height: this.profileForm.get('height')?.value,
       weight: this.profileForm.get('weight')?.value,
       type: this.profileForm.get('type')?.value,
+      gender: this.profileForm.get('gender')?.value
     };
     this.userService.updateProfileData(data).subscribe((response: User) => {
       this.toast.success({
