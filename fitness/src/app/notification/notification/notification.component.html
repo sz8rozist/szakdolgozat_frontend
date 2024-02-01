@@ -65,29 +65,31 @@
                   <div class="small">{{ notification.date }}</div>
                 </div>
                 <span class="ms-auto">
-                  <fa-icon
+                  <button
+                    routerLink="/notification/comment/{{
+                      notification.notificationId
+                    }}"
                     *ngIf="
                       notification.type == 'DIET' ||
                       notification.type == 'EXERCISE'
                     "
-                    [icon]="faComment"
-                    style="cursor: pointer"
-                    class="fa-lg me-2 text-primary"
-                    routerLink="/notification/comment/{{notification.notificationId}}"
-                  ></fa-icon>
-                  <fa-icon
-                    *ngIf="!notification.viewed"
-                    [icon]="faRead"
-                    style="cursor: pointer"
-                    class="fa-lg text-success"
+                    class="btn btn-primary btn-sm me-2"
+                  >
+                    <fa-icon [icon]="faComment"></fa-icon>
+                  </button>
+                  <button
                     (click)="markAsViewed(notification.notificationId)"
-                  ></fa-icon>
-                  <fa-icon
-                    [icon]="faTrash"
-                    style="cursor: pointer"
-                    class="fa-lg ms-2 text-danger"
+                    *ngIf="!notification.viewed"
+                    class="btn btn-success btn-sm me-2"
+                  >
+                    <fa-icon [icon]="faRead"></fa-icon>
+                  </button>
+                  <button
                     (click)="onDelete(notification.notificationId)"
-                  ></fa-icon>
+                    class="btn btn-danger btn-sm"
+                  >
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </button>
                 </span>
               </div>
             </div>
