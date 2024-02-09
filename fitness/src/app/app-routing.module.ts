@@ -38,6 +38,11 @@ const routes: Routes = [
     loadChildren: () =>
     import('./workout/workout.module').then((m) => m.WorkoutModule)
   },
+  {
+    path: 'calendar',
+    loadChildren: () =>
+    import('./calendar/calendar.module').then((m) => m.CalendarModule)
+  },
   { path: '', redirectTo: '/signin', pathMatch: 'full' },
   { path: '**', redirectTo: '/not-found', pathMatch: 'full' },
 ];

@@ -2,11 +2,9 @@ import { Component, HostListener } from '@angular/core';
 import { AuthService } from './service/auth.service';
 import { UserDto } from './model/dto/UserDto';
 import { NgToastService } from 'ng-angular-popup';
-import { NotificationModel } from './model/NotificationModel';
 import { NotificationService } from './service/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Notification } from './model/Notification';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
