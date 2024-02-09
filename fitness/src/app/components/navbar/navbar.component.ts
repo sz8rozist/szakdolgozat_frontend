@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../model/User';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 import { NotificationService } from 'src/app/service/notification.service';
 import { Notification } from 'src/app/model/Notification';
+import { OffcanvasComponent } from '../offcanvas/offcanvas.component';
 
 @Component({
   selector: 'app-navbar',
@@ -14,11 +15,11 @@ import { Notification } from 'src/app/model/Notification';
 export class NavbarComponent {
   @Output() logoutEvent = new EventEmitter<void>();
   isSpecialRoute: boolean = false;
-  toggleNotification: boolean = false;
   toggleProfileDropdown: boolean = false;
   auth?: User;
   notifications: Notification[] = [];
   profileImageSrc: string | null = null;
+  @ViewChild('canvasRef') canvasRef!: OffcanvasComponent;
 
   constructor(
     private router: Router,
@@ -50,8 +51,12 @@ export class NavbarComponent {
     }
   }
 
-  toggleNotificationFunc() {
-    this.toggleNotification = !this.toggleNotification;
+  openNotificationOffCanvas() {
+    this.canvasRef.openCanvas();
+  }
+
+  closeNotificationOffCanvas(){
+    this.canvasRef.closeCanvas();
   }
 
   toggleProfileDropdownFunc() {

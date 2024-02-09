@@ -1,9 +1,33 @@
-.notifications{
-    height: 500px;
-    overflow: auto;
-}
 .logo img{
     width: 40% !important;
+}
+
+.notifications{
+  list-style-type: none;
+  padding: 0;
+}
+.notification-item{
+  display: flex;
+  border-bottom: 1px solid lightgray;
+  min-height: 80px;
+  padding: 10px 0 10px 0;
+}
+
+.notification-item:first-child{
+  border-top: 1px solid lightgray;
+}
+
+.notification-item:hover{
+  background-color: #f6f9ff;
+}
+
+#show_all_notification_href{
+  font-size: 14px;
+}
+
+.notification-item > i{
+  font-size: 22px;
+  margin-right: 15px;
 }
 
 @media only screen and  (max-width: 1200px) {

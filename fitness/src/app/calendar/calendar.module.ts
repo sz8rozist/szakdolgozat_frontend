@@ -6,16 +6,20 @@ import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../app.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../components/modal/modal.component';
 
 
 
 @NgModule({
   declarations: [
-    CalendarComponent
+    CalendarComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
     CalendarRoutingModule,
+    NgbModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

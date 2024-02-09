@@ -10,6 +10,28 @@
       </nav>
     </div>
     <section class="section">
+      <app-modal #modalRef>
+        <div header>
+          <!-- Modal header content -->
+          <h4 class="modal-title" id="modal-basic-title">{{title}} - {{start | date: 'yyyy-MM-dd'}}</h4>
+        </div>
+        <div body>
+          <!-- Modal body content -->
+          <p>This is the modal body.</p>
+        </div>
+      </app-modal>
+
+      <app-modal #newEventModal>
+        <div header>
+          <!-- Modal header content -->
+          <h4 class="modal-title" id="modal-basic-title">Új esemény hozzáadása - {{newEventTitleDate | date: 'yyyy-MM-dd'}}</h4>
+        </div>
+        <div body>
+          <!-- Modal body content -->
+          <p>This is the modal body.</p>
+        </div>
+      </app-modal>
+      
         <full-calendar [options]="calendarOptions"></full-calendar>
     </section>
 </main>

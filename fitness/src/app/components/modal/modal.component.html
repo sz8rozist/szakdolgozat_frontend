@@ -1,0 +1,26 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <ng-content  select="[header]"></ng-content>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="closeModal()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <ng-content select="[body]"></ng-content>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="closeModal()">
+        Mégse
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="c('Save click')"
+    >
+      Mentés
+    </button>
+  </div>
+</ng-template>

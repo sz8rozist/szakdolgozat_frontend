@@ -71,13 +71,29 @@ export class CreateTrainerComponent {
     responsive: true,
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: 'bottom',
+      },
+      datalabels: {
+        color: 'white',
+        anchor: 'end',
+        align: 'start',
+        offset: 0,
+        borderWidth: 2,
+        borderColor: '#F44336',
+        borderRadius: 4,
+        backgroundColor: '#F44336',
+        formatter: (value: any, ctx: any) => {
+          console.log(value);
+          if (ctx.chart.data.labels) {
+            return ctx.chart.data.labels[ctx.dataIndex];
+          }
+        },
       },
     },
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: [],
+    labels: ['Szénhidrát', 'Fehérje', 'Zsír'],
     datasets: [
       {
         data: [1],

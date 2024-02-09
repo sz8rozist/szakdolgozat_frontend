@@ -131,6 +131,7 @@
   "ferfi": "Male",
   "no": "Female",
   "nem": "Gender",
-  "kot_gender": "Gender selection is required"
+  "kot_gender": "Gender selection is required",
+  "nincs_uj_ertesites": "You have no new notifications"
 
 }

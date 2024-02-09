@@ -4,8 +4,6 @@ import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/model/User';
 import { UserDto } from 'src/app/model/dto/UserDto';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
-import { ChatWindowComponent } from '../chat-window/chat-window.component';
 import { ChatService } from 'src/app/service/chat.service';
 
 @Component({

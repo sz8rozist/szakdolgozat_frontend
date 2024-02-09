@@ -1,0 +1,9 @@
+<ng-template #content let-offcanvas>
+	<div class="offcanvas-header">
+        <ng-content  select="[canvasHeader]"></ng-content>
+		<button type="button" class="btn-close" aria-label="Close" (click)="closeCanvas()"></button>
+	</div>
+	<div class="offcanvas-body">
+        <ng-content select="[canvasBody]"></ng-content>
+	</div>
+</ng-template>

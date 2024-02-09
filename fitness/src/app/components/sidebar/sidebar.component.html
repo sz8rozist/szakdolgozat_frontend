@@ -1,13 +1,13 @@
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
-    <li class="nav-item">
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
       <a class="nav-link" routerLink="dashboard">
         <i class="bi bi-grid"></i>
         <span>{{'kezdolap'| translate}}</span>
       </a>
     </li>
-    <li class="nav-item" *ngIf="auth?.trainer != null">
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="auth?.trainer != null">
       <a routerLink="trainer" class="nav-link">
         <i class="bi bi-people"></i>
         <span>{{'vendegek' | translate}}</span>
@@ -22,42 +22,45 @@
         data-bs-target="#forms-nav"
         data-bs-toggle="collapse"
         href="#"
+        [ngClass]="{active: isEtrendVisible}"
       >
-        <i class="bi bi-shop-window"></i><span>{{'etrend' | translate}}</span
-        ><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-shop-window" [ngClass]="{active: isEtrendVisible}"></i><span>{{'etrend' | translate}}</span
+        >
+        <i *ngIf="!isEtrendVisible" class="bi bi-chevron-down ms-auto"></i>
+        <i *ngIf="isEtrendVisible" class="bi bi-chevron-up ms-auto"></i>
       </span>
       <ul
         id="forms-nav"
         class="nav-content collapse"
         data-bs-parent="#sidebar-nav"
-        [ngClass]="{ show: isEtrendVisible }"
+        [ngClass]="{show: isEtrendVisible }"
       >
         <li>
-          <a routerLink="diet/food">
+          <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="diet/food">
             <i class="bi bi-circle"></i><span>{{'etelek'|translate}}</span>
           </a>
         </li>
         <li *ngIf="auth?.guest; else trainerLink">
-          <a routerLink="diet/create">
+          <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="diet/create">
             <i class="bi bi-circle"></i><span>{{'etrend_tervezes'|translate}}</span>
           </a>
         </li>
         <ng-template #trainerLink>
           <li>
-            <a routerLink="diet/create-trainer">
+            <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="diet/create-trainer">
               <i class="bi bi-circle"></i><span>{{'etrend_tervezes'|translate}}</span>
             </a>
           </li>
         </ng-template>
         
         <li *ngIf="auth?.guest != null; else trainerLINK">
-          <a routerLink="diet/diary">
+          <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="diet/diary">
             <i class="bi bi-circle"></i><span>{{'etkezesi_naplo'|translate}}</span>
           </a>
         </li>
         <ng-template #trainerLINK>
           <li>
-            <a routerLink="diet/trainer-diary">
+            <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="diet/trainer-diary">
               <i class="bi bi-circle"></i><span>{{'etkezesi_naplo'|translate}}</span>
             </a>
           </li>
@@ -74,9 +77,11 @@
         data-bs-target="#forms-nav"
         data-bs-toggle="collapse"
         href="#"
+        [ngClass]="{active: isEdzesVisible}"
       >
-        <i class="bi bi-heart-pulse"></i><span>{{'edzes'|translate}}</span
-        ><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-heart-pulse" [ngClass]="{active: isEdzesVisible}"></i><span>{{'edzes'|translate}}</span
+        > <i *ngIf="!isEdzesVisible" class="bi bi-chevron-down ms-auto"></i>
+        <i *ngIf="isEdzesVisible" class="bi bi-chevron-up ms-auto"></i>
       </span>
       <ul
         id="forms-nav"
@@ -85,37 +90,37 @@
         [ngClass]="{ show: isEdzesVisible }"
       >
         <li>
-          <a routerLink="workout/exercises">
+          <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="workout/exercises">
             <i class="bi bi-circle"></i><span>{{'gyakorlatok'|translate}}</span>
           </a>
         </li>
         <li *ngIf="auth?.guest; else trainerlink">
-          <a routerLink="workout/create">
+          <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="workout/create">
             <i class="bi bi-circle"></i><span>{{'edzes_tervezes'|translate}}</span>
           </a>
         </li>
         <ng-template #trainerlink>
           <li>
-            <a routerLink="workout/create-trainer">
+            <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="workout/create-trainer">
               <i class="bi bi-circle"></i><span>{{'edzes_tervezes'|translate}}</span>
             </a>
           </li>
         </ng-template>
         <li *ngIf="auth?.guest != null; else trainerLInk">
-          <a routerLink="workout/training-log">
+          <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="workout/training-log">
             <i class="bi bi-circle"></i><span>{{'edzes_naplo'|translate}}</span>
           </a>
         </li>
         <ng-template #trainerLInk>
           <li>
-            <a routerLink="workout/trainer-training-log">
+            <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="workout/trainer-training-log">
               <i class="bi bi-circle"></i><span>{{'edzes_naplo'|translate}}</span>
             </a>
           </li>
         </ng-template>
       </ul>
     </li>
-    <li class="nav-item">
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
       <a class="nav-link" routerLink="calendar">
         <i class="bi bi-calendar"></i>
         <span>Naptáram</span>

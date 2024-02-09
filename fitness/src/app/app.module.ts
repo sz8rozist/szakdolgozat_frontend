@@ -20,6 +20,8 @@ import { ChatWindowComponent } from './components/chat-window/chat-window.compon
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
 
 export function HttpLoaderFactory(http:HttpClient){
   return new TranslateHttpLoader(http);
@@ -35,6 +37,7 @@ export function HttpLoaderFactory(http:HttpClient){
     NotFoundComponent,
     FooterComponent,
     ChatWindowComponent,
+    OffcanvasComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ export function HttpLoaderFactory(http:HttpClient){
         tokenGetter: tokenGetter
       }
     }),
+    NgbModule,
   ],
   providers: [
     {

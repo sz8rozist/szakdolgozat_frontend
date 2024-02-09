@@ -13,37 +13,33 @@
   
         <li class="nav-item dropdown">
   
-          <span class="nav-link nav-icon" style="cursor: pointer;" (click)="toggleNotificationFunc()" data-bs-toggle="dropdown">
+          <span class="nav-link nav-icon" style="cursor: pointer;" (click)="openNotificationOffCanvas()" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">{{notifications.length}}</span>
           </span><!-- End Notification Icon -->
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" [ngClass]="{'show': toggleNotification}" [ngStyle]="{'position': toggleNotification ? 'absolute' : '', 'inset': toggleNotification ? '0px 0px auto auto' : '', 'margin': toggleNotification? '0px' : '', 'transform': toggleNotification ? 'translate(-25px, 35px)' : ''}">
-            <li class="dropdown-header">
-              {{notifications.length}} {{'uj_ertesitesed_van' | translate}}
-              <a href="#" (click)="toggleNotificationFunc()" routerLink="/notification"><span class="badge rounded-pill bg-primary p-2 ms-2">{{'mutasd_mindet' |translate}}</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li class="notification-item" *ngFor="let n of notifications">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>{{n.guestFirstName + ' ' + n.guestLastName}}</h4>
-                <p>{{n.message}}</p>
-                <p>{{n.date}}</p>
-              </div>
-            </li>
-  
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#" (click)="toggleNotificationFunc()" routerLink="/notification">{{'mutasd_az_osszes_uj_ertesites' |translate}}</a>
-            </li>
-  
-          </ul><!-- End Notification Dropdown Items -->
-  
+          <app-offcanvas #canvasRef>
+            <div canvasHeader>
+              <!-- Modal header content -->
+              <h4 class="offcanvas-title" id="offcanvas-basic-title">{{"ertesites"|translate}}</h4>
+            </div>
+            <div canvasBody>
+              <!-- Modal body content -->
+              <div class="text-center" *ngIf="notifications.length == 0">{{"nincs_uj_ertesites" | translate}}</div>
+              <ul class="notifications">
+                <li class="notification-item" *ngFor="let n of notifications">
+                  <i class="bi bi-info-circle text-primary"></i>
+                  <div>
+                    <p>{{n.message}}</p>
+                    <p>{{n.date}}</p>
+                  </div>
+                </li>
+                <li class="text-center">
+                  <a href="#" (click)="closeNotificationOffCanvas()" routerLink="/notification"><span id="show_all_notification_href" class="badge rounded-pill bg-primary p-3 ms-2 mt-3">{{'mutasd_mindet' |translate}}</span></a>
+                </li>
+
+              </ul>
+            </div>
+          </app-offcanvas>
         </li><!-- End Notification Nav -->  
         <li class="nav-item dropdown pe-3" (click)="toggleProfileDropdownFunc()">
   
