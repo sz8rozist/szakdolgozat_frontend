@@ -1,0 +1,194 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>{{"uzenofal" | translate}}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">{{ "kezdolap" | translate }}</a>
+        </li>
+        <li class="breadcrumb-item active">{{"uzenofal" | translate}}</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="card" id="chat3" style="border-radius: 15px">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+            <div class="p-3">
+              <div class="input-group rounded mb-3">
+                <input
+                  type="search"
+                  class="form-control rounded"
+                  aria-label="Search"
+                  [(ngModel)]="searchInput"
+                  (input)="onSearch()"
+                  placeholder="{{ 'kereses' | translate }}"
+                  aria-describedby="search-addon"
+                />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+              <div
+                data-mdb-perfect-scrollbar="true"
+                style="position: relative; height: 400px"
+              >
+                <ul class="list-unstyled mb-0">
+                  <li
+                    class="p-2 border-bottom"
+                    (click)="chooseUser(user)"
+                    *ngFor="let user of users"
+                  >
+                    <a
+                      style="cursor: pointer"
+                      class="d-flex justify-content-between"
+                    >
+                      <div class="d-flex flex-row">
+                        <div>
+                          <img
+                            *ngIf="user.profilePictureName; else defaultImage"
+                            [src]="user.profilePictureName"
+                            alt="avatar"
+                            class="d-flex align-self-center me-3 rounded-circle"
+                            width="60"
+                          />
+                          <span class="badge bg-success badge-dot"></span>
+                          <ng-template #defaultImage>
+                            <img
+                              src="assets/img/no-profile-picture.webp"
+                              alt="Default Profile"
+                              class="d-flex align-self-center me-3 rounded-circle"
+                              width="60"
+                            />
+                          </ng-template>
+                        </div>
+                        <div class="pt-1">
+                          <p class="fw-bold mb-0">
+                            {{ user.firstName + " " + user.lastName }}
+                          </p>
+                          <p class="small text-muted">{{ user.lastMessage }}</p>
+                        </div>
+                      </div>
+                      <div class="pt-1">
+                        <p class="small text-muted mb-1">Just now</p>
+                        <span class="badge bg-danger rounded-pill float-end"
+                          >3</span
+                        >
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-7 col-xl-8">
+            <div
+              class="pt-3 pe-3 mt-3"
+              data-mdb-perfect-scrollbar="true"
+              style="
+                position: relative;
+                height: 70vh;
+                overflow: auto;
+                scrollbar-width: thin;
+              "
+            >
+              <div *ngIf="!user">
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle me-1"></i>
+                  {{ "nincs_felhasznalo" | translate }}
+                </div>
+              </div>
+              <ng-container *ngIf="user">
+                <div *ngIf="messages.length == 0">
+                  <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-1"></i>
+                    {{ "nincs_uzenet" | translate }}
+                  </div>
+                </div>
+                <div *ngFor="let m of messages">
+                  <ng-container
+                    *ngIf="
+                      m.receiverUserId == senderUser?.id &&
+                      m.receiverUserId != user?.id
+                    "
+                  >
+                    <div class="d-flex flex-row justify-content-start">
+                      <img
+                        [src]="user.profilePictureName"
+                        alt="avatar 1"
+                        style="width: 45px; height: 100%"
+                        class="rounded-circle"
+                      />
+                      <div>
+                        <p
+                          class="small p-2 ms-3 mb-1 rounded-3"
+                          style="background-color: #f5f6f7"
+                        >
+                          {{ m.message }}
+                        </p>
+                        <p
+                          class="small ms-3 mb-3 rounded-3 text-muted float-end"
+                        >
+                          {{ m.dateTime }}
+                        </p>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      m.receiverUserId == user?.id &&
+                      m.receiverUserId != senderUser?.id
+                    "
+                  >
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <p
+                          class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
+                        >
+                          {{ m.message }}
+                        </p>
+                        <p class="small me-3 mb-3 rounded-3 text-muted">
+                          {{ m.dateTime }}
+                        </p>
+                      </div>
+                      <img
+                        [src]="senderUser?.profilePictureName"
+                        alt="avatar 1"
+                        style="width: 45px; height: 100%"
+                        class="rounded-circle"
+                      />
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+            <div
+              class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2"
+            >
+              <div class="input-group mb-3">
+                <input
+                  [disabled]="!user"
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput2"
+                  placeholder="{{ 'uzenet' | translate }}...."
+                  [(ngModel)]="message"
+                  (keydown.enter)="sendMessage()"
+                />
+                <button
+                  [disabled]="!user"
+                  class="btn btn-primary"
+                  (click)="sendMessage()"
+                >
+                  {{ "kuldes" | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

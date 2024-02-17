@@ -6,7 +6,6 @@ import { TrainingLogComponent } from './training-log/training-log.component';
 import { CreateTrainingComponent } from './create-training/create-training.component';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditWorkoutComponent } from './edit-workout/edit-workout.component';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -23,7 +22,6 @@ import { TrainerTrainingLogComponent } from './trainer-training-log/trainer-trai
     TrainingLogComponent,
     CreateTrainingComponent,
     AddExerciseComponent,
-    EditWorkoutComponent,
     CreateTrainerComponent,
     TrainerTrainingLogComponent,
   ],

@@ -1,12 +1,11 @@
 <app-navbar (logoutEvent)="onLogout()" *ngIf="authService.isLoggedIn$ | async"></app-navbar>
 <div class="container-fluid">
   <div class="row">
-    <app-sidebar (chatWindow)="getUserToChatWindow($event)" *ngIf="authService.isLoggedIn$ | async"></app-sidebar>
+    <app-sidebar *ngIf="authService.isLoggedIn$ | async"></app-sidebar>
     <div class="col-md-12">
       <router-outlet></router-outlet>
       <ng-toast [style]="{width:'300px'}"></ng-toast>
     </div>
   </div>
-  <app-chat-window [user]="user"></app-chat-window>
   <app-footer *ngIf="authService.isLoggedIn$ | async"></app-footer>  
 </div>

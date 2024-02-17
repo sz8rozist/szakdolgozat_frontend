@@ -132,5 +132,10 @@
   "no": "Nő",
   "nem": "Nem",
   "kot_gender": "A nem kiválasztása kötelező",
-  "nincs_uj_ertesites": "Nincsenek új értesítéseid"
+  "nincs_uj_ertesites": "Nincsenek új értesítéseid",
+  "naptar": "Naptár",
+  "nincs_uzenet": "Még nincsenek üzenetek",
+  "nincs_felhasznalo": "Nincs kiválasztva felhasználó",
+  "kereses": "Keresés",
+  "uzenofal": "Üzenőfal"
 }

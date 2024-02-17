@@ -40,22 +40,24 @@ export class TrainingLogComponent {
     private guestService: GuestService,
     private notificationService: NotificationService,
     private route: ActivatedRoute
-  ) {this.workoutForm = new FormGroup({
-    exerciseId: new FormControl('', [Validators.required]),
-    date: new FormControl('', [Validators.required]),
-    sets: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    repetitions: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-  });}
+  ) {
+    this.workoutForm = new FormGroup({
+      exerciseId: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
+      sets: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+      repetitions: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+    });
+  }
 
-  ngOnInit(){
+  ngOnInit() {
     const date = this.route.snapshot.paramMap.get('date');
-    if(date){
+    if (date) {
       this.date = date;
       this.loadWorkout(date);
       this.giveByTrainer = this.workouts.every((workout) => !workout.trainer);
@@ -68,24 +70,23 @@ export class TrainingLogComponent {
   }
 
   loadWorkout(date: string) {
-    this.authService.getAuthData().subscribe((response: User)  =>{
-      if(response && response.guest != null){
+    this.authService.getAuthData().subscribe((response: User) => {
+      if (response && response.guest != null) {
         this.workoutService
-        .getWorkouts(response.guest.id as number, date)
-        .subscribe((resp: Workout[]) => {
-          if (resp.length == 0) {
-            this.toast.warning({
-              detail: 'Figyelmeztetés',
-              summary: 'Ehhez a dátumhoz nem tartozik edzésterv!',
-              duration: 2000,
-              type: 'warning',
-            });
-          }
-          this.workouts = [...resp];
-        });
+          .getWorkouts(response.guest.id as number, date)
+          .subscribe((resp: Workout[]) => {
+            if (resp.length == 0) {
+              this.toast.warning({
+                detail: 'Figyelmeztetés',
+                summary: 'Ehhez a dátumhoz nem tartozik edzésterv!',
+                duration: 2000,
+                type: 'warning',
+              });
+            }
+            this.workouts = [...resp];
+          });
       }
     });
-    
   }
 
   targetedBodyPart(part: string) {
@@ -144,34 +145,33 @@ export class TrainingLogComponent {
     });
   }
 
-  sendNotificationToTrainer(workout: Workout){
+  async sendNotificationToTrainer(workout: Workout) {
     const token = this.authService.getDecodedToken();
-    const trainer = this.guestService.findTrainer(token.sub).toPromise();
-    trainer.then(
-      (response: Trainer | any) => {
-        //console.log(response);
-        const data: SocketWorkoutDto = {
-          guestId: token.sub as number,
-          trainerId: response.id,
-          exerciseId: workout.exercise.id as number,
-          workoutId: workout.workoutId as number,
-        };
-        this.notificationService.sendWorkoutNotificationToTrainer(data);
-        this.loadWorkout(this.date);
-      },
-      (error) => {
-        console.log(error.mesage);
-      }
+    const trainer = await this.guestService.findTrainer(token.sub).toPromise();
+    if (trainer) {
+      const data: SocketWorkoutDto = {
+        guestId: token.sub as number,
+        trainerId: trainer.id as number,
+        exerciseId: workout.exercise.id as number,
+        workoutId: workout.workoutId as number,
+      };
+      this.notificationService.sendWorkoutNotificationToTrainer(data);
+      //this.loadWorkout(this.date);
+    }
+    const findedWorkout = this.workouts.find(
+      (item: Workout) => item.workoutId == workout.workoutId
     );
+    if (findedWorkout) {
+      findedWorkout.done = true;
+    }
   }
 
   openEditModal(id: Workout) {
     this.workoutId = id.workoutId;
     this.modalRef.openModal();
-   this.loadWorkoutToEdit(id.workoutId as number);
+    this.loadWorkoutToEdit(id.workoutId as number);
   }
 
-  
   loadWorkoutToEdit(workoutId: number) {
     if (workoutId) {
       this.workoutService
@@ -210,8 +210,8 @@ export class TrainingLogComponent {
             duration: 2000,
             type: 'success',
           });
-         this.modalRef.closeModal();
-         this.loadWorkout(this.date);
+          this.modalRef.closeModal();
+          this.loadWorkout(this.date);
         });
     }
   }

@@ -39,6 +39,11 @@ const routes: Routes = [
     import('./workout/workout.module').then((m) => m.WorkoutModule)
   },
   {
+    path: 'chat',
+    loadChildren: () =>
+    import('./chat/chat.module').then((m) => m.ChatModule)
+  },
+  {
     path: 'calendar',
     loadChildren: () =>
     import('./calendar/calendar.module').then((m) => m.CalendarModule)

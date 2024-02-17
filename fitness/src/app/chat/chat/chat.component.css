@@ -1,0 +1,18 @@
+
+.badge-dot {
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  margin-left: 2.9rem;
+  margin-top: -0.75rem;
+}
+
+#chat3{
+  min-height: 80vh;
+}
+
+.list-unstyled {
+  overflow: auto;
+  height: 70vh;
+  scrollbar-width: thin;
+}

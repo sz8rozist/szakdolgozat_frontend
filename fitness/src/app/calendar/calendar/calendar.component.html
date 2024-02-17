@@ -1,15 +1,16 @@
-
 <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>Naptáram</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">{{"kezdolap" | translate}}</a></li>
-          <li class="breadcrumb-item active">Naptáram</li>
-        </ol>
-      </nav>
-    </div>
-    <section class="section">      
-        <full-calendar [options]="calendarOptions"></full-calendar>
-    </section>
+  <div class="pagetitle">
+    <h1>{{ "naptar" | translate }}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">{{ "kezdolap" | translate }}</a>
+        </li>
+        <li class="breadcrumb-item active">{{ "naptar" | translate }}</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </section>
 </main>

@@ -34,10 +34,6 @@ export class AppComponent {
     this.authService.logout();
   }
 
-  getUserToChatWindow(value: UserDto) {
-    this.user = value;
-  }
-
   getTrainerNotification() {
     this.notificationService
       .getTrainerNotification()

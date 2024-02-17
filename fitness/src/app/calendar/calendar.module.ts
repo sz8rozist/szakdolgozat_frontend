@@ -7,7 +7,6 @@ import { HttpLoaderFactory } from '../app.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../components/modal/modal.component';
 
 
 

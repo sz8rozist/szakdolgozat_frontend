@@ -132,6 +132,10 @@
   "no": "Female",
   "nem": "Gender",
   "kot_gender": "Gender selection is required",
-  "nincs_uj_ertesites": "You have no new notifications"
-
+  "nincs_uj_ertesites": "You have no new notifications",
+  "naptar": "Calendar",
+  "nincs_uzenet": "There are no messages yet",
+  "nincs_felhasznalo": "No user selected",
+  "kereses": "Search",
+  "uzenofal": "Chat"
 }

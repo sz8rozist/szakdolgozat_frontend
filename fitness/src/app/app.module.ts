@@ -1,4 +1,3 @@
-import { InputMaskModule } from '@ectuser/input-mask-test';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -16,7 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
 import { JwtModule } from '@auth0/angular-jwt';
 import { SharedModule } from './shared/shared.module';
-import { ChatWindowComponent } from './components/chat-window/chat-window.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,7 +34,6 @@ export function HttpLoaderFactory(http:HttpClient){
     NavbarComponent,
     NotFoundComponent,
     FooterComponent,
-    ChatWindowComponent,
     OffcanvasComponent,
   ],
   imports: [
