@@ -48,14 +48,14 @@
                   <td>{{ workout.repetitions }}</td>
                   <td>
                     <button
-                      *ngIf="!workout.trainer"
+                      *ngIf="!workout.trainer && !workout.done"
                       class="btn btn-primary btn-sm me-2"
                       (click)="openEditModal(workout)"
                     >
                       <fa-icon [icon]="faEdit"></fa-icon>
                     </button>
                     <button
-                      *ngIf="!workout.trainer"
+                      *ngIf="!workout.trainer && !workout.done"
                       class="btn btn-danger btn-sm"
                       (click)="deleteExercise(workout.workoutId)"
                     >
@@ -73,8 +73,8 @@
                       *ngIf="workout.done"
                       disabled
                     >
-                      <i class="bi bi-check" *ngIf="workout.done"></i>
-                      {{ "elvegezve" | translate }}
+                    <fa-icon [icon]="faCheck" *ngIf="workout.done"></fa-icon>
+                    {{ "elvegezve" | translate }}
                     </button>
                   </td>
                 </tr>

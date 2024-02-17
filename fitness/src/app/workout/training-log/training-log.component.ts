@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NgToastService } from 'ng-angular-popup';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { Exercise } from 'src/app/model/Exercise';
@@ -30,6 +30,7 @@ export class TrainingLogComponent {
   faEdit = faEdit;
   workoutId?: number;
   workoutForm: FormGroup;
+  faCheck = faCheck
   exercisess: Exercise[] = [];
   @ViewChild('modalRef') modalRef!: ModalComponent;
   constructor(

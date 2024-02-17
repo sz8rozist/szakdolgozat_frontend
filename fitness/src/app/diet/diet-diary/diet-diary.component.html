@@ -58,15 +58,8 @@
                   <td class="text-end">{{ (food.fat / 100) * food.quantity }}</td>
                   <td class="text-end">{{ (food.calorie / 100) * food.quantity }}</td>
                   <td>
-                    <!--<button
-                      *ngIf="!food.trainerId"
-                      class="btn btn-primary btn-sm me-2"
-                      routerLink="/diet/edit-food/{{ food.dietId }}"
-                    >
-                      <fa-icon [icon]="faEdit"></fa-icon>
-                    </button>-->
                     <button
-                      *ngIf="!food.trainerId"
+                      *ngIf="!food.trainerId && !food.eated"
                       class="btn btn-primary btn-sm me-2"
                       (click)="openEditModal(food.dietId)"
                     >
@@ -88,7 +81,7 @@
                       {{ "elfogyasztva" | translate }}
                     </button>
                     <button
-                      *ngIf="!food.trainerId"
+                      *ngIf="!food.trainerId && !food.eated"
                       (click)="removeFood(food.dietId)"
                       class="btn btn-danger btn-sm"
                     >
