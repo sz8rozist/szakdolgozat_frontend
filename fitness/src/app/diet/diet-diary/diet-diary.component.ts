@@ -13,6 +13,12 @@ import { Trainer } from 'src/app/model/Trainer';
 import { NotificationService } from 'src/app/service/notification.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { faCheck, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Diet } from 'src/app/model/Diet';
+import { Food } from 'src/app/model/Food';
+import { DietUpdateRequest } from 'src/app/model/DietUpdateRequest';
 @Component({
   selector: 'app-diet-diary',
   templateUrl: './diet-diary.component.html',
@@ -25,7 +31,13 @@ export class DietDiaryComponent {
   giveByTrainer: boolean = false;
   faTrash = faTrash;
   faEdit = faEdit;
-  faCheck = faCheck
+  faCheck = faCheck;
+  dietId?: number;
+  @ViewChild('modalRef') modalRef!: ModalComponent;
+  foodForm: FormGroup;
+  dietForm: FormGroup;
+  diets?: Diet;
+  foods?: Food[];
   sum: {
     calorie: number;
     carbonhydrate: number;
@@ -76,15 +88,49 @@ export class DietDiaryComponent {
     private authService: AuthService,
     private toast: NgToastService,
     private guestService: GuestService,
-    private notificationService: NotificationService
-  ) {}
+    private notificationService: NotificationService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.foodForm = new FormGroup({
+      foodId: new FormControl('', [Validators.required]),
+      calorie: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+      protein: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+      carbonhydrate: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+      fat: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+    });
+    this.dietForm = new FormGroup({
+      quantity: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+      type: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
+    });
+  }
   public pieChartPlugins = [DatalabelsPlugin];
-  ngOnInit() {}
-
-  loadDietByDate() {
-    this.loadDiet(this.date);
-    this.giveByTrainer = (this.diet?.diet &&
-      this.diet?.diet.every((workout) => workout.trainerId != null)) as boolean;
+  ngOnInit() {
+    const date = this.route.snapshot.paramMap.get('date');
+    if (date) {
+      this.date = date;
+      this.loadDiet(date);
+      this.giveByTrainer = (this.diet?.diet &&
+        this.diet?.diet.every(
+          (workout) => workout.trainerId != null
+        )) as boolean;
+    }
   }
 
   loadDiet(date: string) {
@@ -220,8 +266,8 @@ export class DietDiaryComponent {
           dietId: food.dietId,
         };
         this.notificationService.sendNotificationToTrainer(data);
-        var item = this.diet?.diet.find(item => item.foodId == food.foodId);
-        if(item){
+        var item = this.diet?.diet.find((item) => item.foodId == food.foodId);
+        if (item) {
           item.eated = true;
         }
       },
@@ -229,5 +275,84 @@ export class DietDiaryComponent {
         console.log(error.mesage);
       }
     );
+  }
+
+  openEditModal(id: number) {
+    this.dietId = id;
+    this.modalRef.openModal();
+    this.loadFoods();
+    this.loadDietToForm();
+  }
+
+  loadFoods() {
+    this.dietService.getAllFoodWithoutPagination().subscribe((food: Food[]) => {
+      this.foods = [...food];
+    });
+  }
+
+  loadDietToForm() {
+    if (this.dietId) {
+      this.dietService
+        .getDietById(Number(this.dietId))
+        .subscribe((response: Diet) => {
+          if (response) {
+            this.diets = response;
+            this.patchFoodForm(this.diets.food);
+            this.patchDietForm(this.diets);
+          }
+        });
+    }
+  }
+
+  patchFoodForm(food: any) {
+    this.foodForm.patchValue({
+      foodId: food.id,
+      calorie: food.calorie,
+      protein: food.protein,
+      carbonhydrate: food.carbonhydrate,
+      fat: food.fat,
+    });
+  }
+
+  patchDietForm(diet: any) {
+    this.dietForm.patchValue({
+      quantity: diet.quantity,
+      type: diet.type,
+      date: diet.date,
+    });
+  }
+
+  onSelectChange(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.dietService
+      .getFoodById(Number(selectedValue))
+      .subscribe((response: Food) => {
+        if (response) {
+          this.patchFoodForm(response);
+        }
+      });
+  }
+
+  saveEtkezes() {
+    if (this.dietForm.valid && this.foodForm.valid) {
+      const diet: DietUpdateRequest = {
+        foodId: this.foodForm.get('foodId')?.value,
+        quantity: this.dietForm.get('quantity')?.value,
+        date: this.dietForm.get('date')?.value,
+        type: this.dietForm.get('type')?.value,
+      };
+      this.dietService
+        .updateDiet(diet, this.diets?.id as number)
+        .subscribe(() => {
+          this.toast.success({
+            detail: 'Sikeres',
+            summary: 'Sikeres frissítés',
+            duration: 2000,
+            type: 'success',
+          });
+         this.modalRef.closeModal();
+         this.loadDiet(this.date);
+        });
+    }
   }
 }

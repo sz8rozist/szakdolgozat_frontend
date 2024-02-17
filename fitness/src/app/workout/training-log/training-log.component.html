@@ -1,54 +1,41 @@
 <main class="main" id="main">
   <div class="pagetitle">
-    <h1>{{'edzes_naplo'|translate}}</h1>
+    <h1>{{ "edzes_naplo" | translate }}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">{{'kezdolap'|translate}}</a></li>
-        <li class="breadcrumb-item">{{'edzes'|translate}}</li>
-        <li class="breadcrumb-item active">{{'edzes_naplo'|translate}}</li>
+        <li class="breadcrumb-item">
+          <a href="index.html">{{ "kezdolap" | translate }}</a>
+        </li>
+        <li class="breadcrumb-item">{{ "edzes" | translate }}</li>
+        <li class="breadcrumb-item active">{{ "edzes_naplo" | translate }}</li>
       </ol>
     </nav>
   </div>
   <section class="section">
     <div class="row">
       <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-lg-6">
-                <p>{{'datum'|translate}}</p>
-              </div>
-              <div class="col-lg-6 text-end">
-                <button *ngIf="date != '' && !giveByTrainer" class="btn btn-danger" (click)="deleteWorkout()"><i class="bi bi-trash"></i></button>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="form-floating mb-3 mt-3">
-              <input
-                type="date"
-                class="form-control"
-                id="floatingInput"
-                [(ngModel)]="date"
-                (ngModelChange)="change()"
-              />
-              <label for="floatingInput">{{'datum'|translate}}</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12">
         <div class="card" *ngIf="workouts && workouts.length > 0">
-          <div class="card-header">{{'edzes_naplo'|translate}}</div>
+          <div class="card-header">
+            <div class="col-lg-6">{{ "edzes_naplo" | translate }}</div>
+            <div class="col-lg-6 text-end">
+              <button
+                *ngIf="date != '' && !giveByTrainer"
+                class="btn btn-danger"
+                (click)="deleteWorkout()"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
           <div class="card-body">
             <table class="table table-bordered mt-3">
               <thead>
                 <tr>
-                  <th>{{'gyakorlat'|translate}}</th>
-                  <th>{{'testresz'|translate}}</th>
-                  <th>{{'sorozatszam'|translate}}</th>
-                  <th>{{'ismetlesszam'|translate}}</th>
-                  <th>{{'muvelet'|translate}}</th>
+                  <th>{{ "gyakorlat" | translate }}</th>
+                  <th>{{ "testresz" | translate }}</th>
+                  <th>{{ "sorozatszam" | translate }}</th>
+                  <th>{{ "ismetlesszam" | translate }}</th>
+                  <th>{{ "muvelet" | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -61,13 +48,17 @@
                   <td>{{ workout.repetitions }}</td>
                   <td>
                     <button
-                    *ngIf="!workout.trainer"
-                      class="btn btn-primary btn-sm me-2 "
+                      *ngIf="!workout.trainer"
+                      class="btn btn-primary btn-sm me-2"
                       routerLink="/workout/edit/{{ workout.workoutId }}"
                     >
-                    <fa-icon [icon]="faEdit"></fa-icon>
-                  </button>
-                    <button *ngIf="!workout.trainer" class="btn btn-danger btn-sm" (click)="deleteExercise(workout.workoutId)">
+                      <fa-icon [icon]="faEdit"></fa-icon>
+                    </button>
+                    <button
+                      *ngIf="!workout.trainer"
+                      class="btn btn-danger btn-sm"
+                      (click)="deleteExercise(workout.workoutId)"
+                    >
                       <fa-icon [icon]="faTrash"></fa-icon>
                     </button>
                     <button

@@ -12,7 +12,7 @@ import { TrainerTrainingLogComponent } from './trainer-training-log/trainer-trai
 
 const routes: Routes = [
   {path: 'exercises', component: ExerciseComponent, canActivate: [AuthGuard]},
-  {path: 'training-log', component: TrainingLogComponent, canActivate: [AuthGuard]},
+  {path: 'training-log/:date', component: TrainingLogComponent, canActivate: [AuthGuard]},
   {path: 'create', component: CreateTrainingComponent, canActivate: [AuthGuard]},
   {path: 'addExercise', component: AddExerciseComponent, canActivate: [AuthGuard]},
   {path: 'edit/:id', component: EditWorkoutComponent, canActivate: [AuthGuard]},

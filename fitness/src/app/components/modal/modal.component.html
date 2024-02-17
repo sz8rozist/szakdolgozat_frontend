@@ -15,12 +15,6 @@
     <button class="btn btn-secondary" (click)="closeModal()">
         Mégse
     </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="c('Save click')"
-    >
-      Mentés
-    </button>
+    <ng-content select="[saveButton]"></ng-content>
   </div>
 </ng-template>

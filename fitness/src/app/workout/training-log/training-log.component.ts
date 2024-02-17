@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { NgToastService } from 'ng-angular-popup';
 import { Exercise } from 'src/app/model/Exercise';
 import { Trainer } from 'src/app/model/Trainer';
 import { User } from 'src/app/model/User';
 import { Workout } from 'src/app/model/Workout';
-import { SocketDietDto } from 'src/app/model/dto/SocketDietDto';
 import { SocketWorkoutDto } from 'src/app/model/dto/SocketWorkoutDto';
 import { AuthService } from 'src/app/service/auth.service';
 import { ExerciseService } from 'src/app/service/exercise.service';
@@ -31,8 +31,17 @@ export class TrainingLogComponent {
     private toast: NgToastService,
     private exerciseService: ExerciseService,
     private guestService: GuestService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private route: ActivatedRoute
   ) {}
+
+  ngOnInit(){
+    const date = this.route.snapshot.paramMap.get('date');
+    if(date){
+      this.loadWorkout(date);
+      this.giveByTrainer = this.workouts.every((workout) => !workout.trainer);
+    }
+  }
 
   loadWorkout(date: string) {
     this.authService.getAuthData().subscribe((response: User)  =>{
@@ -54,11 +63,6 @@ export class TrainingLogComponent {
       }
     });
     
-  }
-
-  change() {
-    this.loadWorkout(this.date);
-    this.giveByTrainer = this.workouts.every((workout) => !workout.trainer);
   }
 
   targetedBodyPart(part: string) {

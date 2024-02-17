@@ -52,19 +52,11 @@
             </a>
           </li>
         </ng-template>
-        
-        <li *ngIf="auth?.guest != null; else trainerLINK">
-          <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="diet/diary">
-            <i class="bi bi-circle"></i><span>{{'etkezesi_naplo'|translate}}</span>
-          </a>
-        </li>
-        <ng-template #trainerLINK>
-          <li>
+          <li *ngIf="auth?.trainer != null">
             <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="diet/trainer-diary">
               <i class="bi bi-circle"></i><span>{{'etkezesi_naplo'|translate}}</span>
             </a>
           </li>
-        </ng-template>
       </ul>
     </li>
     <!-- End Forms Nav -->
@@ -106,18 +98,11 @@
             </a>
           </li>
         </ng-template>
-        <li *ngIf="auth?.guest != null; else trainerLInk">
-          <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="workout/training-log">
-            <i class="bi bi-circle"></i><span>{{'edzes_naplo'|translate}}</span>
-          </a>
-        </li>
-        <ng-template #trainerLInk>
-          <li>
+          <li *ngIf="auth?.trainer != null">
             <a routerLinkActive="active-color" [routerLinkActiveOptions]="{exact: true}" routerLink="workout/trainer-training-log">
               <i class="bi bi-circle"></i><span>{{'edzes_naplo'|translate}}</span>
             </a>
           </li>
-        </ng-template>
       </ul>
     </li>
     <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">

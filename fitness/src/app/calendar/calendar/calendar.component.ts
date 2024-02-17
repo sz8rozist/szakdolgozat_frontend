@@ -12,6 +12,12 @@ import interactionPlugin from '@fullcalendar/interaction';
 import huLocale from '@fullcalendar/core/locales/hu';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { AuthService } from 'src/app/service/auth.service';
+import { DietService } from 'src/app/service/diet.service';
+import { User } from 'src/app/model/User';
+import { CalendarEvent } from 'src/app/model/CalendarEvent';
+import { WorkoutService } from 'src/app/service/workout.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -22,34 +28,75 @@ export class CalendarComponent {
   title: string = '';
   start: string = '';
   newEventTitleDate: string = '';
-  @ViewChild('modalRef') modalRef!: ModalComponent;
-  @ViewChild('newEventModal') newEventModal!: ModalComponent;
-
-  event = [
-    { title: 'Present', date: '2024-02-09', color: '#0000fff' },
-    { title: 'Present', date: '2024-02-10', color: '#0000fff' },
-    { title: 'Present', date: '2024-02-12', color: '#0000fff' },
-    { title: 'Present', date: '2024-02-20', color: '#0000fff' },
-  ];
+  events: CalendarEvent[] = [];
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, bootstrap5Plugin, interactionPlugin],
     initialView: 'dayGridMonth',
-    eventClick: this.handleEventClick.bind(this),
-    dateClick: this.handleDateClick.bind(this),
     weekends: true,
     themeSystem: 'bootstrap5',
+    eventClick: this.handleEventClick.bind(this),
     locale: huLocale,
-    events: this.event,
-  };
+    events: [],
+  }; // A calendarOptions változó
+  constructor(
+    private authService: AuthService,
+    private dietService: DietService,
+    private workoutService: WorkoutService,
+    private router: Router
+  ) {}
 
-  handleEventClick(input: any) {
-    this.modalRef.openModal();
-    this.title = input.event._def.title;
-    this.start = input.event.start;
+  async ngOnInit() {
+    try {
+      const response: User | undefined = await this.authService
+        .getAuthData()
+        .toPromise();
+
+      if (response?.trainer) {
+        // Kezelheted a trainer logikát, ha szükséges
+      } else if (response?.guest) {
+        const resp: CalendarEvent[] | undefined = await this.dietService
+          .getAllDietByGuest(response.guest.id as number)
+          .toPromise();
+        const workoutEvent: CalendarEvent[] | undefined =
+          await this.workoutService
+            .getAllWorkoutByGuest(response.guest.id as number)
+            .toPromise();
+        if (resp) {
+          this.events = [...resp];
+        }
+        if (workoutEvent) {
+          this.events = [...this.events, ...workoutEvent];
+        }
+        this.initializeCalendarOptions(); // calendarOptions inicializálása a második API kérés sikere esetén
+      }
+    } catch (error) {
+      console.error('Hiba történt:', error);
+    }
   }
 
-  handleDateClick(input: any) {
-    this.newEventModal.openModal();
-    this.newEventTitleDate = input.date;
+  initializeCalendarOptions() {
+    this.calendarOptions = {
+      events: this.events,
+    };
+  }
+
+  handleEventClick(args: any) {
+    console.log(args.event);
+
+    var currentDate = new Date(args.event.start);
+
+    // Év, hónap és nap külön változókba mentése
+    var year = currentDate.getFullYear();
+    var month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Hónap 0-tól kezdődik, ezért +1, és két számjegyű formátumra alakítás
+    var day = currentDate.getDate().toString().padStart(2, '0'); // Nap két számjegyű formátumra alakítás
+
+    // Dátum összeállítása a kívánt formátumban
+    var formattedDate = year + '-' + month + '-' + day;
+    // A 'target' az útvonal neve, amit definiáltál
+    if (args.event._def.title == 'Étrend') {
+      this.router.navigateByUrl('/diet/diary/' + formattedDate);
+    } else {
+      this.router.navigateByUrl('/workout/training-log/' + formattedDate);
+    }
   }
 }

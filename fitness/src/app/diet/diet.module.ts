@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DietFormComponent } from './diet-form/diet-form.component';
 import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
 import { NgToastModule } from 'ng-angular-popup';
-import { EditFoodComponent } from './edit-food/edit-food.component';
 import { SharedModule } from '../shared/shared.module';
 import { CreateTrainerComponent } from './create-trainer/create-trainer.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -16,15 +15,16 @@ import { HttpLoaderFactory } from '../app.module';
 import { HttpClient } from '@angular/common/http';
 import { TrainerDiaryComponent } from './trainer-diary/trainer-diary.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModalComponent } from '../components/modal/modal.component';
 @NgModule({
   declarations: [
     DietDiaryComponent,
     FoodFormComponent,
     FoodListComponent,
     DietFormComponent,
-    EditFoodComponent,
     CreateTrainerComponent,
     TrainerDiaryComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,

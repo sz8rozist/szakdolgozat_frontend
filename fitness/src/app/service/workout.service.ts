@@ -4,6 +4,7 @@ import { ApiUrlService } from './api-url.service';
 import { WorkoutRequest } from '../model/WorkoutRequest';
 import { Workout } from '../model/Workout';
 import { WorkoutUpdateRequest } from '../model/WorkoutUpdateRequest';
+import { CalendarEvent } from '../model/CalendarEvent';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,8 @@ export class WorkoutService {
 
   countTrainerWorkoutPlan(trainerId: number){
     return this.http.get<number>(`${this.apiUrlService.getApiUrl()}/workout/trainerWorkoutPlanCount/${trainerId}`);
+  }
+  getAllWorkoutByGuest(guestId: number){
+    return this.http.get<CalendarEvent[]>(`${this.apiUrlService.getApiUrl()}/workout/getAllWorkoutByGuestId/${guestId}`);
   }
 }

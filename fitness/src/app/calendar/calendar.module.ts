@@ -14,7 +14,6 @@ import { ModalComponent } from '../components/modal/modal.component';
 @NgModule({
   declarations: [
     CalendarComponent,
-    ModalComponent
   ],
   imports: [
     CommonModule,

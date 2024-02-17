@@ -11,6 +11,7 @@ import { MealFrequency } from '../model/MealFrequency';
 import { DietRecommendation } from '../model/DietRecommendation';
 import { ExerciseRegularity } from '../model/ExerciseRegularity';
 import { RecentlyUsedExercise } from '../model/RecentlyUsedExercise';
+import { CalendarEvent } from '../model/CalendarEvent';
 @Injectable({
   providedIn: 'root',
 })
@@ -96,5 +97,8 @@ export class DietService {
   }
   getRecentlyUsedExercise(userId: number){
     return this.http.get<RecentlyUsedExercise[]>(`${this.apiUrlService.getApiUrl()}/workout/recentlyUsedExercise/${userId}`);
+  }
+  getAllDietByGuest(guestId: number){
+    return this.http.get<CalendarEvent[]>(`${this.apiUrlService.getApiUrl()}/diet/getAllDietByGuestId/${guestId}`);
   }
 }
