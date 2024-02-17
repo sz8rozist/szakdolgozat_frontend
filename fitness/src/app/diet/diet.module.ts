@@ -15,7 +15,6 @@ import { HttpLoaderFactory } from '../app.module';
 import { HttpClient } from '@angular/common/http';
 import { TrainerDiaryComponent } from './trainer-diary/trainer-diary.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ModalComponent } from '../components/modal/modal.component';
 @NgModule({
   declarations: [
     DietDiaryComponent,
@@ -24,7 +23,6 @@ import { ModalComponent } from '../components/modal/modal.component';
     DietFormComponent,
     CreateTrainerComponent,
     TrainerDiaryComponent,
-    ModalComponent
   ],
   imports: [
     CommonModule,

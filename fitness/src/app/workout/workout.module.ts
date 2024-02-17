@@ -25,7 +25,7 @@ import { TrainerTrainingLogComponent } from './trainer-training-log/trainer-trai
     AddExerciseComponent,
     EditWorkoutComponent,
     CreateTrainerComponent,
-    TrainerTrainingLogComponent
+    TrainerTrainingLogComponent,
   ],
   imports: [
     CommonModule,

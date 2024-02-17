@@ -37,7 +37,7 @@ export function HttpLoaderFactory(http:HttpClient){
     NotFoundComponent,
     FooterComponent,
     ChatWindowComponent,
-    OffcanvasComponent
+    OffcanvasComponent,
   ],
   imports: [
     BrowserModule,

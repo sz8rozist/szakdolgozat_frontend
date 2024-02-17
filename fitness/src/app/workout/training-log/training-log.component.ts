@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { NgToastService } from 'ng-angular-popup';
+import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { Exercise } from 'src/app/model/Exercise';
 import { Trainer } from 'src/app/model/Trainer';
 import { User } from 'src/app/model/User';
 import { Workout } from 'src/app/model/Workout';
+import { WorkoutUpdateRequest } from 'src/app/model/WorkoutUpdateRequest';
 import { SocketWorkoutDto } from 'src/app/model/dto/SocketWorkoutDto';
 import { AuthService } from 'src/app/service/auth.service';
 import { ExerciseService } from 'src/app/service/exercise.service';
@@ -25,6 +28,10 @@ export class TrainingLogComponent {
   giveByTrainer: boolean = false;
   faTrash = faTrash;
   faEdit = faEdit;
+  workoutId?: number;
+  workoutForm: FormGroup;
+  exercisess: Exercise[] = [];
+  @ViewChild('modalRef') modalRef!: ModalComponent;
   constructor(
     private authService: AuthService,
     private workoutService: WorkoutService,
@@ -33,14 +40,31 @@ export class TrainingLogComponent {
     private guestService: GuestService,
     private notificationService: NotificationService,
     private route: ActivatedRoute
-  ) {}
+  ) {this.workoutForm = new FormGroup({
+    exerciseId: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required]),
+    sets: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    repetitions: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
+  });}
 
   ngOnInit(){
     const date = this.route.snapshot.paramMap.get('date');
     if(date){
+      this.date = date;
       this.loadWorkout(date);
       this.giveByTrainer = this.workouts.every((workout) => !workout.trainer);
     }
+    this.exerciseService
+      .getAllExerciseWithoutPagination()
+      .subscribe((response: Exercise[]) => {
+        this.exercises = [...response];
+      });
   }
 
   loadWorkout(date: string) {
@@ -57,7 +81,6 @@ export class TrainingLogComponent {
               type: 'warning',
             });
           }
-          console.log(resp);
           this.workouts = [...resp];
         });
       }
@@ -140,5 +163,56 @@ export class TrainingLogComponent {
         console.log(error.mesage);
       }
     );
+  }
+
+  openEditModal(id: Workout) {
+    this.workoutId = id.workoutId;
+    this.modalRef.openModal();
+   this.loadWorkoutToEdit(id.workoutId as number);
+  }
+
+  
+  loadWorkoutToEdit(workoutId: number) {
+    if (workoutId) {
+      this.workoutService
+        .getWorkoutByID(Number(workoutId))
+        .subscribe((response: Workout) => {
+          if (response) {
+            this.patchForm(response);
+          }
+        });
+    }
+  }
+
+  patchForm(workout: Workout) {
+    this.workoutForm.patchValue({
+      exerciseId: workout.exercise.id,
+      date: workout.date,
+      sets: workout.sets,
+      repetitions: workout.repetitions,
+    });
+  }
+
+  saveGyakorlat() {
+    if (this.workoutForm.valid) {
+      const data: WorkoutUpdateRequest = {
+        exerciseId: this.workoutForm.get('exerciseId')?.value,
+        date: this.workoutForm.get('date')?.value,
+        sets: this.workoutForm.get('sets')?.value,
+        repetitions: this.workoutForm.get('repetitions')?.value,
+      };
+      this.workoutService
+        .saveExerciseInWorkout(data, Number(this.workoutId))
+        .subscribe(() => {
+          this.toast.success({
+            detail: 'Sikeres',
+            summary: 'Sikeres frissítés!',
+            duration: 2000,
+            type: 'success',
+          });
+         this.modalRef.closeModal();
+         this.loadWorkout(this.date);
+        });
+    }
   }
 }

@@ -50,7 +50,7 @@
                     <button
                       *ngIf="!workout.trainer"
                       class="btn btn-primary btn-sm me-2"
-                      routerLink="/workout/edit/{{ workout.workoutId }}"
+                      (click)="openEditModal(workout)"
                     >
                       <fa-icon [icon]="faEdit"></fa-icon>
                     </button>
@@ -86,3 +86,102 @@
     </div>
   </section>
 </main>
+
+
+
+<app-modal #modalRef>
+  <div header>
+    <!-- Modal header content -->
+    <h4 class="modal-title" id="modal-basic-title">Gyakorlat szerkesztése</h4>
+  </div>
+  <div body>
+    <form class="row g-3" [formGroup]="workoutForm">
+      <div class="col-md-12">
+        <div class="form-floating mb-3">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+            formControlName="exerciseId"
+          >
+            <option *ngFor="let exercise of exercises" [value]="exercise.id">
+              {{ exercise.name }}
+            </option>
+          </select>
+          <label for="floatingSelect">{{'gyakorlat'|translate}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" style="margin-top: 0;">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="sets"
+            id="floatingEmail"
+            placeholder="Your Email"
+            
+          />
+          <label for="floatingEmail">{{'sorozatszam'|translate}}</label>
+        </div>
+        <span
+          class="text-danger"
+          *ngIf="this.workoutForm.get('sets')?.errors?.['pattern'] && this.workoutForm.get('sets')?.touched"
+        >
+          A sorozatszám csak szám lehet!
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="this.workoutForm.get('sets')?.errors?.['required'] && this.workoutForm.get('sets')?.touched"
+        >
+          A sorozatszám kitöltése kötelező!
+        </span>
+      </div>
+      <div class="col-md-6" style="margin-top: 0;">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="repetitions"
+            id="floatingPassword"
+            placeholder="Password"
+            
+          />
+          <label for="floatingPassword">{{'ismetlesszam'|translate}}</label>
+        </div>
+        <span
+          class="text-danger"
+          *ngIf="this.workoutForm.get('repetitions')?.errors?.['pattern'] && this.workoutForm.get('repetitions')?.touched"
+        >
+          Az ismétlésszám csak szám lehet!
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="this.workoutForm.get('repetitions')?.errors?.['required'] && this.workoutForm.get('repetitions')?.touched"
+        >
+          Az ismétlésszám kitöltése kötelező!
+        </span>
+      </div>
+      <div class="col-12">
+        <div class="form-floating">
+          <input
+            type="date"
+            class="form-control"
+            formControlName="date"
+            id="floatingPassword"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">{{'datum'|translate}}</label>
+        </div>
+        <span
+          class="text-danger"
+          *ngIf="this.workoutForm.get('date')?.errors?.['required'] && this.workoutForm.get('date')?.touched"
+        >
+          A dátum kitöltése kötelező!
+        </span>
+      </div>
+    </form>
+  </div>
+  <div saveButton>
+    <button class="btn btn-primary" (click)="saveGyakorlat()" >Mentés</button>
+  </div>
+</app-modal>
