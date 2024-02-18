@@ -10,40 +10,25 @@
   
     <nav *ngIf="authService.isLoggedIn$ | async" class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-  
+        <div ngbDropdown class="d-inline-block pe-3" style="cursor: pointer;">
+          <span id="dropdownBasic1" ngbDropdownToggle >
+            {{"nyelv" | translate}}
+          </span>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button (click)="changeLang('en')" ngbDropdownItem>    <img width="18px"  style="cursor: pointer" class="me-1" src="../../../assets/flags/united-kingdom.png" alt="">
+              {{"angol" | translate}}</button>
+            <button (click)="changeLang('hu')" ngbDropdownItem>    <img width="18px"  style="cursor: pointer" class="me-1" src="../../../assets/flags/hungary.png" alt="">
+              {{"magyar" | translate}}</button>
+          </div>
+        </div>
         <li class="nav-item dropdown">
-  
           <span class="nav-link nav-icon" style="cursor: pointer;" (click)="openNotificationOffCanvas()" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">{{notifications.length}}</span>
           </span><!-- End Notification Icon -->
-          <app-offcanvas #canvasRef>
-            <div canvasHeader>
-              <!-- Modal header content -->
-              <h4 class="offcanvas-title" id="offcanvas-basic-title">{{"ertesites"|translate}}</h4>
-            </div>
-            <div canvasBody>
-              <!-- Modal body content -->
-              <div class="text-center" *ngIf="notifications.length == 0">{{"nincs_uj_ertesites" | translate}}</div>
-              <ul class="notifications">
-                <li class="notification-item" *ngFor="let n of notifications">
-                  <i class="bi bi-info-circle text-primary"></i>
-                  <div>
-                    <p>{{n.message}}</p>
-                    <p>{{n.date}}</p>
-                  </div>
-                </li>
-                <li class="text-center">
-                  <a href="#" (click)="closeNotificationOffCanvas()" routerLink="/notification"><span id="show_all_notification_href" class="badge rounded-pill bg-primary p-3 ms-2 mt-3">{{'mutasd_mindet' |translate}}</span></a>
-                </li>
-
-              </ul>
-            </div>
-          </app-offcanvas>
-        </li><!-- End Notification Nav -->  
-        <li class="nav-item dropdown pe-3" (click)="toggleProfileDropdownFunc()">
-  
-          <span class="nav-link nav-profile d-flex align-items-center pe-0" style="cursor: pointer;" data-bs-toggle="dropdown">
+        </li><!-- End Notification Nav --> 
+        <div ngbDropdown class="d-inline-block pe-3">
+          <span class="nav-link nav-profile d-flex align-items-center pe-0" id="dropdownBasic2" style="cursor: pointer;" ngbDropdownToggle>
             <img
               *ngIf="profileImageSrc; else defaultImage"
               [src]="profileImageSrc"
@@ -58,39 +43,54 @@
                 class="rounded-circle"
               />
             </ng-template>
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{auth?.username}}</span>
-          </span><!-- End Profile Iamge Icon -->
-  
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile" [ngClass]="{'show': toggleProfileDropdown}" [ngStyle]="{'position': toggleProfileDropdown ? 'absolute' : '', 'inset': toggleProfileDropdown ? '0px 0px auto auto' : '', 'margin': toggleProfileDropdown? '0px' : '', 'transform': toggleProfileDropdown ? 'translate(-25px, 35px)' : ''}">
-            <li class="dropdown-header">
-              
-              <h6>{{ auth?.guest == null ? (auth?.trainer?.first_name + ' ' + auth?.trainer?.last_name) : (auth?.guest?.first_name + ' ' + auth?.guest?.last_name) }}</h6>              <span>{{auth?.guest == null ? "Edző" : "Vendég"}}</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li>
-              <a class="dropdown-item d-flex align-items-center" routerLink="profile">
-                <i class="bi bi-person"></i>
-                <span>{{'fiokom' | translate}}</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-  
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#" (click)="onLogout()">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>{{'kijelentkezes' | translate}}</span>
-              </a>
-            </li>
-  
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-  
+            <span class="d-none d-md-block ps-2">{{auth?.username}}</span>
+          </span>
+          <ul ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+              <li ngbDropdownItem class="dropdown-header p-0">
+                <h6>{{ auth?.guest == null ? (auth?.trainer?.first_name + ' ' + auth?.trainer?.last_name) : (auth?.guest?.first_name + ' ' + auth?.guest?.last_name) }}</h6>              <span>{{auth?.guest == null ? "Edző" : "Vendég"}}</span>
+              </li>
+
+              <li ngbDropdownItem class="p-0">
+                <a class="dropdown-item d-flex align-items-center" routerLink="profile">
+                  <i class="bi bi-person"></i>
+                  <span>{{'fiokom' | translate}}</span>
+                </a>
+              </li>
+
+              <li ngbDropdownItem class="p-0">
+                <a class="dropdown-item d-flex align-items-center" href="#" (click)="onLogout()">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>{{'kijelentkezes' | translate}}</span>
+                </a>
+              </li>
+    
+            </ul>
+        </div>  
       </ul>
     </nav><!-- End Icons Navigation -->
   
   </header><!-- End Header -->
+
+  <app-offcanvas #canvasRef>
+    <div canvasHeader>
+      <!-- Modal header content -->
+      <h4 class="offcanvas-title" id="offcanvas-basic-title">{{"ertesites"|translate}}</h4>
+    </div>
+    <div canvasBody>
+      <!-- Modal body content -->
+      <div class="text-center" *ngIf="notifications.length == 0">{{"nincs_uj_ertesites" | translate}}</div>
+      <ul class="notifications">
+        <li class="notification-item" *ngFor="let n of notifications">
+          <i class="bi bi-info-circle text-primary"></i>
+          <div>
+            <p>{{n.message}}</p>
+            <p>{{n.date}}</p>
+          </div>
+        </li>
+        <li class="text-center">
+          <a href="#" (click)="closeNotificationOffCanvas()" routerLink="/notification"><span id="show_all_notification_href" class="badge rounded-pill bg-primary p-3 ms-2 mt-3">{{'mutasd_mindet' |translate}}</span></a>
+        </li>
+
+      </ul>
+    </div>
+  </app-offcanvas>

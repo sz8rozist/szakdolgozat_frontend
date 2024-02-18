@@ -15,8 +15,7 @@ export class SidebarComponent {
   auth?: User;
   isEtrendVisible = false;
   isEdzesVisible = false;
-  constructor(private authService: AuthService,
-    private translateService: TranslateService){
+  constructor(private authService: AuthService){
       
     }
 
@@ -36,12 +35,6 @@ export class SidebarComponent {
 
   toggleEdzesMenuVisible(){
     this.isEdzesVisible = !this.isEdzesVisible;
-  }
-
-  changeLang(lang: string){
-    const selectedLanguage = lang;
-    localStorage.setItem('lang', selectedLanguage);
-    this.translateService.use(selectedLanguage);
   }
 
 }

@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { User } from '../../model/User';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 import { NotificationService } from 'src/app/service/notification.service';
 import { Notification } from 'src/app/model/Notification';
 import { OffcanvasComponent } from '../offcanvas/offcanvas.component';
+import { TranslateService } from '@ngx-translate/core';
+import { faBackwardStep } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -15,17 +16,17 @@ import { OffcanvasComponent } from '../offcanvas/offcanvas.component';
 export class NavbarComponent {
   @Output() logoutEvent = new EventEmitter<void>();
   isSpecialRoute: boolean = false;
-  toggleProfileDropdown: boolean = false;
   auth?: User;
   notifications: Notification[] = [];
   profileImageSrc: string | null = null;
+  faBack = faBackwardStep
   @ViewChild('canvasRef') canvasRef!: OffcanvasComponent;
 
   constructor(
-    private router: Router,
     public authService: AuthService,
     private userService: UserService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -59,10 +60,7 @@ export class NavbarComponent {
     this.canvasRef.closeCanvas();
   }
 
-  toggleProfileDropdownFunc() {
-    this.toggleProfileDropdown = !this.toggleProfileDropdown;
-  }
-
+  
   onLogout() {
     this.logoutEvent.emit();
   }
@@ -89,5 +87,11 @@ export class NavbarComponent {
       });
       this.getProfilePicture(response.profilePictureName);
     });
+  }
+
+  changeLang(lang: string){
+    const selectedLanguage = lang;
+    localStorage.setItem('lang', selectedLanguage);
+    this.translateService.use(selectedLanguage);
   }
 }
