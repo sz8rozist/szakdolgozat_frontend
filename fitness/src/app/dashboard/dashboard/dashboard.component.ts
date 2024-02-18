@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import {
   faDrumstickBite,
+  faFemale,
   faFish,
   faHamburger,
+  faMale,
   faPersonWalking,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +13,7 @@ import { DietSummary } from 'src/app/model/DietSummary';
 import { ExerciseRegularity } from 'src/app/model/ExerciseRegularity';
 import { Guest } from 'src/app/model/Guest';
 import { MealFrequency } from 'src/app/model/MealFrequency';
+import { NotificationModel } from 'src/app/model/NotificationModel';
 import { RecentlyUsedExercise } from 'src/app/model/RecentlyUsedExercise';
 import { User } from 'src/app/model/User';
 import { AuthService } from 'src/app/service/auth.service';
@@ -32,6 +35,9 @@ export class DashboardComponent {
   drumstickBite = faDrumstickBite;
   faFish = faFish;
   faGuest = faUser;
+  faFemale = faFemale;
+  faMale = faMale;
+  endDate: Date = new Date();
   faWorkout = faPersonWalking;
   isTrainer = this.authService.isTrainer();
   mealFreqency: MealFrequency[] = [];
@@ -42,6 +48,7 @@ export class DashboardComponent {
   trainerGuest: Guest[] = [];
   trainerDietRecommendationCount: number = 0;
   trainerWorkoutPlanCount: number = 0;
+  guestNotifications: NotificationModel[] = [];
   constructor(
     private authService: AuthService,
     private dietService: DietService,
@@ -51,7 +58,6 @@ export class DashboardComponent {
 
   ngOnInit() {
     const token = this.authService.getDecodedToken();
-
     if (!this.isTrainer) {
       this.createMacronutrienseStatistics(token);
       this.createCaloriesStatistics(token);
@@ -70,6 +76,23 @@ export class DashboardComponent {
                   this.trainerDietRecommendationCount +=
                     item.dietRecommedations.length;
                 }
+                if (item.notifications) {
+                  // Rendezés a date tulajdonság alapján csökkenő sorrendben
+                  item.notifications.sort((a: any, b: any) => {
+                    const dateA = new Date(a.date).getTime();
+                    const dateB = new Date(b.date).getTime();
+                    return dateB - dateA;
+                  });
+                  // Csak az utolsó értesítést hagyjuk benne
+                  const firstNotificationIndex = item.notifications.findIndex(
+                    (item, index) => index === 0
+                  );
+                  if (item.notifications[firstNotificationIndex] != undefined) {
+                    this.guestNotifications.push(
+                      item.notifications[firstNotificationIndex]
+                    );
+                  }
+                }
               });
               this.trainerGuest = [...response];
             }
@@ -81,6 +104,20 @@ export class DashboardComponent {
           });
       });
     }
+  }
+
+  // Függvény a két dátum közötti napok és hetek számolására
+  calculateDaysAndWeeksBetweenDates(
+    date1: any,
+    date2: Date
+  ): { days: number; weeks: number } {
+    const oneDayMilliseconds = 24 * 60 * 60 * 1000; // Egy nap milliszekundumban
+    var date1Date = new Date(date1);
+    const timeDiff = Math.abs(date2.getTime() - date1Date.getTime());
+    const daysDiff = Math.floor(timeDiff / oneDayMilliseconds);
+    const weeksDiff = Math.floor(daysDiff / 7);
+
+    return { days: daysDiff, weeks: weeksDiff };
   }
 
   createMealFrequency(token: any) {

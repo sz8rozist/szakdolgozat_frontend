@@ -101,15 +101,11 @@ export class CalendarComponent {
   }
 
   handleEventClick(args: any) {
-    console.log(args.event);
-
     var currentDate = new Date(args.event.start);
-
     // Év, hónap és nap külön változókba mentése
     var year = currentDate.getFullYear();
     var month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Hónap 0-tól kezdődik, ezért +1, és két számjegyű formátumra alakítás
     var day = currentDate.getDate().toString().padStart(2, '0'); // Nap két számjegyű formátumra alakítás
-
     // Dátum összeállítása a kívánt formátumban
     var formattedDate = year + '-' + month + '-' + day;
     if (args.event._def.extendedProps.isTrainer) {
@@ -124,7 +120,6 @@ export class CalendarComponent {
             formattedDate
           )
           .subscribe((resp: DietResponse) => {
-            console.log(resp);
             this.diet = resp;
           });
         this.dietModalRef.openModal();
