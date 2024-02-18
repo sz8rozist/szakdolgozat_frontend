@@ -7,6 +7,7 @@ import { HttpLoaderFactory } from '../app.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     CalendarRoutingModule,
     NgbModule,
+    SharedModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

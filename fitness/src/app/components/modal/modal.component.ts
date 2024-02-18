@@ -12,6 +12,7 @@ import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalComponent {
   @ViewChild('content') modalElement = ElementRef;
+  isCalendar: boolean = false;
   constructor(private modalService: NgbModal) {
  
   }
@@ -20,6 +21,7 @@ export class ModalComponent {
     const modalRef = this.modalService.open(this.modalElement, {
       backdrop: 'static',
       keyboard: false,
+      size: 'lg'
     });
 
     modalRef.result.then(
@@ -34,5 +36,9 @@ export class ModalComponent {
 
   closeModal() {
     this.modalService.dismissAll();
+  }
+
+  setIsCalendar(value: boolean){
+    this.isCalendar = value;
   }
 }

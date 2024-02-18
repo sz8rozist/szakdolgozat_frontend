@@ -1,3 +1,3 @@
-.fc-daygrid-day-events{
-    cursor: pointer !important;
+::ng-deep .fc-event{
+    cursor: pointer;
 }

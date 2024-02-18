@@ -1,4 +1,3 @@
-import { Diet } from "./Diet";
 import { DietDto } from "./dto/DietDto";
 
 export interface DietResponse{

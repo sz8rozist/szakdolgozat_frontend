@@ -44,4 +44,8 @@ export class WorkoutService {
   getAllWorkoutByGuest(guestId: number){
     return this.http.get<CalendarEvent[]>(`${this.apiUrlService.getApiUrl()}/workout/getAllWorkoutByGuestId/${guestId}`);
   }
+
+  getAllTrainerGuestWorkout(trainerId: number){
+    return this.http.get<CalendarEvent[]>(`${this.apiUrlService.getApiUrl()}/workout/getAllTrainerGuestWorkout/${trainerId}`);
+  }
 }

@@ -14,3 +14,81 @@
     <full-calendar [options]="calendarOptions"></full-calendar>
   </section>
 </main>
+<app-modal #dietModalRef>
+  <div header>
+    <!-- Modal header content -->
+    <h4 class="modal-title" id="modal-basic-title">{{dietModalTitle}}</h4>
+  </div>
+  <div body>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ "etel_nev" | translate }}</th>
+          <th>{{ "mennyiseg" | translate }}</th>
+          <th>{{ "tipus" | translate }}</th>
+          <th class="text-end">{{ "szenhidrat" | translate }} (g)</th>
+          <th class="text-end">{{ "feherje" | translate }} (g)</th>
+          <th class="text-end">{{ "zsir" | translate }} (g)</th>
+          <th class="text-end">{{ "kaloria" | translate }} (kCal)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let food of diet?.diet let i = index;">
+          <td><strong>{{i | increment}}</strong></td>
+          <td>{{ food.name }}</td>
+          <td>{{ food.quantity }}</td>
+          <td>{{ translateType(food.foodType) }}</td>
+          <td class="text-end">{{ (food.carbonhydrate / 100) * food.quantity }}</td>
+          <td class="text-end">{{ (food.protein / 100) * food.quantity }}</td>
+          <td class="text-end">{{ (food.fat / 100) * food.quantity }}</td>
+          <td class="text-end">{{ (food.calorie / 100) * food.quantity }}</td>
+        </tr>
+        <tr>
+          <th colspan="4">{{ "osszesen" | translate }}:</th>
+          <td class="text-end"><strong>{{ diet?.carbonhydrateSum }}</strong></td>
+          <td class="text-end"><strong>{{ diet?.proteinSum }}</strong></td>
+          <td class="text-end"><strong>{{ diet?.fatSum }}</strong></td>
+          <td class="text-end"><strong>{{ diet?.calorieSum }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div saveButton>
+    <button class="btn btn-primary" (click)="this.dietModalRef.closeModal()">Bezár</button>
+  </div>
+</app-modal>
+
+<app-modal #workoutModalRef>
+  <div header>
+    <!-- Modal header content -->
+    <h4 class="modal-title" id="modal-basic-title">{{workoutModalTitle}}</h4>
+  </div>
+  <div body>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ "gyakorlat" | translate }}</th>
+          <th>{{ "testresz" | translate }}</th>
+          <th>{{ "sorozatszam" | translate }}</th>
+          <th>{{ "ismetlesszam" | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let workout of workout let i = index;">
+          <td><strong>{{i |increment}}</strong></td>
+          <td>{{ workout.exercise.name }}</td>
+          <td>
+            {{ targetedBodyPart(workout.exercise.targetedBodyPart) }}
+          </td>
+          <td>{{ workout.sets }}</td>
+          <td>{{ workout.repetitions }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div saveButton>
+    <button class="btn btn-primary" (click)="this.workoutModalRef.closeModal()">Bezár</button>
+  </div>
+</app-modal>
