@@ -17,21 +17,23 @@
     <div class="row">
       <div class="col-lg-8">
         <div *ngIf="diet && diet.diet.length == 0" class="alert alert-warning">
-          Ehhez a naphoz nem található étrend.
+         {{"nem_talalhato_etrend" | translate}}
         </div>
         <div *ngIf="diet && diet.diet.length > 0" class="card">
           <div class="card-header">
-            <div class="col-lg-6">
-              {{ "etelek" | translate }}
-            </div>
-            <div class="col-lg-6">
-              <button
-                *ngIf="diet && diet.diet.length > 0 && giveByTrainer"
-                class="btn btn-danger btn-sm"
-                (click)="deleteDiet()"
-              >
-                <fa-icon [icon]="faTrash"></fa-icon>
-              </button>
+            <div class="row">
+              <div class="col-lg-6">
+                {{ "etelek" | translate }}
+              </div>
+              <div class="col-lg-6 text-end">
+                <button
+                  *ngIf="diet && diet.diet.length > 0"
+                  class="btn btn-danger btn-sm"
+                  (click)="deleteDiet()"
+                >
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+              </div>
             </div>
           </div>
           <div class="card-body">
@@ -53,10 +55,18 @@
                   <td>{{ food.name }}</td>
                   <td>{{ food.quantity }}</td>
                   <td>{{ translateType(food.foodType) }}</td>
-                  <td class="text-end">{{ (food.carbonhydrate / 100) * food.quantity }}</td>
-                  <td class="text-end">{{ (food.protein / 100) * food.quantity }}</td>
-                  <td class="text-end">{{ (food.fat / 100) * food.quantity }}</td>
-                  <td class="text-end">{{ (food.calorie / 100) * food.quantity }}</td>
+                  <td class="text-end">
+                    {{ (food.carbonhydrate / 100) * food.quantity }}
+                  </td>
+                  <td class="text-end">
+                    {{ (food.protein / 100) * food.quantity }}
+                  </td>
+                  <td class="text-end">
+                    {{ (food.fat / 100) * food.quantity }}
+                  </td>
+                  <td class="text-end">
+                    {{ (food.calorie / 100) * food.quantity }}
+                  </td>
                   <td>
                     <button
                       *ngIf="!food.trainerId && !food.eated"
@@ -68,17 +78,9 @@
                     <button
                       class="btn btn-success btn-sm me-2"
                       (click)="sendNotificationToTrainer(food)"
-                      *ngIf="!food.eated"
+                      [disabled]="food.eated"
                     >
-                      {{ "elfogyasztas" | translate }}
-                    </button>
-                    <button
-                      class="btn btn-success btn-sm me-2"
-                      *ngIf="food.eated"
-                      disabled
-                    >
-                      <fa-icon [icon]="faCheck" *ngIf="food.eated"></fa-icon>
-                      {{ "elfogyasztva" | translate }}
+                      <fa-icon [icon]="faUtensil"></fa-icon>
                     </button>
                     <button
                       *ngIf="!food.trainerId && !food.eated"
@@ -127,7 +129,9 @@
 <app-modal #modalRef>
   <div header>
     <!-- Modal header content -->
-    <h4 class="modal-title" id="modal-basic-title">Étkezés szerkesztése</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ "etkezes_szerkesztes" | translate }}
+    </h4>
   </div>
   <div body>
     <section class="section">
@@ -168,13 +172,13 @@
                 class="text-danger"
                 *ngIf="this.foodForm.get('calorie')?.errors?.['pattern'] && this.foodForm.get('calorie')?.touched"
               >
-                A kalória csak szám lehet!
+                {{ "csak_szam" | translate }}
               </span>
               <span
                 class="text-danger"
                 *ngIf="this.foodForm.get('calorie')?.errors?.['required'] && this.foodForm.get('calorie')?.touched"
               >
-                A kalória kitöltése kötelező!
+                {{ "kotelezo_mezo" | translate }}
               </span>
             </div>
             <div class="col-md-6" style="margin-top: 0">
@@ -195,13 +199,13 @@
                 class="text-danger"
                 *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['pattern'] && this.foodForm.get('carbonhydrate')?.touched"
               >
-                A szénhidrát csak szám lehet!
+                {{ "csak_szam" | translate }}
               </span>
               <span
                 class="text-danger"
                 *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['required'] && this.foodForm.get('carbonhydrate')?.touched"
               >
-                A szénhidrát kitöltése kötelező!
+                {{ "kotelezo_mezo" | translate }}
               </span>
             </div>
             <div class="col-12">
@@ -222,13 +226,13 @@
                 class="text-danger"
                 *ngIf="this.foodForm.get('protein')?.errors?.['pattern'] && this.foodForm.get('protein')?.touched"
               >
-                A fehérje csak szám lehet!
+                {{ "csak_szam" | translate }}
               </span>
               <span
                 class="text-danger"
                 *ngIf="this.foodForm.get('protein')?.errors?.['required'] && this.foodForm.get('protein')?.touched"
               >
-                A fehérje kitöltése kötelező!
+                {{ "kotelezo_mezo" | translate }}
               </span>
             </div>
             <div class="col-12">
@@ -249,17 +253,17 @@
                 class="text-danger"
                 *ngIf="this.foodForm.get('fat')?.errors?.['pattern'] && this.foodForm.get('fat')?.touched"
               >
-                A zsír csak szám lehet!
+                {{ "csak_szam" | translate }}
               </span>
               <span
                 class="text-danger"
                 *ngIf="this.foodForm.get('fat')?.errors?.['required'] && this.foodForm.get('fat')?.touched"
               >
-                A zsír kitöltése kötelező!
+                {{ "kotelezo_mezo" | translate }}
               </span>
             </div>
           </form>
-    
+
           <form class="row g-3 mt-1" [formGroup]="dietForm">
             <div class="col-12">
               <div class="form-floating">
@@ -270,19 +274,21 @@
                   id="floatingPassword"
                   placeholder="Password"
                 />
-                <label for="floatingPassword">{{ "mennyiseg" | translate }}</label>
+                <label for="floatingPassword">{{
+                  "mennyiseg" | translate
+                }}</label>
               </div>
               <span
                 class="text-danger"
                 *ngIf="this.dietForm.get('quantity')?.errors?.['pattern'] && this.dietForm.get('quantity')?.touched"
               >
-                A mennyiség csak szám lehet!
+                {{ "csak_szam" | translate }}
               </span>
               <span
                 class="text-danger"
                 *ngIf="this.dietForm.get('quantity')?.errors?.['required'] && this.dietForm.get('quantity')?.touched"
               >
-                A mennyiség kitöltése kötelező!
+                {{ "kotelezo_mezo" | translate }}
               </span>
             </div>
             <div class="col-12">
@@ -300,7 +306,7 @@
                 class="text-danger"
                 *ngIf="this.dietForm.get('date')?.errors?.['required'] && this.dietForm.get('date')?.touched"
               >
-                A dátum kitöltése kötelező!
+                {{ "kotelezo_mezo" | translate }}
               </span>
             </div>
             <div class="col-12">
@@ -322,16 +328,21 @@
                 class="text-danger"
                 *ngIf="this.dietForm.get('type')?.errors?.['required'] && this.dietForm.get('type')?.touched"
               >
-                A típus kitöltése kötelező!
+                {{ "kotelezo_mezo" | translate }}
               </span>
             </div>
           </form>
         </div>
       </div>
     </section>
-    
   </div>
   <div saveButton>
-    <button class="btn btn-primary" (click)="saveEtkezes()" [disabled]="this.foodForm.invalid || this.dietForm.invalid">Mentés</button>
+    <button
+      class="btn btn-primary"
+      (click)="saveEtkezes()"
+      [disabled]="this.foodForm.invalid || this.dietForm.invalid"
+    >
+      {{ "mentes" | translate }}
+    </button>
   </div>
 </app-modal>

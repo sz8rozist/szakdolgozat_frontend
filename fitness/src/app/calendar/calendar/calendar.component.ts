@@ -10,6 +10,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 import interactionPlugin from '@fullcalendar/interaction';
 import huLocale from '@fullcalendar/core/locales/hu';
+import enLocale from '@fullcalendar/core/locales/en-gb'
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { AuthService } from 'src/app/service/auth.service';
@@ -49,7 +50,7 @@ export class CalendarComponent {
     private authService: AuthService,
     private dietService: DietService,
     private workoutService: WorkoutService,
-    private router: Router
+    private router: Router,
   ) {}
 
   async ngOnInit() {
@@ -100,6 +101,7 @@ export class CalendarComponent {
     };
   }
 
+
   handleEventClick(args: any) {
     var currentDate = new Date(args.event.start);
     // Év, hónap és nap külön változókba mentése
@@ -111,7 +113,7 @@ export class CalendarComponent {
     if (args.event._def.extendedProps.isTrainer) {
       //Trainer event
       if (args.event._def.extendedProps.isDiet) {
-        this.dietModalTitle = 'Étrend - ' + formattedDate;
+        this.dietModalTitle = formattedDate;
         this.selectedGuestId = args.event._def.extendedProps.guestId;
         this.dietModalRef.setIsCalendar(true);
         this.dietService
@@ -124,7 +126,7 @@ export class CalendarComponent {
           });
         this.dietModalRef.openModal();
       } else {
-        this.workoutModalTitle = 'Edzés - ' + formattedDate;
+        this.workoutModalTitle = formattedDate;
         this.selectedGuestId = args.event._def.extendedProps.guestId;
         this.workoutModalRef.setIsCalendar(true);
         this.workoutService

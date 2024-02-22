@@ -51,4 +51,23 @@ export class ExerciseComponent {
       this.loadExercise();
     }
   }
+
+  targetedBodyPart(part: string) {
+    switch (part) {
+      case 'CHEST':
+        return 'Mell';
+      case 'SHOULDER':
+        return 'Váll';
+      case 'ABS':
+        return 'Has';
+      case 'BACK':
+        return 'Hát';
+      case 'ARMS':
+        return 'Kar';
+      case 'LEGS':
+        return 'Láb';
+      default:
+        return '';
+    }
+  }
 }

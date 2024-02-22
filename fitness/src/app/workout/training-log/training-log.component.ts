@@ -158,6 +158,12 @@ export class TrainingLogComponent {
       };
       this.notificationService.sendWorkoutNotificationToTrainer(data);
       //this.loadWorkout(this.date);
+    }else{
+      this.workoutService.setDone(workout.workoutId as number).subscribe(response =>{
+        if(response.status == 204){
+          console.log(response);
+        }
+      }, error => console.log(error))
     }
     const findedWorkout = this.workouts.find(
       (item: Workout) => item.workoutId == workout.workoutId

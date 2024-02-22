@@ -32,8 +32,8 @@
                     class="text-danger"
                     *ngIf="this.exerciseForm.get('name')?.errors?.['required'] && this.exerciseForm.get('name')?.touched"
                   >
-                    A név kitöltése kötelező!
-                  </span>
+                  {{"kotelezo_mezo" | translate}}
+                </span>
                 </div>
               </div>
               <div class="row mb-3">
@@ -51,8 +51,8 @@
                     class="text-danger"
                     *ngIf="this.exerciseForm.get('description')?.errors?.['required'] && this.exerciseForm.get('description')?.touched"
                   >
-                    A leírás kitöltése kötelező!
-                  </span>
+                  {{"kotelezo_mezo" | translate}}
+                </span>
                 </div>
               </div>
               <div class="row mb-3">
@@ -74,8 +74,8 @@
                     class="text-danger"
                     *ngIf="this.exerciseForm.get('targetedBodyPart')?.errors?.['required'] && this.exerciseForm.get('targetedBodyPart')?.touched"
                   >
-                    A célzott testrész kitöltése kötelező!
-                  </span>
+                  {{"kotelezo_mezo" | translate}}
+                </span>
                 </div>
               </div>
               <div class="text-center">

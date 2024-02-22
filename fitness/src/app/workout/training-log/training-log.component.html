@@ -92,7 +92,7 @@
 <app-modal #modalRef>
   <div header>
     <!-- Modal header content -->
-    <h4 class="modal-title" id="modal-basic-title">Gyakorlat szerkesztése</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{"gyakorlat_szerkesztese" |translate}} </h4>
   </div>
   <div body>
     <form class="row g-3" [formGroup]="workoutForm">
@@ -127,14 +127,12 @@
           class="text-danger"
           *ngIf="this.workoutForm.get('sets')?.errors?.['pattern'] && this.workoutForm.get('sets')?.touched"
         >
-          A sorozatszám csak szám lehet!
-        </span>
+        {{"csak_szam" |translate}}         </span>
         <span
           class="text-danger"
           *ngIf="this.workoutForm.get('sets')?.errors?.['required'] && this.workoutForm.get('sets')?.touched"
         >
-          A sorozatszám kitöltése kötelező!
-        </span>
+        {{"kotelezo_mezo" |translate}}         </span>
       </div>
       <div class="col-md-6" style="margin-top: 0;">
         <div class="form-floating">
@@ -152,14 +150,12 @@
           class="text-danger"
           *ngIf="this.workoutForm.get('repetitions')?.errors?.['pattern'] && this.workoutForm.get('repetitions')?.touched"
         >
-          Az ismétlésszám csak szám lehet!
-        </span>
+        {{"csak_szam" |translate}}         </span>
         <span
           class="text-danger"
           *ngIf="this.workoutForm.get('repetitions')?.errors?.['required'] && this.workoutForm.get('repetitions')?.touched"
         >
-          Az ismétlésszám kitöltése kötelező!
-        </span>
+        {{"kotelezo_mezo" |translate}}         </span>
       </div>
       <div class="col-12">
         <div class="form-floating">
@@ -176,12 +172,11 @@
           class="text-danger"
           *ngIf="this.workoutForm.get('date')?.errors?.['required'] && this.workoutForm.get('date')?.touched"
         >
-          A dátum kitöltése kötelező!
-        </span>
+        {{"kotelezo_mezo" |translate}}         </span>
       </div>
     </form>
   </div>
   <div saveButton>
-    <button class="btn btn-primary" (click)="saveGyakorlat()" >Mentés</button>
+    <button class="btn btn-primary" (click)="saveGyakorlat()" >{{"mentes" |translate}} </button>
   </div>
 </app-modal>

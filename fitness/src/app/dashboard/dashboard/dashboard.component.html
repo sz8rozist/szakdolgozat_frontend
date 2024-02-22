@@ -21,7 +21,7 @@
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card sales-card">
               <div class="card-body">
-                <h5 class="card-title">Kalória <span>| Mai nap</span></h5>
+                <h5 class="card-title">{{"kaloria" | translate}} <span>| {{"mai_nap" | translate}}</span></h5>
 
                 <div class="d-flex align-items-center">
                   <div
@@ -42,7 +42,7 @@
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
               <div class="card-body">
-                <h5 class="card-title">Kalória <span>| Ezen a héten</span></h5>
+                <h5 class="card-title">{{"kaloria" | translate}} <span>| {{"ezen_a_heten" | translate }} </span></h5>
 
                 <div class="d-flex align-items-center">
                   <div
@@ -64,7 +64,7 @@
             <div class="card info-card customers-card">
               <div class="card-body">
                 <h5 class="card-title">
-                  Kalória <span>| Ebben a hónapban</span>
+                  {{"kaloria" | translate}} <span>| {{"ebben_a_honapban" | translate}} </span>
                 </h5>
 
                 <div class="d-flex align-items-center">
@@ -83,15 +83,24 @@
           <!-- End Customers Card -->
 
           <!-- Reports -->
-          <div class="col-12" *ngIf="datasets.length > 0 && labels.length > 0">
+          <div class="col-12">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">
-                  {{ "makrotapanyagok" | translate }} <span>/Heti</span>
+                  {{ "makrotapanyagok" | translate }} <span>| {{"heti" |translate}}</span>
                 </h5>
 
                 <!-- Line Chart -->
-                <div id="reportsChart">
+                <div *ngIf="datasets.length == 0">
+                  <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-1"></i>
+                    {{ "nem_talalhato_adat" | translate }}
+                  </div>
+                </div>
+                <div
+                  id="reportsChart"
+                  *ngIf="datasets.length > 0 && labels.length > 0"
+                >
                   <app-bar-chart
                     *ngIf="labels.length > 0 && datasets.length > 0"
                     [datasets]="datasets"
@@ -105,13 +114,22 @@
           <!-- End Reports -->
 
           <!-- Top Selling -->
-          <div class="col-12" *ngIf="recentlyUsedExercise.length > 0">
+          <div class="col-12">
             <div class="card top-selling overflow-auto">
               <div class="card-body pb-0">
                 <h5 class="card-title">
-                  Leggyakrabban végzett gyakorlatok <span>| Éves</span>
+                  {{"leggyakrabban_vegzett_gyakorlatok" | translate}} <span>| {{"eves" | translate}}</span>
                 </h5>
-                <table class="table table-borderless">
+                <div *ngIf="recentlyUsedExercise.length == 0">
+                  <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-1"></i>
+                    {{ "nem_talalhato_adat" | translate }}
+                  </div>
+                </div>
+                <table
+                  class="table table-striped"
+                  *ngIf="recentlyUsedExercise.length > 0"
+                >
                   <thead>
                     <tr>
                       <th scope="col">#</th>
@@ -125,7 +143,7 @@
                       *ngFor="let item of recentlyUsedExercise; let i = index"
                     >
                       <th scope="row">
-                        {{ i + 1 }}
+                        {{ i | increment }}
                       </th>
                       <td>
                         {{ item.exercise }}
@@ -211,8 +229,16 @@
           <div class="card top-selling overflow-auto">
             <div class="card-body pb-0">
               <h5 class="card-title">Aktív vendégek <span>| Jelenleg</span></h5>
-              <div *ngIf="trainerGuest.length == 0">Nincsenek aktív vendégek.</div>
-              <table class="table table-striped" *ngIf="trainerGuest.length > 0">
+              <div *ngIf="trainerGuest.length == 0">
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle me-1"></i>
+                  {{ "nem_talalhato_adat" | translate }}
+                </div>
+              </div>
+              <table
+                class="table table-striped"
+                *ngIf="trainerGuest.length > 0"
+              >
                 <thead>
                   <tr>
                     <th>#</th>
@@ -224,37 +250,54 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of trainerGuest; let i = index">
-                    <th><strong>{{i | increment}}</strong></th>
-                    <td>{{item.first_name}}</td>
-                    <td>{{item.last_name}}</td>
-                    <td>{{item.email}}</td>
+                    <th>
+                      <strong>{{ i | increment }}</strong>
+                    </th>
+                    <td>{{ item.first_name }}</td>
+                    <td>{{ item.last_name }}</td>
+                    <td>{{ item.email }}</td>
                     <td>
-                      <ng-container *ngIf="item.gender !== undefined && item.gender; else female">
-                        <fa-icon [icon]="faMale" style="font-size: 22px; color: green"></fa-icon>
+                      <ng-container
+                        *ngIf="
+                          item.gender !== undefined && item.gender;
+                          else female
+                        "
+                      >
+                        <fa-icon
+                          [icon]="faMale"
+                          style="font-size: 22px; color: green"
+                        ></fa-icon>
                       </ng-container>
                       <ng-template #female>
-                        <fa-icon [icon]="faFemale" style="font-size: 22px; color: red"></fa-icon>
+                        <fa-icon
+                          [icon]="faFemale"
+                          style="font-size: 22px; color: red"
+                        ></fa-icon>
                       </ng-template>
                     </td>
                   </tr>
                 </tbody>
               </table>
-
             </div>
-
           </div>
-        </div><!-- End Top Selling -->
+        </div>
+        <!-- End Top Selling -->
       </div>
       <!-- End Left side columns for trainer -->
 
       <!-- Right side columns -->
-      <div class="col-lg-4" *ngIf="!isTrainer && exerciseRegularity.length > 0">
+      <div class="col-lg-4" *ngIf="!isTrainer">
         <!-- Recent Activity -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Edzés rendszeresség <span>| Éves</span></h5>
-
-            <div class="activity">
+            <h5 class="card-title">{{"edzes_rendszeresseg" | translate}} <span>| {{"eves" | translate}}</span></h5>
+            <div *ngIf="exerciseRegularity.length == 0">
+              <div class="alert alert-info">
+                <i class="bi bi-info-circle me-1"></i>
+                {{ "nem_talalhato_adat" | translate }}
+              </div>
+            </div>
+            <div class="activity" *ngIf="exerciseRegularity.length > 0">
               <div
                 class="activity-item d-flex"
                 *ngFor="let item of exerciseRegularity"
@@ -274,8 +317,13 @@
         <!-- Budget Report -->
         <div class="card">
           <div class="card-body pb-0">
-            <h5 class="card-title">Ételek gyakorisága <span>| Havi</span></h5>
-
+            <h5 class="card-title">{{"etelek_gyakorisaga" | translate}} <span>| {{"havi" | translate}}</span></h5>
+            <div *ngIf="pieLabels.length == 0 && pieDatasets.length == 0">
+              <div class="alert alert-info">
+                <i class="bi bi-info-circle me-1"></i>
+                {{ "nem_talalhato_adat" | translate }}
+              </div>
+            </div>
             <app-pie-chart
               *ngIf="pieLabels.length > 0 && pieDatasets.length > 0"
               [labels]="pieLabels"
@@ -291,32 +339,57 @@
         <!-- Recent Activity -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Legutóbbi értesítések <span>| Vendégek</span></h5>
+            <h5 class="card-title">
+              Legutóbbi értesítések <span>| Vendégek</span>
+            </h5>
             <div class="activity">
-              <div *ngIf="guestNotifications.length == 0">Nincsenek értesítések.</div>
+              <div *ngIf="guestNotifications.length == 0">
+                Nincsenek értesítések.
+              </div>
               <div *ngFor="let item of guestNotifications">
                 <div class="activity-item d-flex" *ngIf="item.type == 'DIET'">
-                  <ng-container *ngIf="calculateDaysAndWeeksBetweenDates(item.date, endDate).weeks > 0; else showDays">
-                    <div class="activite-label">{{ calculateDaysAndWeeksBetweenDates(item.date, endDate).weeks }} hete</div>
+                  <ng-container
+                    *ngIf="
+                      calculateDaysAndWeeksBetweenDates(item.date, endDate)
+                        .weeks > 0;
+                      else showDays
+                    "
+                  >
+                    <div class="activite-label">
+                      {{
+                        calculateDaysAndWeeksBetweenDates(item.date, endDate)
+                          .weeks
+                      }}
+                      hete
+                    </div>
                   </ng-container>
                   <ng-template #showDays>
-                    <div class="activite-label"> {{ calculateDaysAndWeeksBetweenDates(item.date, endDate).days }} napja</div>
+                    <div class="activite-label">
+                      {{
+                        calculateDaysAndWeeksBetweenDates(item.date, endDate)
+                          .days
+                      }}
+                      napja
+                    </div>
                   </ng-template>
                   <i
                     class="bi bi-circle-fill activity-badge text-success align-self-start"
                   ></i>
                   <div class="activity-content">
-                    {{item.message}}
+                    {{ item.message }}
                   </div>
                 </div>
                 <!-- End activity item-->
-                <div class="activity-item d-flex" *ngIf="item.type == 'EXERCISE'">
+                <div
+                  class="activity-item d-flex"
+                  *ngIf="item.type == 'EXERCISE'"
+                >
                   <div class="activite-label">56 min</div>
                   <i
                     class="bi bi-circle-fill activity-badge text-danger align-self-start"
                   ></i>
                   <div class="activity-content">
-                    {{item.message}}
+                    {{ item.message }}
                   </div>
                 </div>
                 <!-- End activity item-->

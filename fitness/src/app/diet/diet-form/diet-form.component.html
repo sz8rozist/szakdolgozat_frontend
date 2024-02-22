@@ -35,8 +35,8 @@
                   class="text-danger"
                   *ngIf="this.dietForm.get('date')?.errors?.['required'] && this.dietForm.get('date')?.touched"
                 >
-                  A dátum kitöltése kötelező!
-                </span>
+                {{"kotelezo_mezo" | translate}}
+              </span>
                 <label for="floatingInput">{{ "datum" | translate }}</label>
               </div>
             </div>
@@ -63,7 +63,7 @@
                       class="text-danger"
                       *ngIf="this.etelForm.get('etel')?.errors?.['required'] && this.etelForm.get('etel')?.touched"
                     >
-                      Az étel kiválasztása kötelező!
+                    {{"kotelezo_mezo" | translate}}
                     </span>
                     <label for="floatingSelect">{{ "etel" | translate }}</label>
                   </div>
@@ -87,7 +87,7 @@
                       class="text-danger"
                       *ngIf="this.etelForm.get('type')?.errors?.['required'] && this.etelForm.get('type')?.touched"
                     >
-                      Az étel típusának kiválasztása kötelező!
+                    {{"kotelezo_mezo" | translate}}
                     </span>
                     <label for="floatingSelect">{{
                       "etel_tipus" | translate
@@ -104,13 +104,13 @@
                       class="text-danger"
                       *ngIf="this.etelForm.get('quantity')?.errors?.['pattern'] && this.etelForm.get('quantity')?.touched"
                     >
-                      A mennyiség csak szám lehet!
+                    {{"csak_szam" | translate}}
                     </span>
                     <span
                       class="text-danger"
                       *ngIf="this.etelForm.get('quantity')?.errors?.['required'] && this.etelForm.get('quantity')?.touched"
                     >
-                      A mennyiség kitöltése kötelező!
+                    {{"kotelezo_mezo" | translate}}
                     </span>
                     <label for="floatingInput">{{
                       "mennyiseg" | translate

@@ -10,6 +10,7 @@ import { DietRecommedationComponent } from './diet-recommedation/diet-recommedat
 import { NewDietRecommedationComponent } from './new-diet-recommedation/new-diet-recommedation.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditDietRecommendationComponent } from './edit-diet-recommendation/edit-diet-recommendation.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -26,6 +27,7 @@ import { EditDietRecommendationComponent } from './edit-diet-recommendation/edit
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    SharedModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

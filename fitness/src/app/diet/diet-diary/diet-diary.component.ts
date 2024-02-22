@@ -12,7 +12,12 @@ import { GuestService } from 'src/app/service/guest.service';
 import { Trainer } from 'src/app/model/Trainer';
 import { NotificationService } from 'src/app/service/notification.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
-import { faCheck, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faEdit,
+  faTrash,
+  faUtensils,
+} from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -31,6 +36,7 @@ export class DietDiaryComponent {
   giveByTrainer: boolean = false;
   faTrash = faTrash;
   faEdit = faEdit;
+  faUtensil = faUtensils;
   faCheck = faCheck;
   dietId?: number;
   @ViewChild('modalRef') modalRef!: ModalComponent;
@@ -126,10 +132,6 @@ export class DietDiaryComponent {
     if (date) {
       this.date = date;
       this.loadDiet(date);
-      this.giveByTrainer = (this.diet?.diet &&
-        this.diet?.diet.every(
-          (workout) => workout.trainerId != null
-        )) as boolean;
     }
   }
 
@@ -258,17 +260,32 @@ export class DietDiaryComponent {
     const trainer = this.guestService.findTrainer(token.sub).toPromise();
     trainer.then(
       (response: Trainer | any) => {
-        //console.log(response);
-        const data: SocketDietDto = {
-          guestId: token.sub as number,
-          trainerId: response.id,
-          foodId: food.foodId,
-          dietId: food.dietId,
-        };
-        this.notificationService.sendNotificationToTrainer(data);
-        var item = this.diet?.diet.find((item) => item.foodId == food.foodId);
-        if (item) {
-          item.eated = true;
+        if (response != null) {
+          const data: SocketDietDto = {
+            guestId: token.sub as number,
+            trainerId: response.id,
+            foodId: food.foodId,
+            dietId: food.dietId,
+          };
+          this.notificationService.sendNotificationToTrainer(data);
+          var item = this.diet?.diet.find((item) => item.foodId == food.foodId);
+          if (item) {
+            item.eated = true;
+          }
+        } else {
+          this.dietService.setEated(food.dietId).subscribe(
+            (response) => {
+              if (response.status == 204) {
+                var item = this.diet?.diet.find(
+                  (item) => item.foodId == food.foodId
+                );
+                if (item) {
+                  item.eated = true;
+                }
+              }
+            },
+            (error) => console.log(error)
+          );
         }
       },
       (error) => {
@@ -350,9 +367,11 @@ export class DietDiaryComponent {
             duration: 2000,
             type: 'success',
           });
-         this.modalRef.closeModal();
-         this.loadDiet(this.date);
+          this.modalRef.closeModal();
+          this.loadDiet(this.date);
         });
     }
   }
+
+  
 }

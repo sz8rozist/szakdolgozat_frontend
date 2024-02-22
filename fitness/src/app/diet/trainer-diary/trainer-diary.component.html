@@ -71,7 +71,7 @@
             </div>
           </div>
           <div *ngIf="diet && diet.diet.length == 0" class="alert alert-warning">
-            Ehhez a naphoz nem található étrend.
+            {{"nem_talalhato_etrend" | translate}}
           </div>
           <div *ngIf="diet && diet.diet.length > 0" class="card">
             <div class="card-header">{{ "etelek" | translate }}</div>

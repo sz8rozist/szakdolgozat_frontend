@@ -34,7 +34,7 @@
                     class="text-danger"
                     *ngIf="this.foodForm.get('name')?.errors?.['required'] && this.foodForm.get('name')?.touched"
                   >
-                    A név kitöltése kötelező!
+                    {{"kotelezo_mezo" | translate}}
                   </span>
                 </div>
               </div>
@@ -58,14 +58,14 @@
                     class="text-danger"
                     *ngIf="this.foodForm.get('calorie')?.errors?.['pattern'] && this.foodForm.get('calorie')?.touched"
                   >
-                    A kalória csak szám lehet!
+                  {{"csak_szam" | translate}}
                   </span>
                   <span
                     class="text-danger"
                     *ngIf="this.foodForm.get('calorie')?.errors?.['required'] && this.foodForm.get('calorie')?.touched"
                   >
-                    A kalória kitöltése kötelező!
-                  </span>
+                  {{"kotelezo_mezo" | translate}}
+                </span>
                 </div>
               </div>
               <div class="row mb-3">
@@ -88,14 +88,14 @@
                     class="text-danger"
                     *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['pattern'] && this.foodForm.get('carbonhydrate')?.touched"
                   >
-                    A szénhidrát csak szám lehet!
+                  {{"csak_szam" | translate}}
                   </span>
                   <span
                     class="text-danger"
                     *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['required'] && this.foodForm.get('carbonhydrate')?.touched"
                   >
-                    A szénhidrát kitöltése kötelező!
-                  </span>
+                  {{"kotelezo_mezo" | translate}}
+                </span>
                 </div>
               </div>
               <div class="row mb-3">
@@ -118,14 +118,14 @@
                     class="text-danger"
                     *ngIf="this.foodForm.get('protein')?.errors?.['pattern'] && this.foodForm.get('protein')?.touched"
                   >
-                    A fehérje csak szám lehet!
+                  {{"csak_szam" | translate}}
                   </span>
                   <span
                     class="text-danger"
                     *ngIf="this.foodForm.get('protein')?.errors?.['required'] && this.foodForm.get('protein')?.touched"
                   >
-                    A fehérje kitöltése kötelező!
-                  </span>
+                  {{"kotelezo_mezo" | translate}}
+                </span>
                 </div>
               </div>
               <div class="row mb-3">
@@ -148,14 +148,14 @@
                     class="text-danger"
                     *ngIf="this.foodForm.get('fat')?.errors?.['pattern'] && this.foodForm.get('fat')?.touched"
                   >
-                    A zsír csak szám lehet!
-                  </span>
+                  {{"csak_szam" | translate}}
+                </span>
                   <span
                     class="text-danger"
                     *ngIf="this.foodForm.get('fat')?.errors?.['required'] && this.foodForm.get('fat')?.touched"
                   >
-                    A zsír kitöltése kötelező!
-                  </span>
+                  {{"kotelezo_mezo" | translate}}
+                </span>
                 </div>
               </div>
               <div class="text-center">

@@ -105,4 +105,7 @@ export class DietService {
   getAllTrainerGuestDiet(trainerId: number){
     return this.http.get<CalendarEvent[]>(`${this.apiUrlService.getApiUrl()}/diet/getAllTrainerGuestDiet/${trainerId}`);
   }
+  setEated(dietId: number){
+    return this.http.get(`${this.apiUrlService.getApiUrl()}/diet/setEated/${dietId}`, {observe: 'response'});
+  }
 }

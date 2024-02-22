@@ -26,7 +26,7 @@ export class NavbarComponent {
     public authService: AuthService,
     private userService: UserService,
     private notificationService: NotificationService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {

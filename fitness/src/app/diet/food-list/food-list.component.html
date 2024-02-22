@@ -17,8 +17,16 @@
             <div class="card-title">
               <button routerLink="/diet/addFood" class="btn btn-primary">{{"uj_etel"|translate}}</button>
             </div>
-            <!-- Table with stripped rows -->
-            <table class="table datatable">
+            <div *ngIf="foods.length == 0">
+              <div
+                class="alert alert-warning alert-dismissible fade show"
+                role="alert"
+              >
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                {{'nincs_rogzitve_etel'|translate}}
+              </div>
+            </div>
+            <table class="table datatable" *ngIf="foods.length > 0">
               <thead>
                 <tr>
                   <th scope="col">#</th>

@@ -47,8 +47,8 @@
                     </div>
                   </td>
                 </tr>
-                <tr *ngFor="let item of recommedation">
-                  <th scope="row">{{ item.id }}</th>
+                <tr *ngFor="let item of recommedation; let i = index">
+                  <th scope="row">{{ i | increment }}</th>
                   <td>{{ item.calorie}}</td>
                   <td>{{ item.carbonhydrate }}</td>
                   <td>{{ item.fat }}</td>
