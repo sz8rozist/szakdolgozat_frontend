@@ -73,6 +73,13 @@ export class ChatComponent {
   }
 
   chooseUser(user: UserDto) {
+    if(user.lastMessage != ""){
+     this.chatService.updateReaded(user.lastMessageId).subscribe(response =>{
+      if(response.status == 200){
+       this.fetchAllUser();
+      }
+     }, error => console.log(error));
+    }
     this.user = user;
     this.loadMessages();
   }

@@ -22,7 +22,6 @@ export class SigninComponent {
     private toast: NgToastService,
     private router: Router,
     private translateService: TranslateService,
-    private notificationService: NotificationService,
     private userService: UserService
   ) {
     this.lang = localStorage.getItem('lang') || 'hu';
@@ -40,7 +39,6 @@ export class SigninComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.get('rememberme')?.value);
       const loginUser: LoginUser = {
         username: this.loginForm.get('username')?.value,
         password: this.loginForm.get('password')?.value,
@@ -57,6 +55,12 @@ export class SigninComponent {
             if(this.loginForm.get('rememberme')?.value){
               this.authService.addRememberme(this.loginForm.get('rememberme')?.value);
             }
+            const token = this.authService.getDecodedToken();
+            this.userService.setOnline(token.sub as number).subscribe(response =>{
+              if(response.status === 200){
+                console.log("sikeres online!");
+              }
+            }, error => console.log(error));
             this.router.navigate(['/dashboard']);
           }
         },

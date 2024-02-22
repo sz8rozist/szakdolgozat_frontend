@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { StompConfig, Client } from '@stomp/stompjs';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { AuthService } from './auth.service';
 import { MessageDto } from '../model/dto/MessageDto';
 import { WebsocketService } from './websocket.service';
 import { ApiUrlService } from './api-url.service';

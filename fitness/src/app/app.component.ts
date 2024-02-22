@@ -5,6 +5,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { NotificationService } from './service/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Notification } from './model/Notification';
+import { UserService } from './service/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,15 +13,12 @@ import { Notification } from './model/Notification';
 })
 export class AppComponent {
   title = 'My Fitness';
-
-  auth: any;
-  user?: UserDto;
-
   constructor(
     public authService: AuthService,
     private notificationService: NotificationService,
     private toast: NgToastService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private userService: UserService
   ) {}
   ngOnInit() {
     this.getTrainerNotification();
@@ -31,7 +29,16 @@ export class AppComponent {
   }
 
   onLogout() {
+    const token = this.authService.getDecodedToken();
+    console.log(token.sub);
+
+    this.userService.removeOnline(token.sub as number).subscribe(response =>{
+      if(response.status == 200){
+        console.log("sikeres setonline");
+      }
+    }, error => console.error(error));
     this.authService.logout();
+    
   }
 
   getTrainerNotification() {

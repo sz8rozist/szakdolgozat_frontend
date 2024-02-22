@@ -11,6 +11,7 @@ import { UserDto } from '../model/dto/UserDto';
   providedIn: 'root',
 })
 export class UserService {
+
   private _profilePicture$ = new BehaviorSubject<string | null>(null);
   profilePicture$: Observable<string | null> =
     this._profilePicture$.asObservable();
@@ -56,5 +57,12 @@ export class UserService {
 
   getAllUser(userId: number){
     return this.http.get<UserDto[]>(`${this.apiUrlService.getApiUrl()}/user/userMessages/${userId}`);
+  }
+
+  setOnline(userId: number) {
+    return this.http.get(`${this.apiUrlService.getApiUrl()}/user/setOnline/${userId}`, {observe: "response"});
+  }
+  removeOnline(userId: number) {
+    return this.http.get(`${this.apiUrlService.getApiUrl()}/user/removeOnline/${userId}`, {observe: "response"});
   }
 }

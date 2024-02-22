@@ -5,4 +5,6 @@ export interface UserDto{
     firstName: string,
     lastName: string,
     lastMessage: string,
+    lastMessageId: number,
+    online: boolean
 }
