@@ -227,7 +227,7 @@ export class DashboardComponent {
         return 'Kedd';
       case 'Wednesday':
         return 'Szerda';
-      case 'Thirsday':
+      case 'Thursday':
         return 'Csütörtök';
       case 'Friday':
         return 'Péntek';

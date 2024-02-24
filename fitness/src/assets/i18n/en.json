@@ -157,5 +157,7 @@
   "hibas_regi_jelszo": "Incorrent password",
   "ket_jelszo_nem_egyezik": "The passwords don't match",
   "nem_talalhato_etrend": "The selected day has no meal plan",
-  "bezar": "Close"
+  "bezar": "Close",
+  "ossz_ismetles": "All repetitions",
+  "ossz_sorozat": "All sets"
 }

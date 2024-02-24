@@ -157,5 +157,7 @@
   "hibas_regi_jelszo": "Hibás régi jelszó",
   "ket_jelszo_nem_egyezik": "A két jelszó nem egyezik",
   "nem_talalhato_etrend": "Ehhez a naphoz nem található étrend",
-  "bezar" :"Bezár"
+  "bezar" :"Bezár",
+  "ossz_ismetles": "Összes ismétlés",
+  "ossz_sorozat": "Összes sorozat"
 }
