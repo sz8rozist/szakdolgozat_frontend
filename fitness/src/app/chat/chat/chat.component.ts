@@ -68,7 +68,7 @@ export class ChatComponent {
           user.profilePictureName = e.target.result;
         };
         reader.readAsDataURL(response);
-      });
+      }, error => console.error("Nem található profilkép."));
     }
   }
 
