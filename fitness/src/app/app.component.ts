@@ -11,7 +11,7 @@ import { UserService } from './service/user.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'My Fitness';
+  title = 'MozgasMester';
   constructor(
     public authService: AuthService,
     private notificationService: NotificationService,
