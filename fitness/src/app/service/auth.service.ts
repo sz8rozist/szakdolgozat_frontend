@@ -29,7 +29,7 @@ export class AuthService {
       })
     );
   }
-  
+
   signup(signupUser: SignupUser){
     return this.http.post(`${this.apiUrlService.getApiUrl()}/user/register`, signupUser,{observe: 'response'});
   }
@@ -41,11 +41,7 @@ export class AuthService {
     }
   }
 
-  isTokenExpired(): boolean {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return true; // Nincs token
-    }
+  isTokenExpired(token: string): boolean {
     const tokenData = JSON.parse(atob(token.split('.')[1]));
     const expirationDate = new Date(tokenData.exp * 1000); // Konvertálás ms-re
     console.log(expirationDate);

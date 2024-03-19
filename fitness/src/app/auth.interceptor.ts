@@ -6,26 +6,35 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from './service/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (request.url.endsWith('/user/login') || request.url.endsWith('/user/register')) {
+    if (
+      request.url.endsWith('/user/login') ||
+      request.url.endsWith('/user/register')
+    ) {
       return next.handle(request);
     }
 
     const token = localStorage.getItem('token');
-    const modifiedRequest = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
+    if (token) {
+      if (this.authService.isTokenExpired(token)) {
+        this.authService.logout();
       }
-    });
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
 
-    return next.handle(modifiedRequest);
+    return next.handle(request);
   }
 }
