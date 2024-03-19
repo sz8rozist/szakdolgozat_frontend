@@ -20,6 +20,7 @@ export class NavbarComponent {
   notifications: Notification[] = [];
   profileImageSrc: string | null = null;
   faBack = faBackwardStep
+  lang?: string;
   @ViewChild('canvasRef') canvasRef!: OffcanvasComponent;
 
   constructor(
@@ -38,6 +39,11 @@ export class NavbarComponent {
       const filter = notification.filter((elem) => !elem.viewed);
       this.notifications = [...filter];
     });
+
+    const lang = localStorage.getItem('lang');
+    if(lang){
+      this.lang = lang;
+    }
   }
 
 
@@ -91,6 +97,7 @@ export class NavbarComponent {
 
   changeLang(lang: string){
     const selectedLanguage = lang;
+    this.lang = lang;
     localStorage.setItem('lang', selectedLanguage);
     this.translateService.use(selectedLanguage);
   }

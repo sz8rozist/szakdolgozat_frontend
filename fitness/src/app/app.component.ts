@@ -31,13 +31,15 @@ export class AppComponent {
     const token = this.authService.getDecodedToken();
     console.log(token.sub);
 
-    this.userService.removeOnline(token.sub as number).subscribe(response =>{
-      if(response.status == 200){
-        console.log("sikeres setonline");
-      }
-    }, error => console.error(error));
+    this.userService.removeOnline(token.sub as number).subscribe(
+      (response) => {
+        if (response.status == 200) {
+          console.log('sikeres setonline');
+        }
+      },
+      (error) => console.error(error)
+    );
     this.authService.logout();
-    
   }
 
   getTrainerNotification() {
@@ -72,29 +74,28 @@ export class AppComponent {
       });
   }
 
-  getFeedbackNotification(){
+  getFeedbackNotification() {
     this.notificationService
-    .getFeedbackNotification()
-    .subscribe((response: Notification) => {
-      setTimeout(() => {
-        this.toast.info({
-          detail: 'Értesítés',
-          summary: response.message,
-          duration: 2000,
-          type: 'info',
-        });
-        this.notificationService.addNotification(response);
-      }, 2500);
-    });
+      .getFeedbackNotification()
+      .subscribe((response: Notification) => {
+        setTimeout(() => {
+          this.toast.info({
+            detail: 'Értesítés',
+            summary: response.message,
+            duration: 2000,
+            type: 'info',
+          });
+          this.notificationService.addNotification(response);
+        }, 2500);
+      });
   }
 
   @HostListener('window:beforeunload', ['$event'])
   unloadHandler(event: Event) {
-    console.log('Az oldal bezárásra kerül.');
-    this.authService.rememberme$.subscribe((response: boolean) =>{
-      if(!response){
-       // localStorage.removeItem("token");
-      }
-    });
+    const rememberme = localStorage.getItem('rememberme');
+    if (!rememberme) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('rememberme');
+    }
   }
 }

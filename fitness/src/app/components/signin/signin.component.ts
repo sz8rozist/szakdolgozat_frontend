@@ -53,7 +53,7 @@ export class SigninComponent {
               type: 'success',
             });
             if(this.loginForm.get('rememberme')?.value){
-              this.authService.addRememberme(this.loginForm.get('rememberme')?.value);
+              localStorage.setItem("rememberme", "1");
             }
             const token = this.authService.getDecodedToken();
             this.userService.setOnline(token.sub as number).subscribe(response =>{
