@@ -11,11 +11,6 @@ import { NotificationService } from 'src/app/service/notification.service';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { Guest } from 'src/app/model/Guest';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { ModalComponent } from 'src/app/components/modal/modal.component';
-import { Food } from 'src/app/model/Food';
-import { Diet } from 'src/app/model/Diet';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DietUpdateRequest } from 'src/app/model/DietUpdateRequest';
 
 @Component({
   selector: 'app-trainer-diary',
@@ -26,15 +21,9 @@ export class TrainerDiaryComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   date: string = '';
   diet?: DietResponse;
-  foodForm: FormGroup;
-  dietForm: FormGroup;
-  diets?: Diet;
   giveByTrainer: boolean = false;
   selectedGuest?: number;
   guests: Guest[] = [];
-  dietId?: number;
-  foods?: Food[];
-  @ViewChild('modalRef') modalRef!: ModalComponent;
   sum: {
     calorie: number;
     carbonhydrate: number;
@@ -88,33 +77,7 @@ export class TrainerDiaryComponent {
     private toast: NgToastService,
     private guestService: GuestService,
     private notificationService: NotificationService
-  ) {this.foodForm = new FormGroup({
-    foodId: new FormControl('', [Validators.required]),
-    calorie: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    protein: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    carbonhydrate: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    fat: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-  });
-  this.dietForm = new FormGroup({
-    quantity: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    type: new FormControl('', [Validators.required]),
-    date: new FormControl('', [Validators.required]),
-  });}
+  ) {}
   public pieChartPlugins = [DatalabelsPlugin];
   ngOnInit() {
     this.authService.getAuthData().subscribe((response: User) => {
@@ -139,48 +102,7 @@ export class TrainerDiaryComponent {
     }
 
   }
-  openEditModal(id: number) {
-    this.dietId = id;
-    this.modalRef.openModal();
-    this.loadFoods();
-    this.loadDietToForm();
-  }
-  loadFoods() {
-    this.dietService.getAllFoodWithoutPagination().subscribe((food: Food[]) => {
-      this.foods = [...food];
-    });
-  }
-  loadDietToForm() {
-    if (this.dietId) {
-      this.dietService
-        .getDietById(Number(this.dietId))
-        .subscribe((response: Diet) => {
-          if (response) {
-            this.diets = response;
-            this.patchFoodForm(this.diets.food);
-            this.patchDietForm(this.diets);
-          }
-        });
-    }
-  }
 
-  patchFoodForm(food: any) {
-    this.foodForm.patchValue({
-      foodId: food.id,
-      calorie: food.calorie,
-      protein: food.protein,
-      carbonhydrate: food.carbonhydrate,
-      fat: food.fat,
-    });
-  }
-
-  patchDietForm(diet: any) {
-    this.dietForm.patchValue({
-      quantity: diet.quantity,
-      type: diet.type,
-      date: diet.date,
-    });
-  }
   changeGuest() {
     if (this.date && this.selectedGuest) {
       this.loadDiet(this.date, this.selectedGuest as number);
@@ -302,40 +224,5 @@ export class TrainerDiaryComponent {
           });
       }
     });
-  }
-
-
-  saveEtkezes() {
-    if (this.dietForm.valid && this.foodForm.valid) {
-      const diet: DietUpdateRequest = {
-        foodId: this.foodForm.get('foodId')?.value,
-        quantity: this.dietForm.get('quantity')?.value,
-        date: this.dietForm.get('date')?.value,
-        type: this.dietForm.get('type')?.value,
-      };
-      this.dietService
-        .updateDiet(diet, this.diets?.id as number)
-        .subscribe(() => {
-          this.toast.success({
-            detail: 'Sikeres',
-            summary: 'Sikeres frissítés',
-            duration: 2000,
-            type: 'success',
-          });
-          this.modalRef.closeModal();
-          this.loadDiet(this.date,this.selectedGuest as number);
-        });
-    }
-  }
-
-  onSelectChange(event: Event) {
-    const selectedValue = (event.target as HTMLSelectElement).value;
-    this.dietService
-      .getFoodById(Number(selectedValue))
-      .subscribe((response: Food) => {
-        if (response) {
-          this.patchFoodForm(response);
-        }
-      });
   }
 }
