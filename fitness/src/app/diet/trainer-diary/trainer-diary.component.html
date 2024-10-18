@@ -101,7 +101,7 @@
                     <td *ngIf="giveByTrainer">
                       <button
                         class="btn btn-primary btn-sm me-2"
-                        routerLink="/diet/edit-food/{{ food.dietId }}"
+                        (click)="openEditModal(food.dietId)"
                       >
                       <fa-icon [icon]="faEdit"></fa-icon>
                       </button>
@@ -147,4 +147,223 @@
       </div>
     </section>
   </main>
+  <app-modal #modalRef>
+    <div header>
+      <!-- Modal header content -->
+      <h4 class="modal-title" id="modal-basic-title">
+        {{ "etkezes_szerkesztes" | translate }}
+      </h4>
+    </div>
+    <div body>
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12">
+            <form class="row g-3" [formGroup]="foodForm">
+              <div class="col-md-12">
+                <div class="form-floating mb-3">
+                  <select
+                    class="form-select"
+                    id="floatingSelect"
+                    aria-label="Floating label select example"
+                    formControlName="foodId"
+                    (change)="onSelectChange($event)"
+                  >
+                    <option *ngFor="let food of foods" [value]="food.id">
+                      {{ food.name }}
+                    </option>
+                  </select>
+                  <label for="floatingSelect">{{ "etel" | translate }}</label>
+                </div>
+              </div>
+              <div class="col-md-6" style="margin-top: 0">
+                <div class="form-floating">
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="calorie"
+                    id="floatingEmail"
+                    placeholder="Your Email"
+                    readonly
+                  />
+                  <label for="floatingEmail"
+                    >{{ "kaloria" | translate }} (100g)</label
+                  >
+                </div>
+                <span
+                  class="text-danger"
+                  *ngIf="this.foodForm.get('calorie')?.errors?.['pattern'] && this.foodForm.get('calorie')?.touched"
+                >
+                  {{ "csak_szam" | translate }}
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="this.foodForm.get('calorie')?.errors?.['required'] && this.foodForm.get('calorie')?.touched"
+                >
+                  {{ "kotelezo_mezo" | translate }}
+                </span>
+              </div>
+              <div class="col-md-6" style="margin-top: 0">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="carbonhydrate"
+                    id="floatingPassword"
+                    placeholder="Password"
+                    readonly
+                  />
+                  <label for="floatingPassword"
+                    >{{ "szenhidrat" | translate }} (100g)</label
+                  >
+                </div>
+                <span
+                  class="text-danger"
+                  *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['pattern'] && this.foodForm.get('carbonhydrate')?.touched"
+                >
+                  {{ "csak_szam" | translate }}
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="this.foodForm.get('carbonhydrate')?.errors?.['required'] && this.foodForm.get('carbonhydrate')?.touched"
+                >
+                  {{ "kotelezo_mezo" | translate }}
+                </span>
+              </div>
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="protein"
+                    id="floatingPassword"
+                    placeholder="Password"
+                    readonly
+                  />
+                  <label for="floatingPassword"
+                    >{{ "feherje" | translate }} (100g)</label
+                  >
+                </div>
+                <span
+                  class="text-danger"
+                  *ngIf="this.foodForm.get('protein')?.errors?.['pattern'] && this.foodForm.get('protein')?.touched"
+                >
+                  {{ "csak_szam" | translate }}
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="this.foodForm.get('protein')?.errors?.['required'] && this.foodForm.get('protein')?.touched"
+                >
+                  {{ "kotelezo_mezo" | translate }}
+                </span>
+              </div>
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="fat"
+                    id="floatingPassword"
+                    placeholder="Password"
+                    readonly
+                  />
+                  <label for="floatingPassword"
+                    >{{ "zsir" | translate }} (100g)</label
+                  >
+                </div>
+                <span
+                  class="text-danger"
+                  *ngIf="this.foodForm.get('fat')?.errors?.['pattern'] && this.foodForm.get('fat')?.touched"
+                >
+                  {{ "csak_szam" | translate }}
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="this.foodForm.get('fat')?.errors?.['required'] && this.foodForm.get('fat')?.touched"
+                >
+                  {{ "kotelezo_mezo" | translate }}
+                </span>
+              </div>
+            </form>
   
+            <form class="row g-3 mt-1" [formGroup]="dietForm">
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="quantity"
+                    id="floatingPassword"
+                    placeholder="Password"
+                  />
+                  <label for="floatingPassword">{{
+                    "mennyiseg" | translate
+                  }}</label>
+                </div>
+                <span
+                  class="text-danger"
+                  *ngIf="this.dietForm.get('quantity')?.errors?.['pattern'] && this.dietForm.get('quantity')?.touched"
+                >
+                  {{ "csak_szam" | translate }}
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="this.dietForm.get('quantity')?.errors?.['required'] && this.dietForm.get('quantity')?.touched"
+                >
+                  {{ "kotelezo_mezo" | translate }}
+                </span>
+              </div>
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="date"
+                    id="floatingPassword"
+                    placeholder="Password"
+                  />
+                  <label for="floatingPassword">{{ "datum" | translate }}</label>
+                </div>
+                <span
+                  class="text-danger"
+                  *ngIf="this.dietForm.get('date')?.errors?.['required'] && this.dietForm.get('date')?.touched"
+                >
+                  {{ "kotelezo_mezo" | translate }}
+                </span>
+              </div>
+              <div class="col-12">
+                <div class="form-floating">
+                  <select
+                    class="form-select"
+                    id="floatingSelect"
+                    formControlName="type"
+                    aria-label="Floating label select example"
+                  >
+                    <option value="BREAKFAST">{{ "reggeli" | translate }}</option>
+                    <option value="LUNCH">{{ "ebed" | translate }}</option>
+                    <option value="DINNER">{{ "vacsora" | translate }}</option>
+                    <option value="SNACK">{{ "snack" | translate }}</option>
+                  </select>
+                  <label for="floatingPassword">{{ "tipus" | translate }}</label>
+                </div>
+                <span
+                  class="text-danger"
+                  *ngIf="this.dietForm.get('type')?.errors?.['required'] && this.dietForm.get('type')?.touched"
+                >
+                  {{ "kotelezo_mezo" | translate }}
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div saveButton>
+      <button
+        class="btn btn-primary"
+        (click)="saveEtkezes()"
+        [disabled]="this.foodForm.invalid || this.dietForm.invalid"
+      >
+        {{ "mentes" | translate }}
+      </button>
+    </div>
+  </app-modal>
